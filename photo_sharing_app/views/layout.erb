@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World</title>
+  <link rel='stylesheet' href='/stylesheets/main.css'>
+</head>
+<body>
+
+  <header>
+      <img class="icon" src="https://i.imgur.com/EuXHPLZ.png">
+      <div class="nav-bar">
+        <nav>
+          <div><a href="/">Home</a></div>
+          <div><a href="/albums">Albums</a></div>
+          <div><a href="/about">About</a></div>  
+
+          <% if logged_in? %>
+            <form action="/session" method="post">
+              <input type="hidden" name="_method" value="delete">
+              <div><button>logout</button></div>
+            </form>
+          <% end %> 
+        </nav>
+      </div>
+  </header>
+
+  <%= yield %>
+
+</body>
+</html>

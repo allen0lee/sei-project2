@@ -1,0 +1,14 @@
+<% if !logged_in? %>
+    <form action="/login">
+        <button>login page</button>
+    </form>
+
+<% elsif logged_in? %>
+    <p>logined in as <%= current_user.email %></p> 
+    
+    <a href="/albums/<%= current_user.id %>">own albums</a>
+
+    
+<% end %>
+
+<a href="/albums">all albums</a>

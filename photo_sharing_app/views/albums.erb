@@ -1,0 +1,13 @@
+<%# album1 with theme picture and album name
+album2 with theme picture and album name
+... %>
+
+<% @albums.each do |album| %>
+  <p>
+    <a href="/albums/<%= album.id %>">
+      <%= album.name %>
+    </a>
+  </p>
+  <img src="<%= album.theme_image_url %>" alt="">
+<% end %>
+

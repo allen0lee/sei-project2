@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: pink;
+    font-family: Raleway;
+}
+
+header {
+    text-align: center;
+    background: url('https://i.imgur.com/GVE897x.jpg');
+    background-size: cover;
+}
+
+.icon {
+    margin: 30px 0 30px 0;
+    /* border: 7px solid white;
+    border-radius: 20px; */
+    width: 15%;
+}
+
+.nav-bar {
+    background-color: black;
+    opacity: 0.6;
+    display: flex;
+}
+
+.nav-bar nav {
+    display: flex;                
+    flex-direction: row;
+    margin: 0 auto;    
+}
+
+.nav-bar nav div {
+    margin: 0 10px 0 10px;
+}
+
+.nav-bar a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+img {
+    width: 200px;
+}
