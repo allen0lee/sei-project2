@@ -120,8 +120,8 @@ post '/photos/:album_id/:user_id' do
 end
 
 # show single photo and comments - create comments here
-get 'photos/:photo_name/:id' do
-  
+get '/photos/:id' do
+  # params[:id]
   "hello"
 end
 
