@@ -76,6 +76,20 @@ post '/albums' do
   # redirect 'albums'
 end
 
+# show all photos of an album - upload photo here
+get '/:album_name/:album_id/photos' do
+  # "hello"
+  @photos = Photo.where(album_id: params[:album_id])
+  erb :photos
+end
+
+# upload a photo
+post '' do
+
+end
+
+# single photo and comments - create comments here
+
 # delete an album
 
 # edit comment

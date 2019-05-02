@@ -1,6 +1,6 @@
 <%# list all albums of one user %>
 <% @albums.each do |album|%>
     <img src="<%= album.theme_image_url %>" alt="">
-    <a href=""><%= album.name %></a>
+    <a href="/<%= album.name %>/<%= album.id %>/photos"><%= album.name %></a>
 <% end %>
 

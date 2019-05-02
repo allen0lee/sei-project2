@@ -1,0 +1,10 @@
+<%# all photos in one album %>
+
+
+<% @photos.each do |photo|%>
+    <img src="<%= photo.image_url %>" alt="">
+    <a href="/<%= photo.name %>/photo"><%= photo.name %></a>
+<% end %>
+
+
+
