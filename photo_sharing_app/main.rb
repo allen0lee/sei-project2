@@ -49,6 +49,7 @@ end
 # page that lists all users' albums - albums.erb
 get '/albums' do
   @albums = Album.all
+  @counter = 0       # keep track of how many divs in one line
   erb :albums
 end
 

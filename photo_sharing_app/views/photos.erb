@@ -1,10 +1,16 @@
 <%# all photos in one album with 'upload photo' button%>
 
+<div class="all-photos-container">
+    <% @photos.each do |photo|%>
+        <div class="photo-container">
+            <img src="<%= photo.image_url %>" alt="">
+            <div class="photo-name">
+                <a href="/photos/<%= photo.id %>"><%= photo.name %></a>
+            </div>
+        </div>    
+    <% end %>
+</div>
 
-<% @photos.each do |photo|%>
-    <img src="<%= photo.image_url %>" alt="">
-    <a href="/photos/<%= photo.id %>"><%= photo.name %></a>
-<% end %>
 
 <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
     <button>upload photo</button>

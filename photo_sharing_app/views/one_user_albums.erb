@@ -1,8 +1,18 @@
 <%# list all albums of one user %>
-<% @albums.each do |album|%>
-    <img src="<%= album.theme_image_url %>" alt="">
-    <a href="/photos/<%= album.name %>/<%= album.id %>"><%= album.name %></a>
-<% end %>
+
+<div class="one-user-albums-container">
+    <% @albums.each do |album|%>
+        <div class="album-container"> 
+            <img src="<%= album.theme_image_url %>" alt="">
+            <div class="album-name">
+                <a href="/photos/<%= album.name %>/<%= album.id %>">
+                    <%= album.name %>
+                </a>
+            </div>
+
+        </div>
+    <% end %>
+</div>
 
 <%# 'create album' button -> take user to create_new_album.erb %>
 

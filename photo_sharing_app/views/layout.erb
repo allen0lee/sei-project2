@@ -8,21 +8,22 @@
 <body>
 
   <header>
-      <img class="icon" src="https://i.imgur.com/EuXHPLZ.png">
+      <img class="icon" src="https://tripletsisters.files.wordpress.com/2013/11/ios-7-photo-icon-pn.png?w=514&h=514">
+      <% if logged_in? %>
+        <form action="/session" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <div class="login-infor">
+            <span>Logined in as: <%= current_user.email %></span>
+            <span class="logout-btn"><button>logout</button></span>
+          </div>      
+        </form>
+      <% end %>
+       
       <div class="nav-bar">
         <nav>
           <div><a href="/">Home</a></div>
           <div><a href="/albums">Albums</a></div>
           <div><a href="/about">About</a></div>  
-
-          <% if logged_in? %>
-            <form action="/session" method="post">
-              <input type="hidden" name="_method" value="delete">
-
-              <div><a>logined in as <%= current_user.email %></a><button>logout</button></div>
-              
-            </form>
-          <% end %> 
         </nav>
       </div>
   </header>
