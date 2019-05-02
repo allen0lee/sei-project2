@@ -4,7 +4,7 @@ album2 with theme picture and album name
 
 <% @albums.each do |album| %>
   <p>
-    <a href="/<%= album.name %>/<%= album.id %>/photos">
+    <a href="/photos/<%= album.name %>/<%= album.id %>">
       <%= album.name %>
     </a>
   </p>

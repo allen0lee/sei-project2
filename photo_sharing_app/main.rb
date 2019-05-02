@@ -59,16 +59,17 @@ get '/albums/:user_id' do
 end
 
 # in user's own album page (or index after login), click 'create album' button, 
-#go to create_album page - new_album.erb
+#go to create_album page - create_new_album.erb
 get '/albums/:user_id/new' do
   # redirect '/login' if !logged_in?
-  @user_id = User.find(params[:user_id])
-  erb :new_album
+  # @user_id = User.find(params[:user_id])
+  # @user_id = User.where(user_id: params[:user_id])
+  erb :create_new_album
 end
 # create new album here
-post '/albums' do
+post '/albums' do         
   album = Album.new
-  album.name = params[:name]
+  album.name = params[:name]      # params[] here get whatever user inputs 
   album.theme_image_url = params[:theme_image_url]
   album.user_id = session[:user_id]
   album.save
@@ -76,19 +77,49 @@ post '/albums' do
   # redirect 'albums'
 end
 
-# show all photos of an album - upload photo here
-get '/:album_name/:album_id/photos' do
+# show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
+get '/photos/:album_name/:album_id' do
   # "hello"
+
   @photos = Photo.where(album_id: params[:album_id])
+  # @album = Album.where(album_id: params[:album_id])
+
+  @album_id = params[:album_id]
+
   erb :photos
 end
 
+# go to upload photo page
+get '/photos/:album_id/:user_id/new' do
+  erb :upload_photo
+end
 # upload a photo
-post '' do
+post '/photos/:user_id' do           # cannot do post '/:album_name/:album_id/photos'?
+  
+  # how to get the current album's id?
 
+  # wrong, a user can have multiple albums
+  # album = Album.find_by(user_id: params[:user_id]) 
+
+  album = Album.find_by(user_id: params[:user_id]).where(id: params[:album_id]).first
+
+  binding.pry
+
+  photo = Photo.new
+  photo.name = params[:name]
+  photo.image_url = params[:image_url]
+  photo.user_id = session[:user_id]
+  photo.album_id = album.id
+  photo.save
+  redirect "/photos/#{album.name}/#{photo.album_id}"
 end
 
-# single photo and comments - create comments here
+# show single photo and comments - create comments here
+get 'photos/:photo_name/:id' do
+  
+  "hello"
+end
+
 
 # delete an album
 

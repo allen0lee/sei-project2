@@ -1,10 +1,15 @@
-<%# all photos in one album %>
+<%# all photos in one album with 'upload photo' button%>
 
 
 <% @photos.each do |photo|%>
     <img src="<%= photo.image_url %>" alt="">
-    <a href="/<%= photo.name %>/photo"><%= photo.name %></a>
+    <a href="/photos/<%= photo.name %>/<%= photo.id %>"><%= photo.name %></a>
 <% end %>
+
+<form action="/photos/<%= @album_id %>/<%= session[:user_id] %>/new">
+    <button>upload photo</button>
+</form>
+
 
 
 
