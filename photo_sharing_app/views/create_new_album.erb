@@ -1,6 +1,6 @@
 <h2>create album</h2>
 
-<form action="/albums" method="post">
+<form action="/albums/<%= @user_id %>" method="post">
     <label for="">name</label>
     <input type="text" name="name">
     <label for="">theme image url</label>

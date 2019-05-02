@@ -6,7 +6,7 @@
 
 <%# 'create album' button -> take user to create_new_album.erb %>
 
-<form action="/albums/<%= session[:user_id] %>/new">
+<form action="/albums/<%= @user_id %>/new">
     <button>create album</button>
 </form>
 

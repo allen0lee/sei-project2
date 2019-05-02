@@ -55,6 +55,7 @@ end
 # page that lists one user's albums
 get '/albums/:user_id' do
   @albums = Album.where(user_id: params[:user_id])
+  @user_id = session[:user_id]
   erb :one_user_albums
 end
 
@@ -64,17 +65,17 @@ get '/albums/:user_id/new' do
   # redirect '/login' if !logged_in?
   # @user_id = User.find(params[:user_id])
   # @user_id = User.where(user_id: params[:user_id])
+  @user_id = params[:user_id]
   erb :create_new_album
 end
 # create new album here
-post '/albums' do         
+post '/albums/:user_id' do         
   album = Album.new
   album.name = params[:name]      # params[] here get whatever user inputs 
   album.theme_image_url = params[:theme_image_url]
   album.user_id = session[:user_id]
   album.save
   redirect "/albums/#{album.user_id}"
-  # redirect 'albums'
 end
 
 # show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
@@ -85,30 +86,34 @@ get '/photos/:album_name/:album_id' do
   # @album = Album.where(album_id: params[:album_id])
 
   @album_id = params[:album_id]
+  @user_id = session[:user_id]
 
   erb :photos
 end
 
 # go to upload photo page
 get '/photos/:album_id/:user_id/new' do
+  @album_id = params[:album_id]
+  @user_id = session[:user_id]
   erb :upload_photo
 end
 # upload a photo
-post '/photos/:user_id' do           # cannot do post '/:album_name/:album_id/photos'?
-  
+post '/photos/:album_id/:user_id' do          
   # how to get the current album's id?
 
   # wrong, a user can have multiple albums
   # album = Album.find_by(user_id: params[:user_id]) 
 
-  album = Album.find_by(user_id: params[:user_id]).where(id: params[:album_id]).first
+  # album = Album.find_by(id: params[:album_id])
+  album = Album.where(id: params[:album_id]).first
 
-  binding.pry
+  #binding.pry
 
   photo = Photo.new
   photo.name = params[:name]
   photo.image_url = params[:image_url]
-  photo.user_id = session[:user_id]
+  #photo.user_id = session[:user_id]
+  photo.user_id = params[:user_id]
   photo.album_id = album.id
   photo.save
   redirect "/photos/#{album.name}/#{photo.album_id}"

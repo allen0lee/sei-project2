@@ -6,7 +6,7 @@
     <a href="/photos/<%= photo.name %>/<%= photo.id %>"><%= photo.name %></a>
 <% end %>
 
-<form action="/photos/<%= @album_id %>/<%= session[:user_id] %>/new">
+<form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
     <button>upload photo</button>
 </form>
 
