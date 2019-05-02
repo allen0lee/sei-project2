@@ -18,7 +18,9 @@
           <% if logged_in? %>
             <form action="/session" method="post">
               <input type="hidden" name="_method" value="delete">
-              <div><button>logout</button></div>
+
+              <div><a>logined in as <%= current_user.email %></a><button>logout</button></div>
+              
             </form>
           <% end %> 
         </nav>

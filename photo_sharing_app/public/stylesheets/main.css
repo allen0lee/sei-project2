@@ -42,6 +42,10 @@ header {
     text-decoration: none;
 }
 
+.nav-bar p {
+    color: white;
+}
+
 img {
     width: 200px;
 }

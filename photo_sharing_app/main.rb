@@ -121,14 +121,40 @@ end
 
 # show single photo and comments - create comments here
 get '/photos/:id' do
-  # params[:id]
-  "hello"
+  @photo = Photo.find(params[:id])
+  @comments = Comment.where(photo_id: @photo.id)
+  erb :one_photo
 end
+# create a comment of a photo
+post '/comments' do
+    comment = Comment.new
+    comment.content = params[:content]
+    comment.photo_id = params[:photo_id]
+    comment.save
+    redirect "/photos/#{comment.photo_id}"
+    # redirect "/photos/#{params[:photo_id]}"
+end
+
+# edit a photo
+get '/photos/:id/:user_id/edit' do
+  @photo = Photo.find(params[:id])
+  erb :edit_photo
+end
+
+put '/photos/:id' do
+  photo = Photo.find(params[:id])
+  photo.name = params[:name]
+  photo.image_url = params[:image_url]
+  photo.save
+  redirect "/photos/#{photo.id}"
+end
+
+
 
 
 # delete an album
 
-# edit comment
+
 
 # delete photo
 

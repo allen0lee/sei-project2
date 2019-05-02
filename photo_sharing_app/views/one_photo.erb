@@ -1,0 +1,17 @@
+<img src="<%= @photo.image_url %>" alt="">
+<h2><%= @photo.name %></h2>
+
+<p><a href="/photos/<%= @photo.id %>/<%= session[:user_id] %>/edit">edit</a></p>
+
+<form action="/comments" method="post">
+    <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+    <textarea name="content"></textarea>
+    <button>post</button>
+</form>
+
+<%# list all comments of a dish %>
+<% @comments.each do |comment|%>
+    <p>
+        <%= comment.content %>
+    </p>
+<% end %>
