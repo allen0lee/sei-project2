@@ -124,7 +124,6 @@ end
 get '/photos/:id' do
   @photo = Photo.find(params[:id])
   @comments = Comment.where(photo_id: @photo.id)
-  @user_id = session[:user_id]
   erb :one_photo
 end
 # create a comment of a photo
@@ -139,20 +138,9 @@ post '/comments' do
 end
 
 # edit a photo
-get '/photos/:id/:user_id/edit' do
-  # if params[:user_id] == nil
-  #   redirect '/login'
-  # else
-  #   @photo = Photo.find(params[:id])
-  #   erb :edit_photo
-  # end
-
-
-  # redirect '/login' if !logged_in? # if not logged in, cannot edit photo
+get '/photos/:id/:album_id/edit' do
+  redirect '/login' if !logged_in? # if not logged in, cannot edit photo
   @photo = Photo.find(params[:id])
-
-  binding.pry
-
   erb :edit_photo
 end
 

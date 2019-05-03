@@ -6,11 +6,9 @@
 </div>
 
 <div class="edit-photo-form">
-    <form action="/photos/<%= @photo.id %>/<%= @user_id %>/edit">
+    <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
         <button>edit</button>
     </form>
-
-    <a href="/photos/<%= @photo.id %>/<%= @user_id %>/edit">edit</a>
 </div>
 
 <div class="post-comment-form">
