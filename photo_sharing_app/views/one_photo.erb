@@ -5,11 +5,16 @@
     </div>
 </div>
 
-<div class="edit-photo-form">
-    <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
-        <button>edit</button>
-    </form>
-</div>
+
+<%# edit button should show to photo owner, hidden for not photo owner %>
+<% if session[:user_id] == @photo.user_id  %>
+    <div class="edit-photo-form">
+        <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
+            <button>edit</button>
+        </form>
+    </div>
+<% end %>
+
 
 <div class="post-comment-form">
     <form action="/comments" method="post">
@@ -18,7 +23,6 @@
         <button>post</button>
     </form>
 </div>
-
 
 
 <%# list all comments of a photo %>

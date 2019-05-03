@@ -49,7 +49,6 @@ end
 # page that lists all users' albums - albums.erb
 get '/albums' do
   @albums = Album.all
-  @counter = 0       # keep track of how many divs in one line
   erb :albums
 end
 
@@ -81,10 +80,10 @@ end
 
 # show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
 get '/photos/:album_name/:album_id' do
-  # "hello"
-
   @photos = Photo.where(album_id: params[:album_id])
-  # @album = Album.where(album_id: params[:album_id])
+
+  # need to determine the album owner, because 'upload photo' button is only visible to album owner 
+  @album = Album.find_by(id: params[:album_id])
 
   @album_id = params[:album_id]
   @user_id = session[:user_id]

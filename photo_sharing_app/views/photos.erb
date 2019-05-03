@@ -11,17 +11,23 @@
     <% end %>
 </div>
 
-<div class="upload-photo-form">
-    <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
-        <button>upload photo</button>
-    </form>
-</div>
+
+<%# upload photo button should show to album owner, hidden for not album owner %>
+<% if session[:user_id] == @album.user_id  %>
+    <div class="upload-photo-form">
+        <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
+            <button>upload photo</button>
+        </form>
+    </div>
+
+<% end %>
 
 
 <div class="expanded-image-container">
   <span onclick="this.parentElement.style.display='none'" class="close-expanded-image-btn">&times;</span>
   <img id="expandedImg" style="width: 100%">
 </div>
+
 
 <script>
 function expandImage(imgs) {
