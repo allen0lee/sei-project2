@@ -1,35 +1,65 @@
-<div class="photo-container">
-    <img src="<%= @photo.image_url %>" alt="">
-    <div class="photo-name">
-        <a><%= @photo.name %></a>
-    </div>
-</div>
-
-
-<%# edit button should show to photo owner, hidden for not photo owner %>
-<% if session[:user_id] == @photo.user_id  %>
-    <div class="edit-photo-form">
-        <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
-            <button>edit</button>
-        </form>
-    </div>
-<% end %>
-
-
-<div class="post-comment-form">
-    <form action="/comments" method="post">
-        <input type="hidden" name="photo_id" value="<%= @photo.id %>">
-        <textarea name="content"></textarea>
-        <button>post</button>
-    </form>
-</div>
-
-
-<%# list all comments of a photo %>
-<div class="list-of-comments">
-    <% @comments.each do |comment|%>
-        <div class="comment">
-            <p><%= comment.content %></p>
+<div class="one-photo-page-container">
+    <div class="photo-comment-container">
+        <div class="photo-container">
+            <img src="<%= @photo.image_url %>" alt="">
+            <div class="photo-name">
+                <a><%= @photo.name %></a>
+            </div>
         </div>
-    <% end %>
+
+        <%# edit button should show to photo owner, hidden for not photo owner %>
+        <% if session[:user_id] == @photo.user_id  %>
+            <div class="edit-photo-form">
+                <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
+                    <button>edit</button>
+                </form>
+            </div>
+        <% end %>
+
+        <div class="post-comment-form">
+            <form action="/comments" method="post">
+                <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+                <div class="comment-input-field">
+                    <textarea name="content" placeholder="comment"></textarea>
+                </div>   
+                <div class="post-comment-btn"><button>post</button></div> 
+            </form>
+        </div>
+
+        <div class="image-link"><a href="<%= @photo.image_url %>">image link</a></div> 
+        <div class="like-btn">
+            <img src="/images/like.png" alt="">
+            <span class="like-holder"></span>
+        </div>
+    </div>
+
+    <%# list all comments of a photo %>
+    <div class="list-of-comments">
+        <% @comments.each do |comment|%>
+            <p><%= User.find_by(id: comment.user_id).email %> posted:</p>
+            <div class="comment">
+                <p><%= comment.content %></p>
+            </div>
+        <% end %>
+    </div>
+
 </div>
+
+
+<script>
+    var likeBtn = document.querySelector(".like-btn");
+    var setLike= document.querySelector(".like-holder");
+    var likeCounter = 0;
+    function countLike() {
+        likeCounter += 1;
+        setLike.textContent = `${likeCounter}`;
+    }
+    likeBtn.addEventListener('click', countLike);
+    
+</script>
+
+
+
+
+
+

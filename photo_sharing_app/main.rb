@@ -54,6 +54,10 @@ end
 
 # page that lists one user's albums
 get '/albums/:user_id' do
+  # prevent user from typing in the route in address bar to access resources
+  # need user to login first
+  # redirect '/login' if !logged_in?
+
   @albums = Album.where(user_id: params[:user_id])
   @user_id = session[:user_id]
   erb :one_user_albums
@@ -62,9 +66,8 @@ end
 # in user's own album page (or index after login), click 'create album' button, 
 #go to create_album page - create_new_album.erb
 get '/albums/:user_id/new' do
-  # redirect '/login' if !logged_in?
-  # @user_id = User.find(params[:user_id])
-  # @user_id = User.where(user_id: params[:user_id])
+  redirect '/login' if !logged_in?
+
   @user_id = params[:user_id]
   erb :create_new_album
 end
@@ -80,6 +83,8 @@ end
 
 # show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
 get '/photos/:album_name/:album_id' do
+  # redirect '/login' if !logged_in?  
+
   @photos = Photo.where(album_id: params[:album_id])
 
   # need to determine the album owner, because 'upload photo' button is only visible to album owner 
@@ -93,6 +98,8 @@ end
 
 # go to upload photo page
 get '/photos/:album_id/:user_id/new' do
+  redirect '/login' if !logged_in?
+
   @album_id = params[:album_id]
   @user_id = session[:user_id]
   erb :upload_photo
@@ -121,6 +128,8 @@ end
 
 # show single photo and comments - create comments here
 get '/photos/:id' do
+  # redirect '/login' if !logged_in?  
+
   @photo = Photo.find(params[:id])
   @comments = Comment.where(photo_id: @photo.id)
   erb :one_photo
@@ -131,7 +140,12 @@ post '/comments' do
   comment = Comment.new
   comment.content = params[:content]
   comment.photo_id = params[:photo_id]
-  comment.save
+  comment.user_id = session[:user_id]
+
+  if comment.content != ""
+    comment.save
+  end
+
   redirect "/photos/#{comment.photo_id}"
   # redirect "/photos/#{params[:photo_id]}"
 end
@@ -142,7 +156,7 @@ get '/photos/:id/:album_id/edit' do
   @photo = Photo.find(params[:id])
   erb :edit_photo
 end
-
+# update a photo here
 put '/photos/:id' do
   photo = Photo.find(params[:id])
   photo.name = params[:name]

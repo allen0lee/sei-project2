@@ -122,6 +122,7 @@ header {
     cursor: pointer;
 }
 
+
 /* style logout-btn to look like a link */
 .logout-btn button {
     border: none; 
@@ -141,12 +142,6 @@ header {
     color: white;
 }
 
-@media (max-width: 400px) {
-    .nav-bar nav {
-        display: flex;
-        flex-wrap: wrap;
-    }    
-}
 
 .upload-photo-form {
     text-align: center;
@@ -157,3 +152,57 @@ header {
     text-align: center;
     margin-top: 10px;
 }
+
+
+.one-photo-page-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.photo-comment-container {
+    width: 200px;
+    margin: 20px 0 0 200px;
+}
+
+.edit-photo-form {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.post-comment-form {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.post-comment-btn {
+    margin-top: 5px;
+}
+
+.image-link {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.like-btn img {
+    cursor: pointer;
+}
+
+.list-of-comments {
+    margin-left: 200px; 
+    margin-top: 10px;
+}
+
+.comment {
+    border-bottom: 1px solid gray;
+    padding-left: 20px;
+}
+
+/* @media (max-width: 400px) {
+    .nav-bar nav {
+        display: flex;
+        flex-wrap: wrap;
+    }    
+} */
+
+
+
