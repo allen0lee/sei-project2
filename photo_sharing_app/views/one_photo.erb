@@ -1,17 +1,33 @@
-<img src="<%= @photo.image_url %>" alt="">
-<h2><%= @photo.name %></h2>
+<div class="photo-container">
+    <img src="<%= @photo.image_url %>" alt="">
+    <div class="photo-name">
+        <a><%= @photo.name %></a>
+    </div>
+</div>
 
-<p><a href="/photos/<%= @photo.id %>/<%= session[:user_id] %>/edit">edit</a></p>
+<div class="edit-photo-form">
+    <form action="/photos/<%= @photo.id %>/<%= @user_id %>/edit">
+        <button>edit</button>
+    </form>
 
-<form action="/comments" method="post">
-    <input type="hidden" name="photo_id" value="<%= @photo.id %>">
-    <textarea name="content"></textarea>
-    <button>post</button>
-</form>
+    <a href="/photos/<%= @photo.id %>/<%= @user_id %>/edit">edit</a>
+</div>
 
-<%# list all comments of a dish %>
-<% @comments.each do |comment|%>
-    <p>
-        <%= comment.content %>
-    </p>
-<% end %>
+<div class="post-comment-form">
+    <form action="/comments" method="post">
+        <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+        <textarea name="content"></textarea>
+        <button>post</button>
+    </form>
+</div>
+
+
+
+<%# list all comments of a photo %>
+<div class="list-of-comments">
+    <% @comments.each do |comment|%>
+        <div class="comment">
+            <p><%= comment.content %></p>
+        </div>
+    <% end %>
+</div>

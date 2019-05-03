@@ -147,3 +147,13 @@ header {
         flex-wrap: wrap;
     }    
 }
+
+.upload-photo-form {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.create-album-form {
+    text-align: center;
+    margin-top: 10px;
+}

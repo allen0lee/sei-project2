@@ -16,7 +16,11 @@
 
 <%# 'create album' button -> take user to create_new_album.erb %>
 
-<form action="/albums/<%= @user_id %>/new">
-    <button>create album</button>
-</form>
+<div class="create-album-form">
+    <form action="/albums/<%= @user_id %>/new">
+        <button>create album</button>
+    </form>
+</div>
+
+
 

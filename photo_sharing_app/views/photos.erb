@@ -11,9 +11,11 @@
     <% end %>
 </div>
 
-<form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
-    <button>upload photo</button>
-</form>
+<div class="upload-photo-form">
+    <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
+        <button>upload photo</button>
+    </form>
+</div>
 
 
 <div class="expanded-image-container">
