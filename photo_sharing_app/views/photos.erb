@@ -1,5 +1,7 @@
 <%# all photos in one album with 'upload photo' button%>
 
+<label for="">album owner: <%= @album_owner %></label>
+
 <div class="all-photos-container">
     <% @photos.each do |photo|%>
         <div class="photo-container">

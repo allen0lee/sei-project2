@@ -84,10 +84,10 @@ get '/photos/:album_name/:album_id' do
 
   # need to determine the album owner, because 'upload photo' button is only visible to album owner 
   @album = Album.find_by(id: params[:album_id])
+  @album_owner = User.find_by(id: @album.user_id).email
 
   @album_id = params[:album_id]
-  @user_id = session[:user_id]
-
+  @user_id = session[:user_id]     
   erb :photos
 end
 
