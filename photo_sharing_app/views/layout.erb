@@ -10,13 +10,13 @@
   <header>
       <img class="icon" src="https://tripletsisters.files.wordpress.com/2013/11/ios-7-photo-icon-pn.png?w=514&h=514">
       <% if logged_in? %>
-        <form action="/session" method="post">
-          <input type="hidden" name="_method" value="delete">
-          <div class="login-infor">
-            <span>Logined in as: <%= current_user.email %></span>
-            <span class="logout-btn"><button>logout</button></span>
-          </div>      
-        </form>
+        <div class="login-infor">
+          <form action="/session" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <span>Logined in as: <%= current_user.email %></span> 
+            <span class="logout-btn"><button>logout</button></span>     
+          </form>
+        </div> 
       <% end %>
        
       <div class="nav-bar">

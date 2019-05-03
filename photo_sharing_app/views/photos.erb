@@ -3,7 +3,7 @@
 <div class="all-photos-container">
     <% @photos.each do |photo|%>
         <div class="photo-container">
-            <img src="<%= photo.image_url %>" alt="">
+            <img src="<%= photo.image_url %>" alt="" onclick="expandImage(this);">
             <div class="photo-name">
                 <a href="/photos/<%= photo.id %>"><%= photo.name %></a>
             </div>
@@ -11,11 +11,22 @@
     <% end %>
 </div>
 
-
 <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
     <button>upload photo</button>
 </form>
 
 
+<div class="expanded-image-container">
+  <span onclick="this.parentElement.style.display='none'" class="close-expanded-image-btn">&times;</span>
+  <img id="expandedImg" style="width: 100%">
+</div>
+
+<script>
+function expandImage(imgs) {
+  var expandImg = document.getElementById("expandedImg");
+  expandImg.src = imgs.src;
+  expandImg.parentElement.style.display = "block";
+}
+</script>
 
 

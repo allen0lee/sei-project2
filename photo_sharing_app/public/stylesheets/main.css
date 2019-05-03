@@ -93,6 +93,7 @@ header {
 .photo-container img {
     width: 100%;
     height: auto;
+    cursor: pointer;
 }
 
 .photo-name {
@@ -105,7 +106,23 @@ header {
     border: 1px solid yellow;
 }
 
+.expanded-image-container {
+    position: relative;
+    display: none;
+    text-align: center;
+}
 
+/* Closable button inside the expanded image */
+.close-expanded-image-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+/* style logout-btn to look like a link */
 .logout-btn button {
     border: none; 
     padding: 0; 
@@ -119,6 +136,14 @@ header {
 }
 
 .login-infor {
-    padding-left: 950px;
+    /* margin-left: 800px; */
+    /* width: 500px; */
     color: white;
+}
+
+@media (max-width: 400px) {
+    .nav-bar nav {
+        display: flex;
+        flex-wrap: wrap;
+    }    
 }
