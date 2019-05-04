@@ -66,13 +66,13 @@ header {
 .all-albums-container {
     display: flex;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 95px;
+    padding: 20px 0 0 100px;
 }
 
 .one-user-albums-container {
     display: flex;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 95px;
+    padding: 20px 0 0 100px;
 }
 
 .album-container {
@@ -105,7 +105,7 @@ header {
 .all-photos-container {
     display: flex;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 95px;
+    padding: 20px 0 0 100px;
 }
 
 .photo-container {
@@ -140,19 +140,45 @@ header {
     border: 1px solid yellow;
 }
 
-.expanded-image-container {
-    position: relative;
-    display: none;
+.enlarged-image-container {
     text-align: center;
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 20px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 
-/* Closable button inside the expanded image */
-.close-expanded-image-btn {
+/* animation effect */
+#enlargedImg {  
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* close button */
+.close-enlarged-image-btn {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    color: white;
-    font-size: 35px;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close-enlarged-image-btn:hover, .close-enlarged-image-btn:focus {
+    color: #bbb;
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -175,7 +201,7 @@ header {
 
 .photo-comment-container {
     width: 200px;
-    margin: 20px 0 0 200px;
+    margin: 10px 0 0 200px;
 }
 
 .edit-photo-form {
@@ -184,7 +210,7 @@ header {
 }
 
 .post-comment-form {
-    margin-top: 10px;
+    margin-top: 5px;
     text-align: center;
 }
 
@@ -193,12 +219,12 @@ header {
 }
 
 .image-link {
-    margin-top: 10px;
+    margin-top: 5px;
     text-align: center;
 }
 
 .like-container {
-    margin-top: 10px;
+    margin-top: 5px;
     display: flex;
     justify-content: space-evenly;
 }

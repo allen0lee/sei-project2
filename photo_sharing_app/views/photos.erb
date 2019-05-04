@@ -5,7 +5,7 @@
 <div class="all-photos-container">
     <% @photos.each do |photo|%>
         <div class="photo-container">
-            <img src="<%= photo.image_url %>" alt="" onclick="expandImage(this);">
+            <img src="<%= photo.image_url %>" alt="" onclick="enlargeImage(this);">
             <div class="photo-name">
                 <a href="/photos/<%= photo.id %>"><%= photo.name %></a>
             </div>
@@ -24,26 +24,33 @@
 <% end %>
 
 
-<div class="expanded-image-container">
-    <span onclick="this.parentElement.style.display='none'" class="close-expanded-image-btn">&times;</span>
-    <img id="expandedImg" style="width: 100%">
+<div class="enlarged-image-container">
+    <span class="close-enlarged-image-btn">&times;</span>
+    <img id="enlargedImg">
 </div>
 
 
 <script>
-function expandImage(imgs) {
-    var expandImg = document.getElementById("expandedImg");
-    expandImg.src = imgs.src;
-    expandImg.parentElement.style.display = "block";
+function enlargeImage(imgs) {
+    var enlargedImageBackground = document.querySelector('.enlarged-image-container');
+    var enlargeImg = document.getElementById("enlargedImg");
+    enlargedImageBackground.style.display = "block";
+    enlargeImg.src = imgs.src;
+
+    var span = document.getElementsByClassName("close-enlarged-image-btn")[0];
+    span.onclick = function() { 
+        enlargedImageBackground.style.display = "none";
+    }
 }
 
-var showEditDelete = function(event) {
-    event.target.classList.toggle('.show-edit-delete');
-}
 
-document.querySelectorAll('.photo-name').forEach(function(item) {
-    item.addEventListener('click', showEditDelete);    
-});
+// var showEditDelete = function(event) {
+//     event.target.classList.toggle('.show-edit-delete');
+// }
+// document.querySelectorAll('.photo-name').forEach(function(item) {
+//     item.addEventListener('click', showEditDelete);    
+// });
+
 
 </script>
 
