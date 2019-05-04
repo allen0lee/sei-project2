@@ -31,8 +31,14 @@
         <% end %>
 
         <div class="like-container">
-            <div class="like-btn"><img src="/images/heart.png" alt=""></div>
-            <div class="like-holder">2000</div>
+            <form action="/likes" method="post">
+                <input type="hidden" name="photo_id" value="<%= @photo.id %>"> 
+                <div class="like-btn">
+                    <button>like</button>
+                    <input type="hidden" name="_method" value="put">
+                    <span class="like-holder"><%= @like.number %></span> 
+                </div>         
+            </form>
         </div>
 
     </div>

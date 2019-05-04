@@ -29,3 +29,10 @@ create table albums(
     theme_image_url TEXT,
     user_id INTEGER
 );
+
+create table likes(
+    id SERIAL PRIMARY KEY,
+    number INTEGER,
+    photo_id INTEGER,
+    album_id INTEGER
+);
