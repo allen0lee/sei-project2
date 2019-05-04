@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: lightblue;
+    background-color: lightsteelblue;
     font-family: Raleway;
 }
 
@@ -13,7 +13,7 @@ a {
 
 header {
     text-align: center;
-    background: url('/images/bubbles-header.jpg');
+    background: url('/images/snow.jpg');
     background-size: cover;
 }
 
@@ -24,7 +24,7 @@ header {
 
 .nav-bar {
     background-color: black;
-    opacity: 0.5;
+    opacity: 0.6;
     display: flex;
 }
 
@@ -201,16 +201,25 @@ header {
 
 .photo-comment-container {
     width: 200px;
-    margin: 10px 0 0 200px;
+    margin: 5px 0 0 200px;
+}
+
+.edit-delete-forms {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .edit-photo-form {
-    margin-top: 5px;
-    text-align: center;
+    margin-left: 25px;
+}
+
+.delete-photo-form {
+    margin-right: 10px;
 }
 
 .post-comment-form {
-    margin-top: 5px;
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -219,7 +228,7 @@ header {
 }
 
 .image-link {
-    margin-top: 5px;
+    margin-top: 10px;
     text-align: center;
 }
 

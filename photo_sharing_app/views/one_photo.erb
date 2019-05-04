@@ -7,14 +7,27 @@
             </div>
         </div>
 
-        <%# edit button should show to photo owner, hidden for not photo owner %>
-        <% if session[:user_id] == @photo.user_id  %>
-            <div class="edit-photo-form">
-                <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
-                    <button>edit</button>
-                </form>
-            </div>
-        <% end %>
+        <div class="edit-delete-forms">
+            <%# edit button should show to photo owner, hidden for not photo owner %>
+            <% if session[:user_id] == @photo.user_id  %>
+                <div class="edit-photo-form">
+                    <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
+                        <button>edit</button>
+                    </form>
+                </div>
+            <% end %>
+
+            <%# delete button should show to photo owner, hidden for not photo owner %>
+            <% if session[:user_id] == @photo.user_id  %>
+                <div class="delete-photo-form">
+                    <form action="/photos/<%= @photo.id %>" method="post">
+                        <input type="hidden" name="photo_id" value="<%= @photo.id %>"> 
+                        <input type="hidden" name="_method" value="delete">
+                        <button>delete</button>
+                    </form>
+                </div>
+            <% end %>
+        </div>
 
         <div class="post-comment-form">
             <form action="/comments" method="post">
