@@ -141,6 +141,7 @@ post '/comments' do
   comment.content = params[:content]
   comment.photo_id = params[:photo_id]
   comment.user_id = session[:user_id]
+  comment.time = Time.now.strftime("%d/%m/%Y %H:%M")
 
   if comment.content != ""
     comment.save

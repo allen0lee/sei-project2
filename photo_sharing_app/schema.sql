@@ -19,7 +19,8 @@ create table comments(
     content TEXT,
     photo_id INTEGER,
     album_id INTEGER,
-    user_id INTEGER
+    user_id INTEGER,
+    time TEXT
 );
 
 create table albums(

@@ -26,17 +26,23 @@
             </form>
         </div>
 
-        <div class="image-link"><a href="<%= @photo.image_url %>">image link</a></div> 
-        <div class="like-btn">
-            <img src="/images/like.png" alt="">
-            <span class="like-holder"></span>
+        <% if logged_in? %>
+            <div class="image-link"><a href="<%= @photo.image_url %>">image link</a></div>
+        <% end %>
+
+        <div class="like-container">
+            <div class="like-btn"><img src="/images/heart.png" alt=""></div>
+            <div class="like-holder">2000</div>
         </div>
+
     </div>
 
     <%# list all comments of a photo %>
     <div class="list-of-comments">
         <% @comments.each do |comment|%>
-            <p><%= User.find_by(id: comment.user_id).email %> posted:</p>
+            <p><%= User.find_by(id: comment.user_id).email %> &nbsp &nbsp &nbsp
+                <%= comment.time %>
+            </p>
             <div class="comment">
                 <p><%= comment.content %></p>
             </div>
@@ -46,7 +52,7 @@
 </div>
 
 
-<script>
+<%# <script>
     var likeBtn = document.querySelector(".like-btn");
     var setLike= document.querySelector(".like-holder");
     var likeCounter = 0;
@@ -56,7 +62,7 @@
     }
     likeBtn.addEventListener('click', countLike);
     
-</script>
+</script> %>
 
 
 

@@ -183,8 +183,20 @@ header {
     text-align: center;
 }
 
-.like-btn img {
+.like-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.like-btn {
+    margin-left: 50px;
     cursor: pointer;
+}
+
+.like-holder {
+    margin-top: 5px;
+    padding-right: 50px;
 }
 
 .list-of-comments {
