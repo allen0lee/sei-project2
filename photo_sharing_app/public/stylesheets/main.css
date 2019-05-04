@@ -40,9 +40,25 @@ header {
     text-decoration: none;
 }
 
-/* img {
-    width: 200px;
-} */
+/* style logout-btn to look like a link */
+.logout-btn button {
+    border: none; 
+    padding: 0; 
+    background: none;
+    color: white;
+    cursor: pointer;
+}
+
+.logout-btn {
+    margin-left: 10px;
+}
+
+.login-infor {
+    /* margin-left: 800px; */
+    /* width: 500px; */
+    color: white;
+}
+
 
 .all-albums-container {
     display: flex;
@@ -123,26 +139,6 @@ header {
 }
 
 
-/* style logout-btn to look like a link */
-.logout-btn button {
-    border: none; 
-    padding: 0; 
-    background: none;
-    color: white;
-    cursor: pointer;
-}
-
-.logout-btn {
-    margin-left: 10px;
-}
-
-.login-infor {
-    /* margin-left: 800px; */
-    /* width: 500px; */
-    color: white;
-}
-
-
 .upload-photo-form {
     text-align: center;
     margin-top: 10px;
@@ -185,18 +181,24 @@ header {
 
 .like-container {
     margin-top: 10px;
-    /* display: flex;
-    justify-content: space-evenly; */
+    display: flex;
+    justify-content: space-evenly;
 }
 
-/* .like-btn {
+.like-btn {
     margin-left: 50px;
+}
+
+.like-btn button {
+    border: none; 
+    padding: 0; 
+    background: none;
     cursor: pointer;
-} */
+}
 
 .like-holder {
-    /* margin-top: 5px;
-    padding-right: 50px; */
+    margin-top: 5px;
+    margin-right: 50px;
 }
 
 .list-of-comments {

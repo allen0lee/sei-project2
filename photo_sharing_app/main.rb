@@ -102,11 +102,10 @@ get '/photos/:album_id/:user_id/new' do
   @user_id = session[:user_id]
   erb :upload_photo
 end
-# upload a photo
+# upload a photo                                
 post '/photos/:album_id/:user_id' do          
   # album = Album.find_by(id: params[:album_id])
   album = Album.where(id: params[:album_id]).first
-  #binding.pry
   photo = Photo.new
   photo.name = params[:name]
   photo.image_url = params[:image_url]
@@ -114,7 +113,8 @@ post '/photos/:album_id/:user_id' do
   photo.user_id = params[:user_id]
   photo.album_id = album.id
   photo.save
-  redirect "/photos/#{album.name}/#{photo.album_id}"
+  # remove space in album name, otherwise route not known by browser
+  redirect "/photos/#{(album.name).split(" ").join("")}/#{photo.album_id}"
 end
 
 
