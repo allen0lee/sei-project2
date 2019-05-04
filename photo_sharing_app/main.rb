@@ -174,11 +174,12 @@ put '/photos/:id' do
 end
 
 
+# delete a photo
 
 
 # delete an album
 
 
 
-# delete photo
+
 

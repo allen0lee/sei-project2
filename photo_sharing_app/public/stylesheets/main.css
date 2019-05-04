@@ -7,6 +7,10 @@ body {
     font-family: Raleway;
 }
 
+a {
+    text-decoration: none;
+}
+
 header {
     text-align: center;
     background: url('/images/bubbles-header.jpg');
@@ -14,7 +18,7 @@ header {
 }
 
 .icon {
-    margin: 10px 0 10px 0;
+    margin: 10px 0 5px 0;
     width: 10%;
 }
 
@@ -37,7 +41,6 @@ header {
 .nav-bar a {
     color: white;
     font-size: 20px;
-    text-decoration: none;
 }
 
 /* style logout-btn to look like a link */
@@ -54,8 +57,8 @@ header {
 }
 
 .login-infor {
-    /* margin-left: 800px; */
-    /* width: 500px; */
+    /* margin-left: 800px;
+    width: 500px; */
     color: white;
 }
 
@@ -80,13 +83,18 @@ header {
 
 .album-container img {
     width: 100%;
-    height: auto;
+    height: 200px;
 }
 
 .album-name {
-    padding-top: 10px;
+    padding-top: 5px;
     height: 40px;
     text-align: center; 
+    /* background-color: ivory; */
+}
+
+.album-name a {
+    color: black;
 }
 
 .album-container:hover {
@@ -108,14 +116,24 @@ header {
 
 .photo-container img {
     width: 100%;
-    height: auto;
+    height: 200px;
     cursor: pointer;
 }
 
 .photo-name {
-    padding-top: 10px;
+    padding-top: 5px;
     height: 40px;
     text-align: center; 
+    cursor: pointer;
+    /* background-color: ivory; */
+}
+
+.photo-name a {
+    color: black;
+}
+
+.show-edit-delete {
+
 }
 
 .photo-container:hover {

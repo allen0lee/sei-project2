@@ -21,22 +21,30 @@
             <button>upload photo</button>
         </form>
     </div>
-
 <% end %>
 
 
 <div class="expanded-image-container">
-  <span onclick="this.parentElement.style.display='none'" class="close-expanded-image-btn">&times;</span>
-  <img id="expandedImg" style="width: 100%">
+    <span onclick="this.parentElement.style.display='none'" class="close-expanded-image-btn">&times;</span>
+    <img id="expandedImg" style="width: 100%">
 </div>
 
 
 <script>
 function expandImage(imgs) {
-  var expandImg = document.getElementById("expandedImg");
-  expandImg.src = imgs.src;
-  expandImg.parentElement.style.display = "block";
+    var expandImg = document.getElementById("expandedImg");
+    expandImg.src = imgs.src;
+    expandImg.parentElement.style.display = "block";
 }
+
+var showEditDelete = function(event) {
+    event.target.classList.toggle('.show-edit-delete');
+}
+
+document.querySelectorAll('.photo-name').forEach(function(item) {
+    item.addEventListener('click', showEditDelete);    
+});
+
 </script>
 
 
