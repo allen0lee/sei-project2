@@ -1,0 +1,42 @@
+<div class="create-new-user-form">
+    <form action="/users" method="post">
+        <div>
+            <label for="email">email</label>
+            <input type="text" name="email" id="email">
+        </div>
+
+        <div>
+            <label for="">password</label>
+            <input type="password" name="password" class="password"> 
+        </div>
+
+        <div>
+            <label for="">confirm password</label>
+            <input type="password" name="password" class="confirm-password"> 
+        </div>
+
+        <div>
+            <button class="button create-account-btn" onclick="comparePassword();">
+                create account
+            </button>
+
+            <input type="hidden" value="<%= %>">
+                                     
+        </div>
+    </form>
+
+</div>
+
+
+<script>
+    var comparePassword = function() {
+        // var isPasswordSame = false;
+        var getPasswordInput = document.querySelector('.password');
+        var getConfirmPasswordInput = document.querySelector('.confirm-password');
+        if(getPasswordInput.value == getConfirmPasswordInput.value) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

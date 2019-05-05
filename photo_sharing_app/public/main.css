@@ -275,6 +275,7 @@ header {
 
 .index-container {
     text-align: center;
+    padding-top: 10px;
 }
 
 .search-container {
@@ -294,7 +295,7 @@ header {
     cursor: pointer;
 }
 
-.login-form, .own-albums-form {
+.login-form, .own-albums-form { /* in home page */
     margin-top: 30px;
 }
 
@@ -317,7 +318,8 @@ header {
 }
 
 .login-btn:hover, .own-albums-btn:hover, .create-albums-btn:hover, .sign-up-btn:hover, 
-.upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover, .update-photo-btn:hover {
+.upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover, 
+.update-photo-btn:hover, .create-account-btn:hover {
     background-color: ivory;
     color: #4CAF50;
 }
@@ -407,6 +409,27 @@ header {
 }
 
 .handle-edit-photo-form div {
+    margin-top: 20px;
+}
+
+
+.create-new-user-form {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.create-new-user-form label {
+    display: inline-block;
+    width: 120px;
+    text-align: left;
+}
+
+.create-new-user-form input {
+    height: 25px;
+    width: 200px;
+}
+
+.create-new-user-form div {
     margin-top: 20px;
 }
 

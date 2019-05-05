@@ -175,6 +175,25 @@ delete '/photos/:id' do
 end
 
 # delete an album
+# to-do
+
+# create new user
+get '/users/new' do
+  erb :create_new_user
+end
+# create new user here
+post '/users' do
+  user = User.new
+  user.email = params[:email]
+  user.password = params[:password]
+  # confirmed_password = params[:password] # how to check password is same?
+  # binding.pry
+  # if "value of hidden input field in erb" == true
+  user.save
+  # end
+  redirect '/login'
+end
+
 
 
 
