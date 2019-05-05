@@ -49,6 +49,8 @@ header {
     padding: 0; 
     background: none;
     color: white;
+    font-family: Raleway;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -315,7 +317,7 @@ header {
 }
 
 .login-btn:hover, .own-albums-btn:hover, .create-albums-btn:hover, .sign-up-btn:hover, 
-.upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover {
+.upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover, .update-photo-btn:hover {
     background-color: ivory;
     color: #4CAF50;
 }
@@ -386,6 +388,28 @@ header {
 .handle-upload-photo-form div {
     margin-top: 20px;
 }
+
+
+.handle-edit-photo-form {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.handle-edit-photo-form label {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
+.handle-edit-photo-form input {
+    height: 25px;
+    width: 300px;
+}
+
+.handle-edit-photo-form div {
+    margin-top: 20px;
+}
+
 
 /* @media (max-width: 400px) {
     .nav-bar nav {

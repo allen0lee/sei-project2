@@ -1,8 +1,21 @@
-<form action="/photos/<%= @photo.id %>" method="post">
-    <input type="hidden" name="_method" value="put">
-    <label for="">name</label>
-    <input type="text" name="name" value="<%= @photo.name %>">
-    <label for="">image url</label>
-    <input type="text" name="image_url" value="<%= @photo.image_url %>">
-    <button>update</button>
-</form>
+<div class="handle-edit-photo-form">
+    <form action="/photos/<%= @photo.id %>" method="post">
+        <input type="hidden" name="_method" value="put">
+
+        <div>
+            <label for="">name</label>
+            <input type="text" name="name" value="<%= @photo.name %>">
+        </div>
+        
+        <div>
+            <label for="">image url</label>
+            <input type="text" name="image_url" value="<%= @photo.image_url %>">    
+        </div>
+
+        <div>
+            <button class="button update-photo-btn">update photo</button>
+        </div>
+    </form>
+
+</div>
+
