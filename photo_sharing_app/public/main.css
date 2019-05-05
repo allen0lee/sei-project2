@@ -57,19 +57,20 @@ header {
 }
 
 .login-infor {
-    /* margin-left: 800px;
-    width: 500px; */
-    color: white;
+    color: black;
+    float: right; /* align div to right side and responsive */
 }
 
 
 .all-albums-container {
+    position: absolute; /* need this when have a previous div floated right */
     display: flex;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 100px;
+    padding: 30px 0 0 100px;
 }
 
 .one-user-albums-container {
+    position: absolute;
     display: flex;
     flex-wrap: wrap; /* make it change line */
     padding: 20px 0 0 100px;
@@ -105,7 +106,7 @@ header {
 .all-photos-container {
     display: flex;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 100px;
+    padding: 30px 0 0 100px;
 }
 
 .photo-container {
@@ -196,26 +197,26 @@ header {
 
 .one-photo-page-container {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .photo-comment-container {
     width: 200px;
-    margin: 5px 0 0 200px;
+    margin: 5px 100px 0 0;
 }
 
 .edit-delete-forms {
     margin-top: 10px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .edit-photo-form {
-    margin-left: 25px;
+    margin-left: 20px;
 }
 
 .delete-photo-form {
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .post-comment-form {
@@ -235,11 +236,11 @@ header {
 .like-container {
     margin-top: 5px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .like-btn {
-    margin-left: 50px;
+    margin-right: 10px;
 }
 
 .like-btn button {
@@ -251,11 +252,9 @@ header {
 
 .like-holder {
     margin-top: 5px;
-    margin-right: 50px;
 }
 
 .list-of-comments {
-    margin-left: 200px; 
     margin-top: 10px;
 }
 
@@ -264,20 +263,50 @@ header {
     padding-left: 20px;
 }
 
+
+.index-container {
+    text-align: center;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center; /* center 2 divs and responsive */
+}
+
+.search-input-field input {
+    height: 34px;
+    width: 400px;
+}
+
+.search-btn button {
+    border: none; 
+    padding: 0; 
+    background: none;
+    cursor: pointer;
+}
+
+.login-form, .own-albums-form {
+    margin-top: 30px;
+}
+
+
 .button {
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 16px 32px;
+    padding: 8px 16px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    /* margin: 4px 2px; */
     transition-duration: 0.4s;
     cursor: pointer;
 }
 
+.login-btn:hover, .own-albums-btn:hover, .create-albums-btn:hover {
+    background-color: ivory;
+    color: #4CAF50;
+}
 
 
 

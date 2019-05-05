@@ -2,6 +2,15 @@
 
 <label for="">album owner: <%= @album_owner %></label>
 
+<%# upload photo button should show to album owner, hidden for not album owner %>
+<% if session[:user_id] == @album.user_id  %>
+    <div class="upload-photo-form">
+        <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
+            <button>upload photo</button>
+        </form>
+    </div>
+<% end %>
+
 <div class="all-photos-container">
     <% @photos.each do |photo|%>
         <div class="photo-container">
@@ -12,16 +21,6 @@
         </div>    
     <% end %>
 </div>
-
-
-<%# upload photo button should show to album owner, hidden for not album owner %>
-<% if session[:user_id] == @album.user_id  %>
-    <div class="upload-photo-form">
-        <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
-            <button>upload photo</button>
-        </form>
-    </div>
-<% end %>
 
 
 <div class="enlarged-image-container">
