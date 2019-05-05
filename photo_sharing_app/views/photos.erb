@@ -6,7 +6,7 @@
 <% if session[:user_id] == @album.user_id  %>
     <div class="upload-photo-form">
         <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
-            <button>upload photo</button>
+            <button class="button upload-photo-btn">upload photo</button>
         </form>
     </div>
 <% end %>

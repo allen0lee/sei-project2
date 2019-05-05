@@ -1,7 +1,22 @@
-<form action="/photos/<%= @album_id %>/<%= @user_id %>" method="post">
-    <label for="">name</label>
-    <input type="text" name="name">
-    <label for="">image url</label>
-    <input type="text" name="image_url">
-    <button>upload</button>
-</form>
+<div class="handle-upload-photo-form">
+    <form action="/photos/<%= @album_id %>/<%= @user_id %>" method="post">
+        <div>
+            <label for="">name</label>
+            <input type="text" name="name">    
+        </div>
+        
+        <div>
+            <label for="">image url</label>
+            <input type="text" name="image_url">   
+        </div>
+
+        <div>
+            <button class="button upload-photo-btn">upload photo</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+

@@ -1,8 +1,29 @@
-<form action="/session" method="post">
-    <label for="email">email</label>
-    <input type="text" name="email" id="email">
-    <label for="">password</label>
-    <input type="password" name="password" id="password">
-    <button>login</button>
+<div class="login-form">
+    <form action="/session" method="post">
+        <div>
+            <label for="email">email</label>
+            <input type="text" name="email" id="email">    
+        </div>
 
-</form>
+        <div>
+            <label for="">password</label>
+            <input type="password" name="password" id="password">    
+        </div>
+
+        <div>
+            <button class="button login-btn">login</button>
+        </div>  
+    </form>
+
+    <div class="sign-up-form">
+        <p>don't have an account?</p>
+        <form action="">
+            <div>
+                <button class="button sign-up-btn">sign up</button>
+            </div>  
+        </form>
+    </div>
+</div>
+
+
+

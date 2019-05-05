@@ -59,11 +59,11 @@ get '/albums/:user_id' do
 end
 
 # in user's own album page (or index after login), click 'create album' button, 
-# go to create_album page - create_new_album.erb
+# go to create_album page - create_album.erb
 get '/albums/:user_id/new' do
   redirect '/login' if !logged_in?
   @user_id = params[:user_id]
-  erb :create_new_album
+  erb :create_album
 end
 # create new album
 post '/albums/:user_id' do         
@@ -71,7 +71,9 @@ post '/albums/:user_id' do
   album.name = params[:name]         # params[] - get value from a route or get user input 
   album.theme_image_url = params[:theme_image_url]
   album.user_id = session[:user_id]
-  album.save
+  if album.name != "" && album.theme_image_url != ""
+    album.save
+  end
   redirect "/albums/#{album.user_id}"
 end
 
@@ -104,7 +106,9 @@ post '/photos/:album_id/:user_id' do
   # photo.user_id = session[:user_id]
   photo.user_id = params[:user_id]
   photo.album_id = album.id
-  photo.save
+  if photo.name != "" && photo.image_url != ""
+    photo.save
+  end
   # remove space in album name, otherwise route not known by browser
   redirect "/photos/#{(album.name).split(" ").join("")}/#{photo.album_id}"
 end

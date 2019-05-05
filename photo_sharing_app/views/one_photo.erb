@@ -12,7 +12,7 @@
             <% if session[:user_id] == @photo.user_id  %>
                 <div class="edit-photo-form">
                     <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
-                        <button>edit</button>
+                        <button class="button edit-photo-btn">edit</button>
                     </form>
                 </div>
             <% end %>
@@ -23,7 +23,7 @@
                     <form action="/photos/<%= @photo.id %>" method="post">
                         <input type="hidden" name="photo_id" value="<%= @photo.id %>"> 
                         <input type="hidden" name="_method" value="delete">
-                        <button>delete</button>
+                        <button class="button delete-photo-btn">delete</button>
                     </form>
                 </div>
             <% end %>
@@ -35,7 +35,9 @@
                 <div class="comment-input-field">
                     <textarea name="content" placeholder="comment"></textarea>
                 </div>   
-                <div class="post-comment-btn"><button>post</button></div> 
+                <div class="post-comment-btn-holder">
+                    <button class="button post-comment-btn">post</button>
+                </div> 
             </form>
         </div>
 

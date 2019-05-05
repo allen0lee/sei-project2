@@ -106,7 +106,7 @@ header {
 .all-photos-container {
     display: flex;
     flex-wrap: wrap; /* make it change line */
-    padding: 30px 0 0 100px;
+    padding: 20px 0 0 100px;
 }
 
 .photo-container {
@@ -196,13 +196,15 @@ header {
 
 
 .one-photo-page-container {
+    position: relative;
     display: flex;
     justify-content: center;
+    padding-top: 30px;
 }
 
 .photo-comment-container {
     width: 200px;
-    margin: 5px 100px 0 0;
+    margin: 0 50px 0 0;
 }
 
 .edit-delete-forms {
@@ -224,7 +226,12 @@ header {
     text-align: center;
 }
 
-.post-comment-btn {
+.comment-input-field textarea {
+    width: 180px;
+    height: 25px;
+}
+
+.post-comment-btn-holder {
     margin-top: 5px;
 }
 
@@ -255,7 +262,7 @@ header {
 }
 
 .list-of-comments {
-    margin-top: 10px;
+    /* margin-top: 20px; */
 }
 
 .comment {
@@ -303,12 +310,82 @@ header {
     cursor: pointer;
 }
 
-.login-btn:hover, .own-albums-btn:hover, .create-albums-btn:hover {
+.delete-photo-btn {
+    background-color: #f44336;
+}
+
+.login-btn:hover, .own-albums-btn:hover, .create-albums-btn:hover, .sign-up-btn:hover, 
+.upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover {
     background-color: ivory;
     color: #4CAF50;
 }
 
+.delete-photo-btn:hover {
+    background-color: ivory;
+    color: #f44336;
+}
 
+.login-form {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.login-form label {
+    display: inline-block;
+    width: 80px;
+    text-align: left;
+}
+
+.login-form input {
+  height: 25px;
+  width: 200px;
+}
+
+.login-form div {
+    margin-top: 20px;
+}
+
+
+.handle-create-album-form {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.handle-create-album-form label {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
+.handle-create-album-form input {
+    height: 25px;
+    width: 300px;
+}
+
+.handle-create-album-form div {
+    margin-top: 20px;
+}
+
+
+.handle-upload-photo-form {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.handle-upload-photo-form label {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
+.handle-upload-photo-form input {
+    height: 25px;
+    width: 300px;
+}
+
+.handle-upload-photo-form div {
+    margin-top: 20px;
+}
 
 /* @media (max-width: 400px) {
     .nav-bar nav {
