@@ -15,6 +15,11 @@ data models:
 5. likes
 
 'users' has relationship with 'albums', 'photos', and 'comments', which shares same 'user_id'.
+
 'albums' has relationship with 'photos' and 'comments', which shares same 'album_id'.
+
 'photos' has relationship with 'albums' and 'comments', which shares same 'photo_id'.
+
 'comments' has relationship with users, 'photos', and 'albums', which shares same 'user_id' album_id', and'photo_id'.
+
+'likes' has relationship with 'photos' and 'albums', which shares same 'album_id' and 'photo_id'.
