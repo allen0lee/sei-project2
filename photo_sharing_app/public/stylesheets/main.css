@@ -9,6 +9,11 @@ body {
     font-family: Raleway;
 }
 
+input {
+    font-family: 'Crimson Text', serif;
+    font-size: 15px;
+}
+
 h1 {
     font-family: 'Playball', cursive;
     font-style: italic;

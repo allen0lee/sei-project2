@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'pry'
-require 'sinatra/reloader'
+# require 'sinatra/reloader' # comment out to deploy on Heroku
 require 'active_record'
 require_relative 'db_config'
 require_relative 'models/user.rb'
@@ -187,7 +187,6 @@ post '/users' do
   user.email = params[:email]
   user.password = params[:password]
   confirm_password = params[:confirm_password]
-  # binding.pry
   if user.password == confirm_password && user.email != "" && user.password != "" && confirm_password != ""
     user.save
     redirect '/login'
