@@ -264,7 +264,9 @@ header {
 }
 
 .list-of-comments {
-    /* margin-top: 20px; */
+    padding-top: 30px;
+    width: 500px;
+    margin: auto;
 }
 
 .comment {

@@ -1,5 +1,5 @@
 <div class="one-photo-page-container">
-    <div class="photo-comment-container">
+    <div class="photo-btn-container">
         <div class="photo-container">
             <img src="<%= @photo.image_url %>" alt="">
             <div class="photo-name">
@@ -28,7 +28,9 @@
                 </div>
             <% end %>
         </div>
+    </div>
 
+    <div class="comment-like-container">
         <div class="post-comment-form">
             <form action="/comments" method="post">
                 <input type="hidden" name="photo_id" value="<%= @photo.id %>">
@@ -55,21 +57,20 @@
             </form>
             <div class="like-holder"><%= @like.number %></div> 
         </div>
-
     </div>
+</div>
 
-    <%# list all comments of a photo %>
-    <div class="list-of-comments">
-        <% @comments.each do |comment|%>
-            <p><%= User.find_by(id: comment.user_id).email %> &nbsp &nbsp &nbsp
-                <%= comment.time %>
-            </p>
-            <div class="comment">
-                <p><%= comment.content %></p>
-            </div>
-        <% end %>
-    </div>
 
+<%# list all comments of a photo %>
+<div class="list-of-comments">
+    <% @comments.each do |comment|%>
+        <p><%= User.find_by(id: comment.user_id).email %> &nbsp &nbsp &nbsp
+            <%= comment.time %>
+        </p>
+       <div class="comment">
+            <p><%= comment.content %></p>
+        </div>
+    <% end %>
 </div>
 
 

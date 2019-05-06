@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: lightsteelblue;
+    background-color: lightcyan;
     font-family: Raleway;
 }
 
@@ -49,6 +49,8 @@ header {
     padding: 0; 
     background: none;
     color: white;
+    font-family: Raleway;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -57,19 +59,20 @@ header {
 }
 
 .login-infor {
-    /* margin-left: 800px;
-    width: 500px; */
-    color: white;
+    color: black;
+    float: right; /* align div to right side and responsive */
 }
 
 
 .all-albums-container {
+    position: absolute; /* need this when have a previous div floated right */
     display: flex;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 100px;
+    padding: 30px 0 0 100px;
 }
 
 .one-user-albums-container {
+    position: absolute;
     display: flex;
     flex-wrap: wrap; /* make it change line */
     padding: 20px 0 0 100px;
@@ -98,7 +101,7 @@ header {
 }
 
 .album-container:hover {
-    border: 1px solid yellow;
+    border: 1px solid red;
 }
 
 
@@ -196,35 +199,46 @@ header {
 
 .one-photo-page-container {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 30px;
 }
 
-.photo-comment-container {
-    width: 200px;
-    margin: 5px 0 0 200px;
+.photo-btn-container {
+    text-align: center;
 }
 
 .edit-delete-forms {
     margin-top: 10px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .edit-photo-form {
-    margin-left: 25px;
+    /* margin-left: 20px; */
 }
 
 .delete-photo-form {
-    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.comment-like-container {
+    padding-top: 5px;
+    text-align: center;
+    margin-left: 20px;
 }
 
 .post-comment-form {
-    margin-top: 10px;
-    text-align: center;
+    /* margin-top: 10px; */
+    /* text-align: center; */
 }
 
-.post-comment-btn {
-    margin-top: 5px;
+.comment-input-field textarea {
+    width: 500px;
+    height: 120px;
+}
+
+.post-comment-btn-holder {
+    margin-top: 10px;
 }
 
 .image-link {
@@ -233,13 +247,13 @@ header {
 }
 
 .like-container {
-    margin-top: 5px;
+    margin-top: 10px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .like-btn {
-    margin-left: 50px;
+    margin-right: 10px;
 }
 
 .like-btn button {
@@ -251,12 +265,12 @@ header {
 
 .like-holder {
     margin-top: 5px;
-    margin-right: 50px;
 }
 
 .list-of-comments {
-    margin-left: 200px; 
-    margin-top: 10px;
+    padding-top: 10px;
+    width: 500px;
+    margin: auto;
 }
 
 .comment {
@@ -264,21 +278,166 @@ header {
     padding-left: 20px;
 }
 
+
+.index-container {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center; /* center 2 divs and responsive */
+}
+
+.search-input-field input {
+    height: 34px;
+    width: 400px;
+}
+
+.search-btn button {
+    border: none; 
+    padding: 0; 
+    background: none;
+    cursor: pointer;
+}
+
+.login-form, .own-albums-form { /* in home page */
+    margin-top: 30px;
+}
+
+
 .button {
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 16px 32px;
+    padding: 8px 16px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    /* margin: 4px 2px; */
     transition-duration: 0.4s;
     cursor: pointer;
 }
 
+.delete-photo-btn {
+    background-color: #f44336;
+}
 
+.login-btn:hover, .own-albums-btn:hover, .create-albums-btn:hover, .sign-up-btn:hover, 
+.upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover, 
+.update-photo-btn:hover, .create-account-btn:hover {
+    background-color: ivory;
+    color: #4CAF50;
+}
+
+.delete-photo-btn:hover {
+    background-color: ivory;
+    color: #f44336;
+}
+
+.login-form {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.login-form label {
+    display: inline-block;
+    width: 80px;
+    text-align: left;
+}
+
+.login-form input {
+  height: 25px;
+  width: 200px;
+}
+
+.login-form div {
+    margin-top: 20px;
+}
+
+
+.handle-create-album-form {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.handle-create-album-form label {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
+.handle-create-album-form input {
+    height: 25px;
+    width: 300px;
+}
+
+.handle-create-album-form div {
+    margin-top: 20px;
+}
+
+
+.handle-upload-photo-form {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.handle-upload-photo-form label {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
+.handle-upload-photo-form input {
+    height: 25px;
+    width: 300px;
+}
+
+.handle-upload-photo-form div {
+    margin-top: 20px;
+}
+
+
+.handle-edit-photo-form {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.handle-edit-photo-form label {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
+.handle-edit-photo-form input {
+    height: 25px;
+    width: 300px;
+}
+
+.handle-edit-photo-form div {
+    margin-top: 20px;
+}
+
+
+.create-new-user-form {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.create-new-user-form label {
+    display: inline-block;
+    width: 120px;
+    text-align: left;
+}
+
+.create-new-user-form input {
+    height: 25px;
+    width: 200px;
+}
+
+.create-new-user-form div {
+    margin-top: 20px;
+}
 
 
 /* @media (max-width: 400px) {

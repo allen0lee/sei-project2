@@ -186,12 +186,15 @@ post '/users' do
   user = User.new
   user.email = params[:email]
   user.password = params[:password]
-  # confirmed_password = params[:password] # how to check password is same?
+  confirm_password = params[:confirm_password]
   # binding.pry
-  # if "value of hidden input field in erb" == true
-  user.save
-  # end
-  redirect '/login'
+  if user.password == confirm_password && user.email != "" && user.password != "" && confirm_password != ""
+    user.save
+    redirect '/login'
+  else
+    redirect '/'
+  end
+  
 end
 
 

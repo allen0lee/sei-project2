@@ -12,11 +12,11 @@
 
         <div>
             <label for="">confirm password</label>
-            <input type="password" name="password" class="confirm-password"> 
+            <input type="password" name="confirm_password" class="confirm-password"> 
         </div>
 
         <div>
-            <button class="button create-account-btn" onclick="comparePassword();">
+            <button class="button create-account-btn">
                 create account
             </button>
 
@@ -28,15 +28,17 @@
 </div>
 
 
-<script>
-    var comparePassword = function() {
-        // var isPasswordSame = false;
-        var getPasswordInput = document.querySelector('.password');
-        var getConfirmPasswordInput = document.querySelector('.confirm-password');
-        if(getPasswordInput.value == getConfirmPasswordInput.value) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+<script> 
+    // password validation has to happen on server side, 
+    // user can turn off javascript, so can not do on client side 
+    // var comparePassword = function() {
+    //     // var isPasswordSame = false;
+    //     var getPasswordInput = document.querySelector('.password');
+    //     var getConfirmPasswordInput = document.querySelector('.confirm-password');
+    //     if(getPasswordInput.value == getConfirmPasswordInput.value) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 </script>
