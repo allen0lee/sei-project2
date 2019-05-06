@@ -34,6 +34,7 @@ function enlargeImage(imgs) {
     var enlargedImageBackground = document.querySelector('.enlarged-image-container');
     var enlargeImg = document.getElementById("enlargedImg");
     enlargedImageBackground.style.display = "block";
+    // enlargedImageBackground.classList.add('.enlarged-image-fit-window');
     enlargeImg.src = imgs.src;
 
     var span = document.getElementsByClassName("close-enlarged-image-btn")[0];

@@ -168,7 +168,7 @@ header {
     display: none;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 20px; /* Location of the box */
+    /* padding-top: 20px; Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -176,6 +176,14 @@ header {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+#enlargedImg {
+    max-width: 100%;
+}
+
+.enlarged-image-fit-window {
+    display: grid;
 }
 
 /* animation effect */
