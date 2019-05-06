@@ -44,7 +44,11 @@
         </div>
 
         <% if logged_in? %>
-            <div class="image-link"><a href="<%= @photo.image_url %>">image link</a></div>
+            <div class="image-link">
+                <a href="<%= @photo.image_url %>" target="_blank">
+                    image link
+                </a>
+            </div>
         <% end %>
 
         <div class="like-container">

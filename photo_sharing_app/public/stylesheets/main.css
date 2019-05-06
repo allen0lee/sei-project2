@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text|Playball');
+
 * {
     box-sizing: border-box;
 }
@@ -5,6 +7,13 @@
 body {
     background-color: lightcyan;
     font-family: Raleway;
+}
+
+h1 {
+    font-family: 'Playball', cursive;
+    font-style: italic;
+    font-size: 40px;
+    color: crimson;
 }
 
 a {
@@ -41,6 +50,7 @@ header {
 .nav-bar a {
     color: white;
     font-size: 20px;
+    font-family: 'Crimson Text', serif;
 }
 
 /* style logout-btn to look like a link */
@@ -49,7 +59,7 @@ header {
     padding: 0; 
     background: none;
     color: white;
-    font-family: Raleway;
+    font-family: 'Crimson Text', serif;
     font-size: 20px;
     cursor: pointer;
 }
@@ -101,7 +111,7 @@ header {
 }
 
 .album-container:hover {
-    border: 1px solid red;
+    border: 1px solid crimson;
 }
 
 
@@ -140,7 +150,7 @@ header {
 }
 
 .photo-container:hover {
-    border: 1px solid yellow;
+    border: 1px solid crimson;
 }
 
 .enlarged-image-container {
