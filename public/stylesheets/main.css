@@ -87,15 +87,16 @@ header {
 .all-albums-container {
     position: absolute; /* need this when have a previous div floated right */
     display: flex;
+    justify-content: center;
     flex-wrap: wrap; /* make it change line */
-    padding: 30px 0 0 100px;
+    padding-top: 30px;
 }
 
 .one-user-albums-container {
-    position: absolute;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 100px;
+    padding-top: 20px;
 }
 
 .album-container {
@@ -127,8 +128,9 @@ header {
 
 .all-photos-container {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 100px;
+    padding-top: 20px;
 }
 
 .photo-container {
