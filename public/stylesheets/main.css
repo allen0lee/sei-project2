@@ -109,6 +109,7 @@ header {
 .album-container img {
     width: 100%;
     height: 200px;
+    object-fit: cover; /* keep image aspect ratio when resizing */
 }
 
 .album-name {
@@ -144,6 +145,7 @@ header {
     width: 100%;
     height: 200px;
     cursor: pointer;
+    object-fit: cover; /* keep image aspect ratio when resizing */
 }
 
 .photo-name {
