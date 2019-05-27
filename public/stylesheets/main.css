@@ -97,7 +97,8 @@ header {
     display: flex;
     /* justify-content: center; */
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 100px;
+    padding: 20px 0 0 0;
+    padding-left: 5%;
 }
 
 .album-container {
@@ -132,7 +133,8 @@ header {
     display: flex;
     /* justify-content: center; */
     flex-wrap: wrap; /* make it change line */
-    padding: 20px 0 0 100px;
+    padding: 20px 0 0 0;
+    padding-left: 5%;
 }
 
 .photo-container {
