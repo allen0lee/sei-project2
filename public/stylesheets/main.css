@@ -7,6 +7,8 @@
 body {
     background-color: snow;
     font-family: Raleway;
+    margin: 0;
+    padding: 0 10% 0 10%;
 }
 
 input {
