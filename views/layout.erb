@@ -8,13 +8,20 @@
 <body>
 
   <header>
-      <img class="icon" src="https://tripletsisters.files.wordpress.com/2013/11/ios-7-photo-icon-pn.png?w=514&h=514">       
+      <div class="login-infor">
+        <span>&nbsp</span>
+        <% if logged_in? %>
+            <span><%= current_user.email %></span> 
+        <% end %>
+      </div> 
+
+      <div class="icon"><img src="https://tripletsisters.files.wordpress.com/2013/11/ios-7-photo-icon-pn.png?w=514&h=514"></div>       
       
       <div class="nav-bar">
         <nav>
           <div><a href="/">Home</a></div>
           <div><a href="/albums">Albums</a></div>
-          <div><a href="/about">About</a></div> 
+          <%# <div><a href="/about">About</a></div>  %>
 
           <% if logged_in? %>
             <form action="/session" method="post">
@@ -26,12 +33,6 @@
         </nav>
       </div>
   </header>
-
-  <% if logged_in? %>
-    <div class="login-infor">
-      <span>logined in as: <%= current_user.email %></span> 
-    </div> 
-  <% end %>
 
   <%= yield %>
 

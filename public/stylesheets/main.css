@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: snow;
+    background-color: lightgrey;
     font-family: Raleway;
     margin: 0;
     padding: 0 10% 0 10%;
@@ -33,13 +33,16 @@ a {
 }
 
 header {
-    text-align: center;
     background: url('/images/snow.jpg');
     background-size: cover;
 }
 
 .icon {
-    margin: 10px 0 5px 0;
+    /* padding-top: 5px; */
+    text-align: center;
+}
+
+.icon img {
     width: 10%;
 }
 
@@ -81,18 +84,26 @@ header {
 }
 
 .login-infor {
-    color: black;
-    float: right; /* align div to right side and responsive */
+    /* color: black;
+    float: right; align div to right side and responsive */
+    text-align: right;
 }
 
+.index-container {
+    background-color: snow;
+    height: 100vh;
+}
+
+.page {
+    margin: 0 auto;
+}
 
 .all-albums-container {
-    position: absolute; /* need this when have a previous div floated right */
     display: flex;
-    /* justify-content: center; */
     flex-wrap: wrap; /* make it change line */
-    padding: 30px 0 0 0;
+    padding: 20px 0 0 0;
     padding-left: 5%;
+    background-color: snow;
 }
 
 .one-user-albums-container {
@@ -127,7 +138,7 @@ header {
 }
 
 .album-container:hover {
-    border: 1px solid crimson;
+    border: 1px solid gold;
 }
 
 
@@ -169,7 +180,7 @@ header {
 }
 
 .photo-container:hover {
-    border: 1px solid crimson;
+    border: 1px solid gold;
 }
 
 .enlarged-image-container {

@@ -3,6 +3,7 @@ album2 with theme picture and album name
 ... %>
 
 <div class="all-albums-container">
+  <%# <div class="page"> %>
   <% @albums.each do |album| %>
     <div class="album-container">
       <img src="<%= album.theme_image_url %>" alt="">
@@ -13,4 +14,6 @@ album2 with theme picture and album name
       </div>
     </div>
   <% end %>
+  <%# </div> %>
 </div>
+
