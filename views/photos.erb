@@ -5,7 +5,7 @@
 <div class="all-photos-container">
     <div class="display-box">
         <% @photos.each do |photo|%>
-            <div class="photo-container">
+            <div class="photo-display">
                 <img src="<%= photo.image_url %>" alt="" onclick="enlargeImage(this);">
                 <div class="photo-name">
                     <a href="/photos/<%= photo.id %>"><%= photo.name %></a>
