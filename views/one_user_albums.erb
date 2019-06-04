@@ -1,25 +1,27 @@
 <%# list all albums of one user %>
 
-<label for="">&nbsp</label>
-
-<%# 'create album' button -> take user to create_new_album.erb %>
-<div class="create-album-form">
-    <form action="/albums/<%= @user_id %>/new">
-        <button class="button create-albums-btn">create album</button>
-    </form>
-</div>
-
-<div class="one-user-albums-container">    
-    <% @albums.each do |album|%>
-        <div class="album-container"> 
-            <img src="<%= album.theme_image_url %>" alt="">
-            <div class="album-name">
-                <a href="/photos/<%= album.name %>/<%= album.id %>">
-                    <%= album.name %>
-                </a>
+<div class="one-user-albums-container"> 
+    <%# <label for="">&nbsp</label> %>
+    <div class="display-box">
+        <% @albums.each do |album|%>
+            <div class="album-container"> 
+                <img src="<%= album.theme_image_url %>" alt="">
+                <div class="album-name">
+                    <a href="/photos/<%= album.name %>/<%= album.id %>">
+                        <%= album.name %>
+                    </a>
+                </div>
             </div>
-        </div>
-    <% end %>
+        <% end %>
+    </div>
+
+    <%# 'create album' button -> take user to create_new_album.erb %>
+    <div class="create-album-form">
+        <form action="/albums/<%= @user_id %>/new">
+            <button class="button create-albums-btn">create album</button>
+        </form>
+    </div>
+
 </div>
 
 
