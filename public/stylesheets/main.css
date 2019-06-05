@@ -203,10 +203,6 @@ header {
     max-width: 100%;
 }
 
-.enlarged-image-fit-window {
-    display: grid;
-}
-
 /* animation effect */
 #enlargedImg {  
     animation-name: zoom;

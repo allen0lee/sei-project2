@@ -4,14 +4,7 @@
 
 <div class="all-photos-container">
     <div class="display-box">
-        <% @photos.each do |photo|%>
-            <div class="photo-display">
-                <img src="<%= photo.image_url %>" alt="" onclick="enlargeImage(this);">
-                <div class="photo-name">
-                    <a href="/photos/<%= photo.id %>"><%= photo.name %></a>
-                </div>
-            </div>    
-        <% end %>
+
     </div>
 
     <%# upload photo button should show to album owner, hidden for not album owner %>
@@ -31,19 +24,19 @@
 </div>
 
 
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-function enlargeImage(imgs) {
-    var enlargedImageBackground = document.querySelector('.enlarged-image-container');
-    var enlargeImg = document.getElementById("enlargedImg");
-    enlargedImageBackground.style.display = "block";
-    // enlargedImageBackground.classList.add('.enlarged-image-fit-window');
-    enlargeImg.src = imgs.src;
+    const enlargeImage = (imgs) => {
+        var enlargedImageBackground = document.querySelector('.enlarged-image-container');
+        var enlargeImg = document.getElementById("enlargedImg");
+        enlargedImageBackground.style.display = "block";
+        enlargeImg.src = imgs.src;
 
-    var span = document.getElementsByClassName("close-enlarged-image-btn")[0];
-    span.onclick = function() { 
-        enlargedImageBackground.style.display = "none";
+        var span = document.getElementsByClassName("close-enlarged-image-btn")[0];
+        span.onclick = function() { 
+            enlargedImageBackground.style.display = "none";
+        }
     }
-}
 
 
 // var showEditDelete = function(event) {
@@ -52,6 +45,29 @@ function enlargeImage(imgs) {
 // document.querySelectorAll('.photo-name').forEach(function(item) {
 //     item.addEventListener('click', showEditDelete);    
 // });
+
+
+  $.ajax({
+    url: `/api/photos/<%= @album_name %>/<%= @album_id %>`,
+    method: 'get'
+  }).done(res => {
+    let setDisplayBox = document.querySelector('.display-box')
+
+    for(let i = 0; i < res.length; i++) {
+      let div = document.createElement('div')
+      setDisplayBox.append(div)
+
+      div.innerHTML = 
+      `<div class="photo-display">
+        <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+        <div class="photo-name">
+          <a href="/photos/${res[i].id}">
+            ${res[i].name}
+          </a>
+        </div>
+      </div>`
+    }
+  })
 
 
 </script>

@@ -84,6 +84,8 @@ get '/photos/:album_name/:album_id' do
   @album = Album.find_by(id: params[:album_id])
   @album_owner = User.find_by(id: @album.user_id).email
 
+  @album_name = params[:album_name]
+
   @album_id = params[:album_id]
   @user_id = session[:user_id]     
   erb :photos
@@ -194,6 +196,23 @@ post '/users' do
     redirect '/'
   end
   
+end
+
+
+# api for all albums
+get '/api/albums' do
+  @albums = Album.all
+  content_type :json
+  @albums.to_json
+end
+
+# api for photos in an album
+get '/api/photos/:album_name/:album_id' do
+  @photos = Photo.where(album_id: params[:album_id])
+  @album = Album.find_by(id: params[:album_id])
+  @album_id = params[:album_id]
+  content_type :json
+  @photos.to_json
 end
 
 
