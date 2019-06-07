@@ -79,7 +79,7 @@ end
 
 # show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
 get '/photos/:album_name/:album_id' do
-  @photos = Photo.where(album_id: params[:album_id])
+  @photos = Photo.order(:id).where(album_id: params[:album_id])
   # need to determine the album owner, because 'upload photo' button is only visible to album owner 
   @album = Album.find_by(id: params[:album_id])
   @album_owner = User.find_by(id: @album.user_id).email
@@ -207,8 +207,12 @@ get '/api/albums' do
 end
 
 # api for photos in an album
-get '/api/photos/:album_name/:album_id' do
-  @photos = Photo.where(album_id: params[:album_id])
+get '/api/photos/:album_name/:album_id/:offset/:page' do
+  photos_per_page = 12
+  all_photos = Photo.order(:id).where(album_id: params[:album_id])
+  page_start = photos_per_page * (params[:page].to_i - 1)
+  page_end = params[:offset].to_i - 1
+  @photos = all_photos[page_start..page_end]
   @album = Album.find_by(id: params[:album_id])
   @album_id = params[:album_id]
   content_type :json
