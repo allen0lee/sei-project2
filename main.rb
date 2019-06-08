@@ -201,9 +201,9 @@ end
 
 # api for all albums
 get '/api/albums' do
-  @albums = Album.all
+  albums = Album.all
   content_type :json
-  @albums.to_json
+  albums.to_json
 end
 
 # api for photos in an album
@@ -212,11 +212,9 @@ get '/api/photos/:album_name/:album_id/:offset/:page' do
   all_photos = Photo.order(:id).where(album_id: params[:album_id])
   page_start = photos_per_page * (params[:page].to_i - 1)
   page_end = params[:offset].to_i - 1
-  @photos = all_photos[page_start..page_end]
-  @album = Album.find_by(id: params[:album_id])
-  @album_id = params[:album_id]
+  photos = all_photos[page_start..page_end]
   content_type :json
-  @photos.to_json
+  photos.to_json
 end
 
 

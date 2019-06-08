@@ -15,6 +15,12 @@
             </form>
         </div>
     <% end %>
+
+</div>
+
+<div>
+  <a class="prev-12-photos">prev</a>
+  <a class="next-12-photos">next</a>
 </div>
 
 
@@ -26,17 +32,17 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-    const enlargeImage = (imgs) => {
-        var enlargedImageBackground = document.querySelector('.enlarged-image-container');
-        var enlargeImg = document.getElementById("enlargedImg");
-        enlargedImageBackground.style.display = "block";
-        enlargeImg.src = imgs.src;
+  const enlargeImage = (imgs) => {
+      var enlargedImageBackground = document.querySelector('.enlarged-image-container');
+      var enlargeImg = document.getElementById("enlargedImg");
+      enlargedImageBackground.style.display = "block";
+      enlargeImg.src = imgs.src;
 
-        var span = document.getElementsByClassName("close-enlarged-image-btn")[0];
-        span.onclick = function() { 
-            enlargedImageBackground.style.display = "none";
-        }
-    }
+      var span = document.getElementsByClassName("close-enlarged-image-btn")[0];
+      span.onclick = function() { 
+          enlargedImageBackground.style.display = "none";
+      }
+  }
 
 
 // var showEditDelete = function(event) {
@@ -47,17 +53,23 @@
 // });
 
 
+let loadNext12Photos = document.querySelector('.next-12-photos')
+let loadPrev12Photos = document.querySelector('.prev-12-photos')
+let setDisplayBox = document.querySelector('.display-box')
+let offset = 12 
+let page = 1    // increase up to 10
+let photosPerPage = 12
+
+// 1st request - show first 12 photos
   $.ajax({
-    url: `/api/photos/<%= @album_name %>/<%= @album_id %>`,
+    url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset}/${page}`,
     method: 'get'
   }).done(res => {
-    let setDisplayBox = document.querySelector('.display-box')
+    for(let i = 0; i < res.length; i++) {             // draw 12 photos
+      let article = document.createElement('article')
+      setDisplayBox.append(article)
 
-    for(let i = 0; i < res.length; i++) {
-      let div = document.createElement('div')
-      setDisplayBox.append(div)
-
-      div.innerHTML = 
+      article.innerHTML = 
       `<div class="photo-display">
         <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
         <div class="photo-name">
@@ -67,8 +79,79 @@
         </div>
       </div>`
     }
+
   })
 
+  const handleNext = (event) => {
+    if(page < Math.ceil(<%= @photos.length %>/photosPerPage)) {
+      page += 1
+    }
+
+    const options = {
+        url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * page}/${page}`,
+        method: 'get'
+    }
+
+    $.ajax(options).done(res => {
+      if(page <= 10 && res != null) {
+        document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+          photo.remove()
+        })  
+
+        for(let i = 0; i < res.length; i++) {             // draw 12 photos
+          let article = document.createElement('article')
+          setDisplayBox.append(article)
+
+          article.innerHTML = 
+          `<div class="photo-display">
+            <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+            <div class="photo-name">
+              <a href="/photos/${res[i].id}">
+                ${res[i].name}
+              </a>
+            </div>
+          </div>`
+        }
+      }
+    })
+  }
+
+  const handlePrev = (event) => {
+    if(page > 1) {
+      page -= 1
+    }
+
+    const options = {
+        url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * page}/${page}`,
+        method: 'get'
+    }
+
+    $.ajax(options).done(res => {
+      if(page >= 1) {
+        document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+          photo.remove()
+        })  
+
+        for(let i = 0; i < res.length; i++) {             // draw 12 photos
+          let article = document.createElement('article')
+          setDisplayBox.append(article)
+
+          article.innerHTML = 
+          `<div class="photo-display">
+            <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+            <div class="photo-name">
+              <a href="/photos/${res[i].id}">
+                ${res[i].name}
+              </a>
+            </div>
+          </div>`
+        }
+      }
+    })
+  }
+
+  loadNext12Photos.addEventListener('click', handleNext)
+  loadPrev12Photos.addEventListener('click', handlePrev)
 
 </script>
 
