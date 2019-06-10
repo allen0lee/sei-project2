@@ -2,19 +2,18 @@
     <form action="/photos/<%= @album_id %>/<%= @user_id %>" method="post">
         <div>
             <label for="">name</label>
-            <input type="text" name="name">    
+            <input type="text" name="name" required>    
         </div>
         
         <div>
             <label for="">image url</label>
-            <input type="text" name="image_url">   
+            <input type="text" name="image_url" required>   
         </div>
 
         <div>
             <button class="button upload-photo-btn">upload photo</button>
         </div>
     </form>
-
 </div>
 
 

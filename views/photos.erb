@@ -9,10 +9,8 @@
 
     <%# upload photo button should show to album owner, hidden for not album owner %>
     <% if session[:user_id] == @album.user_id  %>
-        <div class="upload-photo-form">
-            <form action="/photos/<%= @album_id %>/<%= @user_id %>/new">
-                <button class="button upload-photo-btn">upload photo</button>
-            </form>
+        <div class="upload-photo">
+          <button class="button upload-photo-btn" onclick="openUploadPhotoForm()">upload photo</button>
         </div>
     <% end %>
 
@@ -23,9 +21,28 @@
   <a class="next-12-photos">next</a>
 </div>
 
+<div class="upload-photo-form">
+    <span class="close-form-btn">&times</span>
+    <form action="/photos/<%= @album_id %>/<%= @user_id %>" method="post">
+        <div>
+            <label for="">name</label>
+            <input type="text" name="name" required>    
+        </div>
+        
+        <div>
+            <label for="">image url</label>
+            <input type="text" name="image_url" required>   
+        </div>
+
+        <div>
+            <button class="button upload-photo-btn">upload photo</button>
+        </div>
+    </form>
+</div>
+
 
 <div class="enlarged-image-container">
-    <span class="close-enlarged-image-btn">&times;</span>
+    <span class="close-image-btn">&times</span>
     <img id="enlargedImg">
 </div>
 
@@ -33,15 +50,24 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
   const enlargeImage = (imgs) => {
-      var enlargedImageBackground = document.querySelector('.enlarged-image-container');
-      var enlargeImg = document.getElementById("enlargedImg");
-      enlargedImageBackground.style.display = "block";
-      enlargeImg.src = imgs.src;
+      let enlargedImageBackground = document.querySelector('.enlarged-image-container')
+      let enlargeImg = document.getElementById('enlargedImg')
+      enlargedImageBackground.style.display = 'block'
+      enlargeImg.src = imgs.src
 
-      var span = document.getElementsByClassName("close-enlarged-image-btn")[0];
-      span.onclick = function() { 
-          enlargedImageBackground.style.display = "none";
+      let span = document.querySelector('.close-image-btn')
+      span.onclick = () => { 
+          enlargedImageBackground.style.display = 'none'
       }
+  }
+
+  const openUploadPhotoForm = () => {
+    let uploadPhotoForm = document.querySelector('.upload-photo-form')
+    uploadPhotoForm.style.display = 'block'
+    let span = document.querySelector('.close-form-btn')
+    span.onclick = () => { 
+      uploadPhotoForm.style.display = 'none'
+    }
   }
 
 
