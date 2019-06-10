@@ -79,7 +79,7 @@ end
 
 # show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
 get '/photos/:album_name/:album_id' do
-  @photos = Photo.order(:id).where(album_id: params[:album_id])
+  # @photos = Photo.order(:id).where(album_id: params[:album_id])
   # need to determine the album owner, because 'upload photo' button is only visible to album owner 
   @album = Album.find_by(id: params[:album_id])
   @album_owner = User.find_by(id: @album.user_id).email
@@ -92,27 +92,27 @@ get '/photos/:album_name/:album_id' do
 end
 
 # go to upload photo page
-get '/photos/:album_id/:user_id/new' do
-  redirect '/login' if !logged_in?
-  @album_id = params[:album_id]
-  @user_id = session[:user_id]
-  erb :upload_photo
-end
+# get '/photos/:album_id/:user_id/new' do
+#   redirect '/login' if !logged_in?
+#   @album_id = params[:album_id]
+#   @user_id = session[:user_id]
+#   erb :upload_photo
+# end
 # upload a photo                                
 post '/photos/:album_id/:user_id' do          
-  # album = Album.find_by(id: params[:album_id])
-  album = Album.where(id: params[:album_id]).first
+  album = Album.find_by(id: params[:album_id]) 
   photo = Photo.new
   photo.name = params[:name]
   photo.image_url = params[:image_url]
-  # photo.user_id = session[:user_id]
   photo.user_id = params[:user_id]
   photo.album_id = album.id
-  if photo.name != "" && photo.image_url != ""
-    photo.save
-  end
+  
+  # if photo.name != "" && photo.image_url != ""
+  photo.save
+  # end
+
   # remove space in album name, otherwise route not known by browser
-  redirect "/photos/#{(album.name).split(" ").join("")}/#{photo.album_id}"
+  # redirect "/photos/#{(album.name).split(" ").join("")}/#{photo.album_id}"
 end
 
 # show single photo, likes and comments - create comments, add likes here
@@ -206,7 +206,7 @@ get '/api/albums' do
   albums.to_json
 end
 
-# api for photos in an album
+# api for album page, each page shows 12 photos
 get '/api/photos/:album_name/:album_id/:offset/:page' do
   photos_per_page = 12
   all_photos = Photo.order(:id).where(album_id: params[:album_id])
@@ -216,6 +216,8 @@ get '/api/photos/:album_name/:album_id/:offset/:page' do
   content_type :json
   photos.to_json
 end
+
+# api for all photos in an album
 
 
 

@@ -8,9 +8,9 @@
     </div>
 
     <%# upload photo button should show to album owner, hidden for not album owner %>
-    <% if session[:user_id] == @album.user_id  %>
+    <% if @user_id == @album.user_id  %>
         <div class="upload-photo">
-          <button class="button upload-photo-btn" onclick="openUploadPhotoForm()">upload photo</button>
+          <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
         </div>
     <% end %>
 
@@ -22,22 +22,22 @@
 </div>
 
 <div class="upload-photo-form">
-    <span class="close-form-btn">&times</span>
-    <form action="/photos/<%= @album_id %>/<%= @user_id %>" method="post">
-        <div>
-            <label for="">name</label>
-            <input type="text" name="name" required>    
-        </div>
-        
-        <div>
-            <label for="">image url</label>
-            <input type="text" name="image_url" required>   
-        </div>
+  <span class="close-form-btn">&times</span>
+    
+  <div>
+      <label for="">name</label>
+      <input class="image-name" type="text" name="name" required>    
+  </div>
+  
+  <div>
+      <label for="">image url</label>
+      <input class="image-url" type="text" name="image_url" required>   
+  </div>
 
-        <div>
-            <button class="button upload-photo-btn">upload photo</button>
-        </div>
-    </form>
+  <div>
+      <button class="button upload-photo-btn">upload photo</button>
+  </div>
+    
 </div>
 
 
@@ -81,7 +81,7 @@
 
 let loadNext12Photos = document.querySelector('.next-12-photos')
 let loadPrev12Photos = document.querySelector('.prev-12-photos')
-let setDisplayBox = document.querySelector('.display-box')
+let displayBox = document.querySelector('.display-box')
 let offset = 12 
 let page = 1    // increase up to 10
 let photosPerPage = 12
@@ -93,7 +93,7 @@ let photosPerPage = 12
   }).done(res => {
     for(let i = 0; i < res.length; i++) {             // draw 12 photos
       let article = document.createElement('article')
-      setDisplayBox.append(article)
+      displayBox.append(article)
 
       article.innerHTML = 
       `<div class="photo-display">
@@ -108,8 +108,15 @@ let photosPerPage = 12
 
   })
 
-  const handleNext = (event) => {
-    if(page < Math.ceil(<%= @photos.length %>/photosPerPage)) {
+  const handleNext = () => {
+    // need to make new request to get all photos
+    // code goes here
+
+
+    let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
+    let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
+
+    if(page < lastPage && lastPage <= 10) {
       page += 1
     }
 
@@ -126,7 +133,7 @@ let photosPerPage = 12
 
         for(let i = 0; i < res.length; i++) {             // draw 12 photos
           let article = document.createElement('article')
-          setDisplayBox.append(article)
+          displayBox.append(article)
 
           article.innerHTML = 
           `<div class="photo-display">
@@ -142,7 +149,7 @@ let photosPerPage = 12
     })
   }
 
-  const handlePrev = (event) => {
+  const handlePrev = () => {
     if(page > 1) {
       page -= 1
     }
@@ -160,7 +167,7 @@ let photosPerPage = 12
 
         for(let i = 0; i < res.length; i++) {             // draw 12 photos
           let article = document.createElement('article')
-          setDisplayBox.append(article)
+          displayBox.append(article)
 
           article.innerHTML = 
           `<div class="photo-display">
@@ -178,6 +185,54 @@ let photosPerPage = 12
 
   loadNext12Photos.addEventListener('click', handleNext)
   loadPrev12Photos.addEventListener('click', handlePrev)
+
+
+  let uploadPhotoBtn = document.querySelector('.upload-photo-btn')
+  const handleUploadPhoto = () => {
+    $.ajax({
+      url: '/photos/<%= @album_id %>/<%= @user_id %>',
+      method: 'post',
+      data: {
+        album_id: <%= @album_id %>,
+        user_id: <%= @user_id %>,
+        name: document.querySelector('.image-name').value,
+        image_url: document.querySelector('.image-url').value 
+      }
+    }).done(() => {
+
+      let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
+      let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+      const options = {
+          url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * lastPage}/${lastPage}`,
+          method: 'get'
+      }
+
+      $.ajax(options).done(res => {
+        if(lastPage <= 10 && res != null) {
+          document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+            photo.remove()
+          })  
+
+          for(let i = 0; i < res.length; i++) {             // draw 12 photos
+            let article = document.createElement('article')
+            displayBox.append(article)
+
+            article.innerHTML = 
+            `<div class="photo-display">
+              <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+              <div class="photo-name">
+                <a href="/photos/${res[i].id}">
+                  ${res[i].name}
+                </a>
+              </div>
+            </div>`
+          }
+        }
+      })
+
+    })
+  }
+  uploadPhotoBtn.addEventListener('click', handleUploadPhoto)
 
 </script>
 
