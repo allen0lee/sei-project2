@@ -107,9 +107,9 @@ post '/photos/:album_id/:user_id' do
   photo.user_id = params[:user_id]
   photo.album_id = album.id
   
-  # if photo.name != "" && photo.image_url != ""
-  photo.save
-  # end
+  if photo.name != "" && photo.image_url != ""
+    photo.save
+  end
 
   # remove space in album name, otherwise route not known by browser
   # redirect "/photos/#{(album.name).split(" ").join("")}/#{photo.album_id}"

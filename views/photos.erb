@@ -23,7 +23,7 @@
 
 <div class="upload-photo-form">
   <span class="close-form-btn">&times</span>
-    
+  
   <div>
       <label for="">name</label>
       <input class="image-name" type="text" name="name" required>    
@@ -35,7 +35,7 @@
   </div>
 
   <div>
-      <button class="button upload-photo-btn">upload photo</button>
+      <button class="button upload-photo-btn" onclick="closeUploadPhotoForm()">upload photo</button>
   </div>
     
 </div>
@@ -61,8 +61,8 @@
       }
   }
 
+  let uploadPhotoForm = document.querySelector('.upload-photo-form')
   const openUploadPhotoForm = () => {
-    let uploadPhotoForm = document.querySelector('.upload-photo-form')
     uploadPhotoForm.style.display = 'block'
     let span = document.querySelector('.close-form-btn')
     span.onclick = () => { 
@@ -112,7 +112,9 @@ let photosPerPage = 12
     // need to make new request to get all photos
     // code goes here
 
+    // const getAllPhotos = () => {
 
+    // }
     let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
     let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
 
@@ -202,6 +204,10 @@ let photosPerPage = 12
 
       let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
       let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+      // const getAllPhotos = () => {
+
+      // }
+
       const options = {
           url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * lastPage}/${lastPage}`,
           method: 'get'
@@ -233,6 +239,10 @@ let photosPerPage = 12
     })
   }
   uploadPhotoBtn.addEventListener('click', handleUploadPhoto)
+
+  closeUploadPhotoForm = () => { 
+    uploadPhotoForm.style.display = 'none'
+  }
 
 </script>
 
