@@ -211,7 +211,7 @@ header {
 }
 
 /* close button */
-.close-image-btn, .close-form-btn {
+.close-image-btn, .close-upload-photo-form-btn, .close-create-album-form-btn {
     position: absolute;
     top: 15px;
     right: 35px;
@@ -221,7 +221,7 @@ header {
     transition: 0.3s;
 }
 
-.close-image-btn:hover, .close-image-btn:focus, .close-form-btn:hover, .close-form-btn:focus {
+.close-image-btn:hover, .close-image-btn:focus, .close-upload-photo-form-btn:hover, .close-upload-photo-form-btn:focus, .close-create-album-form-btn:hover, .close-create-album-form-btn:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
@@ -233,7 +233,7 @@ header {
     margin: 10px 0 0 20px;
 }
 
-.create-album-form {
+.create-album {
     text-align: center;
     margin: 10px 0 0 20px;
 }
@@ -400,28 +400,7 @@ header {
 }
 
 
-.handle-create-album-form {
-    margin-top: 60px;
-    text-align: center;
-}
-
-.handle-create-album-form label {
-    display: inline-block;
-    width: 110px;
-    text-align: left;
-}
-
-.handle-create-album-form input {
-    height: 25px;
-    width: 300px;
-}
-
-.handle-create-album-form div {
-    margin-top: 20px;
-}
-
-
-.upload-photo-form {
+.upload-photo-form, .create-album-form {
     display: none;
     padding-top: 10rem; 
     text-align: center;
@@ -433,19 +412,19 @@ header {
     background-color: rgba(0,0,0,0.9); 
 }
 
-.upload-photo-form label {
+.upload-photo-form label, .create-album-form label {
     display: inline-block;
     width: 110px;
     text-align: left;
     color: white;
 }
 
-.upload-photo-form input {
+.upload-photo-form input, .create-album-form input {
     height: 25px;
     width: 300px;
 }
 
-.upload-photo-form div {
+.upload-photo-form div, .create-album-form div {
     margin-top: 20px;
 }
 

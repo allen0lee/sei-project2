@@ -60,21 +60,25 @@ end
 
 # in user's own album page (or index after login), click 'create album' button, 
 # go to create_album page - create_album.erb
-get '/albums/:user_id/new' do
-  redirect '/login' if !logged_in?
-  @user_id = params[:user_id]
-  erb :create_album
-end
+# get '/albums/:user_id/new' do
+#   redirect '/login' if !logged_in?
+#   @user_id = params[:user_id]
+#   erb :create_album
+# end
 # create new album
 post '/albums/:user_id' do         
   album = Album.new
-  album.name = params[:name]         # params[] - get value from a route or get user input 
+  album.name = params[:name]          # params[] - get value from a route or get user input 
   album.theme_image_url = params[:theme_image_url]
-  album.user_id = session[:user_id]
+
+  # album.user_id = session[:user_id]
+  album.user_id = params[:user_id]
+
   if album.name != "" && album.theme_image_url != ""
     album.save
   end
-  redirect "/albums/#{album.user_id}"
+
+  # redirect "/albums/#{album.user_id}"
 end
 
 # show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
@@ -206,14 +210,27 @@ get '/api/albums' do
   albums.to_json
 end
 
-# api for one user's all albums - show 8 per page - in dashboard
-get '/api/albums/:user_id' do
-  albums = Album.where(user_id: params[:user_id])
+# api for one user's all albums - show 8 per page, offset is 8 - in dashboard
+get '/api/albums/:user_id/:offset/:page' do
+  albums_per_page = 8
+  all_albums = Album.where(user_id: params[:user_id])
+  page_start = albums_per_page * (params[:page].to_i - 1)
+  page_end = params[:offset].to_i - 1
+  albums = all_albums[page_start..page_end]
   content_type :json
   albums.to_json
 end
 
-# api for album page, each page shows 12 photos
+# api for number of albums an user has
+get '/api/albums/:user_id' do 
+  content_type :json
+  {
+    num_of_albums: Album.where(user_id: params[:user_id]).length
+  }.to_json
+end
+
+
+# api for album page, each page shows 12 photos, offset is 12
 get '/api/photos/:album_name/:album_id/:offset/:page' do
   photos_per_page = 12
   all_photos = Photo.order(:id).where(album_id: params[:album_id])

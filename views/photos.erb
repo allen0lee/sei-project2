@@ -22,7 +22,7 @@
 </div>
 
 <div class="upload-photo-form">
-  <span class="close-form-btn">&times</span>
+  <span class="close-upload-photo-form-btn">&times</span>
   
   <div>
       <label for="">name</label>
@@ -66,7 +66,7 @@
     document.querySelector('.image-name').value = '' // clear input field each time open
     document.querySelector('.image-url').value = ''
     uploadPhotoForm.style.display = 'block'
-    let span = document.querySelector('.close-form-btn')
+    let span = document.querySelector('.close-upload-photo-form-btn')
     span.onclick = () => { 
       uploadPhotoForm.style.display = 'none'
     }
@@ -81,12 +81,12 @@
 // });
 
 
-let loadNext12Photos = document.querySelector('.next-12-photos')
-let loadPrev12Photos = document.querySelector('.prev-12-photos')
-let displayBox = document.querySelector('.display-box')
-let offset = 12 
-let page = 1    // increase up to 10
-let photosPerPage = 12
+  let loadNext12Photos = document.querySelector('.next-12-photos')
+  let loadPrev12Photos = document.querySelector('.prev-12-photos')
+  let displayBox = document.querySelector('.display-box')
+  let offset = 12 
+  let page = 1    // increase up to 10
+  let photosPerPage = 12
 
 // 1st request - show first 12 photos
   $.ajax({

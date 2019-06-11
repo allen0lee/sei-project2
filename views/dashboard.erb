@@ -1,27 +1,15 @@
 <%# list all albums of one user %>
 
 <div class="dashboard-albums-container"> 
-    <%# <label for="">&nbsp</label> %>
-    <div class="display-box">
-        <% @albums.each do |album|%>
-            <div class="album-container"> 
-                <img src="<%= album.theme_image_url %>" alt="">
-                <div class="album-name">
-                    <a href="/photos/<%= album.name %>/<%= album.id %>">
-                        <%= album.name %>
-                    </a>
-                </div>
-            </div>
-        <% end %>
-    </div>
+  <%# <label for="">&nbsp</label> %>
+  <div class="display-box">
 
-    <%# 'create album' button -> take user to create_new_album.erb %>
-    <div class="create-album-form">
-        <form action="/albums/<%= @user_id %>/new">
-            <button class="button create-albums-btn">create album</button>
-        </form>
-    </div>
+  </div>
 
+  <%# 'create album' button -> take user to create_new_album.erb %>
+  <div class="create-album">  
+    <button class="button show-create-albums-btn" onclick="openCreateAlbumForm()">create album</button>
+  </div>
 </div>
 
 <div>
@@ -29,30 +17,301 @@
   <a class="next-8-albums">next</a>
 </div>
 
+<div class="create-album-form">
+  <span class="close-create-album-form-btn">&times</span>
+  
+  <div>
+    <label for="">name</label>
+    <input class="theme-image-name" type="text" name="name" required>    
+  </div>
+  
+  <div>
+    <label for="">theme image url</label>
+    <input class="theme-image-url" type="text" name="theme_image_url" required>   
+  </div>
+
+  <div>
+    <button class="button create-album-btn" onclick="closeCreateAlbumForm()">create album</button>
+  </div>
+</div>
+
+
+
+
+
 <div class="dashboard-photos-container"> 
-    <div class="display-box">
-        <% @albums.each do |album|%>
-            <div class="album-container"> 
-                <img src="<%= album.theme_image_url %>" alt="">
-                <div class="album-name">
-                    <a href="/photos/<%= album.name %>/<%= album.id %>">
-                        <%= album.name %>
-                    </a>
-                </div>
-            </div>
-        <% end %>
-    </div>
+  <div class="display-box">
 
-    <div class="upload-photo">
-        <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
-    </div>
+  </div>
 
+  <div class="upload-photo">
+    <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
+  </div>
 </div>
 
 <div>
   <a class="prev-12-photos">prev</a>
   <a class="next-12-photos">next</a>
 </div>
+
+<div class="upload-photo-form">
+  <span class="close-upload-photo-form-btn">&times</span>
+  
+  <div>
+    <label for="">name</label>
+    <input class="image-name" type="text" name="name" required>    
+  </div>
+  
+  <div>
+    <label for="">image url</label>
+    <input class="image-url" type="text" name="image_url" required>   
+  </div>
+
+  <div>
+    <button class="button upload-photo-btn" onclick="closeUploadPhotoForm()">upload photo</button>
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+  let createAlbumForm = document.querySelector('.create-album-form')
+  const openCreateAlbumForm = () => {
+    document.querySelector('.theme-image-name').value = '' // clear input field each time open
+    document.querySelector('.theme-image-url').value = ''
+    createAlbumForm.style.display = 'block'
+    let span = document.querySelector('.close-create-album-form-btn')
+    span.onclick = () => { 
+      createAlbumForm.style.display = 'none'
+    }
+  }
+
+  let uploadPhotoForm = document.querySelector('.upload-photo-form')
+  const openUploadPhotoForm = () => {
+    document.querySelector('.image-name').value = '' // clear input field each time open
+    document.querySelector('.image-url').value = ''
+    uploadPhotoForm.style.display = 'block'
+    let span = document.querySelector('.close-upload-photo-form-btn')
+    span.onclick = () => { 
+      uploadPhotoForm.style.display = 'none'
+    }
+  }
+
+  async function getAllAlbums() {
+    const options = {
+      url: `/api/albums/<%= @user_id %>`,
+      method: 'get'
+    } 
+
+    return await $.ajax(options)
+  }
+
+
+  let loadNext8Albums = document.querySelector('.next-8-albums')
+  let loadPrev8Albums = document.querySelector('.prev-8-albums')
+  let displayBox = document.querySelector('.display-box')
+  let albumsOffset = 8 
+  let albumsPage = 1    // increase up to 10, assuming user can have max 8*10=80 albums
+  let albumsPerPage = 8
+
+  // 1st request - show first 8 albums
+  $.ajax({
+    url: `/api/albums/<%= @user_id %>/${albumsOffset}/${albumsPage}`,
+    method: 'get'
+  }).done(res => {
+    for(let i = 0; i < res.length; i++) {             // show 8 albums
+      let article = document.createElement('article')
+      displayBox.append(article)
+
+      article.innerHTML = 
+      `<div class="album-container">
+        <img src="${res[i].theme_image_url}" alt="">
+        <div class="album-name">
+          <a href="/photos/${res[i].name}/${res[i].id}">
+            ${res[i].name}
+          </a>
+        </div>
+      </div>`
+    }
+  })
+
+  const handleNext8Albums = () => {
+    getAllAlbums().then(res => {
+      let numOfAlbums = res.num_of_albums
+      console.log(numOfAlbums)
+
+      let lastPage = Math.ceil(numOfAlbums/albumsPerPage) // max is 10
+
+      if(albumsPage < lastPage && lastPage <= 10) {
+        albumsPage += 1
+      }
+
+      const options = {
+        url: `/api/albums/<%= @user_id %>/${albumsOffset * albumsPage}/${albumsPage}`,
+        method: 'get'
+      }
+
+      $.ajax(options).done(res => {
+        if(albumsPage <= 10) {
+          document.querySelectorAll('article').forEach(album => { // clear prev 8 albums
+            album.remove()
+          })  
+
+          for(let i = 0; i < res.length; i++) {             // draw 8 albums
+            let article = document.createElement('article')
+            displayBox.append(article)
+
+            article.innerHTML = 
+            `<div class="album-container">
+              <img src="${res[i].theme_image_url}" alt="">
+              <div class="album-name">
+                <a href="/photos/${res[i].name}/${res[i].id}">
+                  ${res[i].name}
+                </a>
+              </div>
+            </div>`
+          }
+        }
+      })
+    })
+  }
+  loadNext8Albums.addEventListener('click', handleNext8Albums)
+
+  const handlePrev8Albums = () => {
+    if(albumsPage > 1) {
+      albumsPage -= 1
+    }
+
+    const options = {
+      url: `/api/albums/<%= @user_id %>/${albumsOffset * albumsPage}/${albumsPage}`,
+      method: 'get'
+    }
+
+    $.ajax(options).done(res => {
+      if(albumsPage >= 1) {
+        document.querySelectorAll('article').forEach(album => { // clear prev 8 albums
+          album.remove()
+        })  
+
+        for(let i = 0; i < res.length; i++) {             // draw 8 albums
+          let article = document.createElement('article')
+          displayBox.append(article)
+
+          article.innerHTML = 
+          `<div class="album-container">
+            <img src="${res[i].theme_image_url}" alt="">
+            <div class="album-name">
+              <a href="/photos/${res[i].name}/${res[i].id}">
+                ${res[i].name}
+              </a>
+            </div>
+          </div>`
+        }
+      }
+    })
+  }
+  loadPrev8Albums.addEventListener('click', handlePrev8Albums)
+
+
+  let createAlbumBtn = document.querySelector('.create-album-btn')
+  const handleCreateAlbum = () => {
+    $.ajax({
+      url: '/albums/<%= @user_id %>',
+      method: 'post',
+      data: {
+        user_id: <%= @user_id %>,
+        name: document.querySelector('.theme-image-name').value,
+        theme_image_url: document.querySelector('.theme-image-url').value 
+      }
+    }).done(() => {
+
+      getAllAlbums().then(res => {
+
+        let numOfAlbums = res.num_of_albums
+        console.log(numOfAlbums)
+
+        let lastPage = Math.ceil(numOfAlbums/albumsPerPage)
+
+        albumsPage = lastPage // update page number
+        
+        const options = {
+          url: `/api/albums/<%= @user_id %>/${albumsOffset * lastPage}/${lastPage}`,
+          method: 'get'
+        }
+
+        $.ajax(options).done(res => {
+          if(lastPage <= 10) {
+            document.querySelectorAll('article').forEach(album => { // clear display area for redraw
+              album.remove()
+            })  
+
+            for(let i = 0; i < res.length; i++) {             // draw 8 albums
+              let article = document.createElement('article')
+              displayBox.append(article)
+
+              article.innerHTML = 
+              `<div class="album-container">
+                <img src="${res[i].theme_image_url}" alt="">
+                <div class="album-name">
+                  <a href="/photos/${res[i].name}/${res[i].id}">
+                    ${res[i].name}
+                  </a>
+                </div>
+              </div>`
+            }
+          }
+        })
+
+      })
+
+    })
+  }
+  createAlbumBtn.addEventListener('click', handleCreateAlbum)
+
+  closeCreateAlbumForm = () => { 
+    createAlbumForm.style.display = 'none'
+  }
+
+
+  // let loadNext12Photos = document.querySelector('.next-12-photos')
+  // let loadPrev12Photos = document.querySelector('.prev-12-photos')
+  // let displayBox = document.querySelector('.display-box')
+  // let photosOffset = 12 
+  // let photosPage = 1    // increase up to 10
+  // let photosPerPage = 12
+
+  // // 1st request - show first 12 photos
+  // $.ajax({
+  //   url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${photosOffset}/${photosPage}`,
+  //   method: 'get'
+  // }).done(res => {
+  //   for(let i = 0; i < res.length; i++) {             // draw 12 photos
+  //     let article = document.createElement('article')
+  //     displayBox.append(article)
+
+  //     article.innerHTML = 
+  //     `<div class="photo-display">
+  //       <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+  //       <div class="photo-name">
+  //         <a href="/photos/${res[i].id}">
+  //           ${res[i].name}
+  //         </a>
+  //       </div>
+  //     </div>`
+  //   }
+  // })
+</script>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
