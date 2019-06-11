@@ -95,7 +95,7 @@ header {
 }
 
 
-.display-box {
+.display-box, .display-box1 {
     display: grid; 
     grid-template-columns: 1fr 1fr 1fr 1fr;
     border: 1px solid black;
@@ -180,7 +180,7 @@ header {
 
 }
 
-.photo-container:hover {
+.photo-container:hover, .photo-display:hover {
     border: 1px solid gold;
 }
 
@@ -479,7 +479,7 @@ header {
 } */
 
 @media only screen and (max-width: 30rem) {
-    .display-box {
+    .display-box, .display-box1 {
         /* display: grid; */
         grid-template-columns: 1fr;
     }

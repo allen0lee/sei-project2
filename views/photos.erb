@@ -141,7 +141,7 @@
 
       $.ajax(options).done(res => {
         if(page <= 10) {
-          document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+          displayBox.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
             photo.remove()
           })  
 
@@ -176,7 +176,7 @@
 
     $.ajax(options).done(res => {
       if(page >= 1) {
-        document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+        displayBox.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
           photo.remove()
         })  
 
@@ -233,7 +233,7 @@
 
         $.ajax(options).done(res => {
           if(lastPage <= 10) {
-            document.querySelectorAll('article').forEach(photo => { // clear display area for redraw
+            displayBox.querySelectorAll('article').forEach(photo => { // clear display area for redraw
               photo.remove()
             })  
 

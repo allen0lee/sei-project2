@@ -16,13 +16,13 @@ album2 with theme picture and album name
     url: '/api/albums',
     method: 'get'
   }).done(res => {
-    let setDisplayBox = document.querySelector('.display-box')
+    let displayBox = document.querySelector('.display-box')
 
     for(let i = 0; i < res.length; i++) {
-      let div = document.createElement('div')
-      setDisplayBox.append(div)
+      let article = document.createElement('article')
+      displayBox.append(article)
 
-      div.innerHTML = 
+      article.innerHTML = 
       `<div class="album-container">
         <img src="${res[i].theme_image_url}" alt="">
         <div class="album-name">

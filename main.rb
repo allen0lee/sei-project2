@@ -102,7 +102,7 @@ end
 #   @user_id = session[:user_id]
 #   erb :upload_photo
 # end
-# upload a photo                                
+# upload a photo inside an album                               
 post '/photos/:album_id/:user_id' do          
   album = Album.find_by(id: params[:album_id]) 
   photo = Photo.new
@@ -246,6 +246,37 @@ get '/api/photos/:album_name/:album_id' do
   content_type :json
   {
     num_of_photos: Photo.order(:id).where(album_id: params[:album_id]).length
+  }.to_json
+end
+
+# upload a photo in dashboard - unarchived photos                               
+post '/photos/:user_id' do          
+  photo = Photo.new
+  photo.name = params[:name]
+  photo.image_url = params[:image_url]
+  photo.user_id = params[:user_id]
+
+  if photo.name != "" && photo.image_url != ""
+    photo.save
+  end
+end
+
+# api for unarchived photos, offset is 12
+get '/api/photos/:user_id/:offset/:page' do
+  photos_per_page = 12
+  all_photos = Photo.order(:id).where(user_id: params[:user_id]).where(album_id: nil)
+  page_start = photos_per_page * (params[:page].to_i - 1)
+  page_end = params[:offset].to_i - 1
+  photos = all_photos[page_start..page_end]
+  content_type :json
+  photos.to_json
+end
+
+# api for number of unarchived photos
+get '/api/photos/:user_id' do 
+  content_type :json
+  {
+    num_of_photos: Photo.order(:id).where(user_id: params[:user_id]).where(album_id: nil).length
   }.to_json
 end
 
