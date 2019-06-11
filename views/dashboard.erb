@@ -1,0 +1,63 @@
+<%# list all albums of one user %>
+
+<div class="dashboard-albums-container"> 
+    <%# <label for="">&nbsp</label> %>
+    <div class="display-box">
+        <% @albums.each do |album|%>
+            <div class="album-container"> 
+                <img src="<%= album.theme_image_url %>" alt="">
+                <div class="album-name">
+                    <a href="/photos/<%= album.name %>/<%= album.id %>">
+                        <%= album.name %>
+                    </a>
+                </div>
+            </div>
+        <% end %>
+    </div>
+
+    <%# 'create album' button -> take user to create_new_album.erb %>
+    <div class="create-album-form">
+        <form action="/albums/<%= @user_id %>/new">
+            <button class="button create-albums-btn">create album</button>
+        </form>
+    </div>
+
+</div>
+
+<div>
+  <a class="prev-8-albums">prev</a>
+  <a class="next-8-albums">next</a>
+</div>
+
+<div class="dashboard-photos-container"> 
+    <div class="display-box">
+        <% @albums.each do |album|%>
+            <div class="album-container"> 
+                <img src="<%= album.theme_image_url %>" alt="">
+                <div class="album-name">
+                    <a href="/photos/<%= album.name %>/<%= album.id %>">
+                        <%= album.name %>
+                    </a>
+                </div>
+            </div>
+        <% end %>
+    </div>
+
+    <div class="upload-photo">
+        <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
+    </div>
+
+</div>
+
+<div>
+  <a class="prev-12-photos">prev</a>
+  <a class="next-12-photos">next</a>
+</div>
+
+
+
+
+
+
+
+

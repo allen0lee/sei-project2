@@ -51,11 +51,11 @@ get '/albums' do
   erb :albums
 end
 
-# page that lists one user's albums
+# page that lists one user's albums - dashboard
 get '/albums/:user_id' do
   @albums = Album.where(user_id: params[:user_id])
   @user_id = session[:user_id]
-  erb :one_user_albums
+  erb :dashboard
 end
 
 # in user's own album page (or index after login), click 'create album' button, 

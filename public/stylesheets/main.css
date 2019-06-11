@@ -103,7 +103,7 @@ header {
     padding: 5px;
 }
 
-.all-albums-container, .one-user-albums-container, .all-photos-container {
+.all-albums-container, .dashboard-albums-container, .dashboard-photos-container, .all-photos-container {
     display: flex;
     justify-content: center;
     padding: 2% 5% 3% 5%;
