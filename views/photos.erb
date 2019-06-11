@@ -63,6 +63,8 @@
 
   let uploadPhotoForm = document.querySelector('.upload-photo-form')
   const openUploadPhotoForm = () => {
+    document.querySelector('.image-name').value = '' // clear input field each time open
+    document.querySelector('.image-url').value = ''
     uploadPhotoForm.style.display = 'block'
     let span = document.querySelector('.close-form-btn')
     span.onclick = () => { 
@@ -222,6 +224,8 @@ let photosPerPage = 12
 
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
 
+        page = lastPage // update page number
+        
         const options = {
           url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * lastPage}/${lastPage}`,
           method: 'get'
