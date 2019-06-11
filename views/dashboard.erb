@@ -1,4 +1,4 @@
-<%# list all albums of one user %>
+<%# list one user's all albums and unarchived photos %>
 
 <div class="dashboard-albums-container"> 
   <%# <label for="">&nbsp</label> %>
@@ -34,9 +34,6 @@
     <button class="button create-album-btn" onclick="closeCreateAlbumForm()">create album</button>
   </div>
 </div>
-
-
-
 
 
 <div class="dashboard-photos-container"> 
@@ -369,6 +366,85 @@
   closeUploadPhotoForm = () => { 
     uploadPhotoForm.style.display = 'none'
   }
+
+  const handleNext12Photos = () => {
+
+    getAllPhotos().then(res => {
+
+      let numOfPhotos = res.num_of_photos
+      console.log(numOfPhotos)
+
+      let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
+
+      if(photosPage < lastPage && lastPage <= 10) {
+        photosPage += 1
+      }
+
+      const options = {
+        url: `/api/photos/<%= @user_id %>/${photosOffset * photosPage}/${photosPage}`,
+        method: 'get'
+      }
+
+      $.ajax(options).done(res => {
+        if(photosPage <= 10) {
+          displayBox1.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+            photo.remove()
+          })  
+
+          for(let i = 0; i < res.length; i++) {             // draw 12 photos
+            let article = document.createElement('article')
+            displayBox1.append(article)
+
+            article.innerHTML = 
+            `<div class="photo-display">
+              <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+              <div class="photo-name">
+                <a href="/photos/${res[i].id}">
+                  ${res[i].name}
+                </a>
+              </div>
+            </div>`
+          }
+        }
+      })
+    })
+  }
+  loadNext12Photos.addEventListener('click', handleNext12Photos)
+
+  const handlePrev12Photos = () => {
+    if(photosPage > 1) {
+      photosPage -= 1
+    }
+
+    const options = {
+      url: `/api/photos/<%= @user_id %>/${photosOffset * photosPage}/${photosPage}`,
+      method: 'get'
+    }
+
+    $.ajax(options).done(res => {
+      if(photosPage >= 1) {
+        displayBox1.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+          photo.remove()
+        })  
+
+        for(let i = 0; i < res.length; i++) {             // draw 12 photos
+          let article = document.createElement('article')
+          displayBox1.append(article)
+
+          article.innerHTML = 
+          `<div class="photo-display">
+            <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+            <div class="photo-name">
+              <a href="/photos/${res[i].id}">
+                ${res[i].name}
+              </a>
+            </div>
+          </div>`
+        }
+      }
+    })
+  }
+  loadPrev12Photos.addEventListener('click', handlePrev12Photos)
 
 </script>
 
