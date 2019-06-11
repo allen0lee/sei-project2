@@ -47,7 +47,7 @@ end
 
 # page that lists all users' albums - albums.erb
 get '/albums' do
-  @albums = Album.all
+  # @albums = Album.all
   erb :albums
 end
 
@@ -199,9 +199,16 @@ post '/users' do
 end
 
 
-# api for all albums
+# api for all albums - show 16 per page
 get '/api/albums' do
   albums = Album.all
+  content_type :json
+  albums.to_json
+end
+
+# api for one user's all albums - show 8 per page - in dashboard
+get '/api/albums/:user_id' do
+  albums = Album.where(user_id: params[:user_id])
   content_type :json
   albums.to_json
 end
