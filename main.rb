@@ -217,8 +217,13 @@ get '/api/photos/:album_name/:album_id/:offset/:page' do
   photos.to_json
 end
 
-# api for all photos in an album
-
+# api for number of photos in an album
+get '/api/photos/:album_name/:album_id' do 
+  content_type :json
+  {
+    num_of_photos: Photo.order(:id).where(album_id: params[:album_id]).length
+  }.to_json
+end
 
 
 

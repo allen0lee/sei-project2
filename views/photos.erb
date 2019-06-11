@@ -105,49 +105,60 @@ let photosPerPage = 12
         </div>
       </div>`
     }
-
   })
+
+  async function getAllPhotos() {
+    const options = {
+      url: `/api/photos/<%= @album_name %>/<%= @album_id %>`,
+      method: 'get'
+    } 
+
+    return await $.ajax(options)
+  }
 
   const handleNext = () => {
     // need to make new request to get all photos
-    // code goes here
 
-    // const getAllPhotos = () => {
+    // let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
 
-    // }
-    let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
-    let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
+    getAllPhotos().then(res => {
 
-    if(page < lastPage && lastPage <= 10) {
-      page += 1
-    }
+      let numOfPhotos = res.num_of_photos
+      console.log(numOfPhotos)
 
-    const options = {
+      let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
+
+      if(page < lastPage && lastPage <= 10) {
+        page += 1
+      }
+
+      const options = {
         url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * page}/${page}`,
         method: 'get'
-    }
-
-    $.ajax(options).done(res => {
-      if(page <= 10 && res != null) {
-        document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
-          photo.remove()
-        })  
-
-        for(let i = 0; i < res.length; i++) {             // draw 12 photos
-          let article = document.createElement('article')
-          displayBox.append(article)
-
-          article.innerHTML = 
-          `<div class="photo-display">
-            <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-            <div class="photo-name">
-              <a href="/photos/${res[i].id}">
-                ${res[i].name}
-              </a>
-            </div>
-          </div>`
-        }
       }
+
+      $.ajax(options).done(res => {
+        if(page <= 10) {
+          document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
+            photo.remove()
+          })  
+
+          for(let i = 0; i < res.length; i++) {             // draw 12 photos
+            let article = document.createElement('article')
+            displayBox.append(article)
+
+            article.innerHTML = 
+            `<div class="photo-display">
+              <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+              <div class="photo-name">
+                <a href="/photos/${res[i].id}">
+                  ${res[i].name}
+                </a>
+              </div>
+            </div>`
+          }
+        }
+      })
     })
   }
 
@@ -157,8 +168,8 @@ let photosPerPage = 12
     }
 
     const options = {
-        url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * page}/${page}`,
-        method: 'get'
+      url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * page}/${page}`,
+      method: 'get'
     }
 
     $.ajax(options).done(res => {
@@ -202,38 +213,43 @@ let photosPerPage = 12
       }
     }).done(() => {
 
-      let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
-      let lastPage = Math.ceil(numOfPhotos/photosPerPage)
-      // const getAllPhotos = () => {
+      // let numOfPhotos = <%= Photo.order(:id).where(album_id: @album_id).length %>
 
-      // }
+      getAllPhotos().then(res => {
 
-      const options = {
+        let numOfPhotos = res.num_of_photos
+        console.log(numOfPhotos)
+
+        let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+
+        const options = {
           url: `/api/photos/<%= @album_name %>/<%= @album_id %>/${offset * lastPage}/${lastPage}`,
           method: 'get'
-      }
-
-      $.ajax(options).done(res => {
-        if(lastPage <= 10 && res != null) {
-          document.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
-            photo.remove()
-          })  
-
-          for(let i = 0; i < res.length; i++) {             // draw 12 photos
-            let article = document.createElement('article')
-            displayBox.append(article)
-
-            article.innerHTML = 
-            `<div class="photo-display">
-              <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-              <div class="photo-name">
-                <a href="/photos/${res[i].id}">
-                  ${res[i].name}
-                </a>
-              </div>
-            </div>`
-          }
         }
+
+        $.ajax(options).done(res => {
+          if(lastPage <= 10) {
+            document.querySelectorAll('article').forEach(photo => { // clear display area for redraw
+              photo.remove()
+            })  
+
+            for(let i = 0; i < res.length; i++) {             // draw 12 photos
+              let article = document.createElement('article')
+              displayBox.append(article)
+
+              article.innerHTML = 
+              `<div class="photo-display">
+                <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+                <div class="photo-name">
+                  <a href="/photos/${res[i].id}">
+                    ${res[i].name}
+                  </a>
+                </div>
+              </div>`
+            }
+          }
+        })
+
       })
 
     })
