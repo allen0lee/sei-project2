@@ -34,15 +34,19 @@
 
     <div class="comment-like-container">
       <div class="post-comment-form">
-        <form action="/comments" method="post">
+
+        <%# <form action="/comments" method="post"> %>
           <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+
           <div class="comment-input-field">
-            <textarea name="content" placeholder="comment"></textarea>
+            <textarea class="content" name="content" placeholder="comment"></textarea>
           </div>   
+
           <div class="post-comment-btn-holder">
             <button class="button post-comment-btn">post</button>
           </div> 
-        </form>
+        <%# </form> %>
+
       </div>
 
       <% if logged_in? %>
@@ -65,14 +69,7 @@
 
 <%# list all comments of a photo %>
 <div class="list-of-comments">
-  <% @comments.each do |comment|%>
-    <p><%= User.find_by(id: comment.user_id).email %> &nbsp &nbsp &nbsp
-      <%= comment.time %>
-    </p>
-    <div class="comment">
-      <p><%= comment.content %></p>
-    </div>
-  <% end %>
+  <div class="comments-area"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -92,6 +89,68 @@
     })
   }
   addLikeBtn.addEventListener('click', handleAddLike)
+
+  async function getAllComments() {
+    const options = {
+      url: `/api/comments/<%= @photo.id %>`,
+      method: 'get'
+    } 
+    return await $.ajax(options)
+  }
+
+  let offset = 5 
+  let page = 1    
+  let commentsPerPage = 5
+
+  let commentsArea = document.querySelector('.comments-area')
+  const requestComments = (offset, page) => {
+    const options = {
+      url: `/api/comments/<%= @photo.id %>/${offset * page}/${page}`,
+      method: 'get'
+    }
+    $.ajax(options).done(res => {
+      commentsArea.querySelectorAll('article').forEach(comment => { 
+        comment.remove()
+      })  
+      for(let i = 0; i < res.length; i++) {             // show 8 albums
+        let article = document.createElement('article')
+        commentsArea.append(article)
+
+        // let userId = res[i].user_id
+
+        article.innerHTML = 
+        `<p>${res[i].user_id} &nbsp &nbsp &nbsp
+          ${res[i].time}
+        </p>
+        <div class="comment">
+          <p>${res[i].content}</p>
+        </div>`
+      }
+    })    
+  }
+
+  requestComments(offset, page)
+
+  let postCommentBtn = document.querySelector('.post-comment-btn')
+  const handlePostComment = () => {
+    const options = {
+      url: '/comments',
+      method: 'post',
+      data: {
+        photo_id: <%= @photo.id %>,
+        content: document.querySelector('.content').value
+      }
+    }
+    $.ajax(options).done(() => {
+      getAllComments().then(res => {
+        let numOfComments = res.num_of_comments
+        let lastPage = Math.ceil(numOfComments/commentsPerPage)
+        page = lastPage // update page number
+        requestComments(offset, lastPage)
+      })
+    })
+  }
+  postCommentBtn.addEventListener('click', handlePostComment)
 
 </script>
 

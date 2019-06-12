@@ -145,6 +145,7 @@ post '/comments' do
   if comment.content != ""
     comment.save
   end
+
   redirect "/photos/#{comment.photo_id}"
   # redirect "/photos/#{params[:photo_id]}"
 end
@@ -159,7 +160,7 @@ put '/likes' do
   {
     like_count: like.number
   }.to_json 
-  
+
   # redirect "/photos/#{like.photo_id}"
 end
 
@@ -303,6 +304,25 @@ put '/photos-move-out-album' do
     photo.album_id = nil
     photo.save
   end
+end
+
+# api for comments of a photo, shows 5 each time, offset is 5 
+get '/api/comments/:photo_id/:offset/:page' do
+  comments_per_page = 5
+  all_comments = Comment.where(photo_id: params[:photo_id])
+  page_start = comments_per_page * (params[:page].to_i - 1)
+  page_end = params[:offset].to_i - 1
+  comments = all_comments[page_start..page_end]
+  content_type :json
+  comments.to_json
+end
+
+# api for number of comments of a photo
+get '/api/comments/:photo_id' do 
+  content_type :json
+  {
+    num_of_comments: Comment.where(photo_id: params[:photo_id]).length
+  }.to_json
 end
 
 
