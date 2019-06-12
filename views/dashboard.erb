@@ -88,6 +88,11 @@
   </div>
 </div>
 
+<div class="enlarged-image-container">
+    <span class="close-image-btn">&times</span>
+    <img id="enlargedImg">
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -120,6 +125,18 @@
     span.onclick = () => { 
       groupPhotoForm.style.display = 'none'
     }
+  }
+
+  const enlargeImage = (imgs) => {
+      let enlargedImageBackground = document.querySelector('.enlarged-image-container')
+      let enlargeImg = document.getElementById('enlargedImg')
+      enlargedImageBackground.style.display = 'block'
+      enlargeImg.src = imgs.src
+
+      let span = document.querySelector('.close-image-btn')
+      span.onclick = () => { 
+          enlargedImageBackground.style.display = 'none'
+      }
   }
 
 
@@ -316,7 +333,7 @@
       article.innerHTML = 
       `<div class="photo-display">
         <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-        <div class="photo-name">
+        <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
           <a href="/photos/${res[i].id}">
             ${res[i].name}
           </a>
@@ -373,7 +390,7 @@
               article.innerHTML = 
               `<div class="photo-display">
                 <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-                <div class="photo-name">
+                <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
                   <a href="/photos/${res[i].id}">
                     ${res[i].name}
                   </a>
@@ -424,7 +441,7 @@
             article.innerHTML = 
             `<div class="photo-display">
               <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-              <div class="photo-name">
+              <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
                 <a href="/photos/${res[i].id}">
                   ${res[i].name}
                 </a>
@@ -460,7 +477,7 @@
           article.innerHTML = 
           `<div class="photo-display">
             <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-            <div class="photo-name">
+            <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
               <a href="/photos/${res[i].id}">
                 ${res[i].name}
               </a>
@@ -472,7 +489,32 @@
   }
   loadPrev12Photos.addEventListener('click', handlePrev12Photos)
 
+  const selectPhoto = (photo) => {
+    photo.classList.toggle('selected')
+  }
+
+  let groupPhotoBtn = document.querySelector('.group-photo-btn')
+  const handleGroupPhotos = () => {
+    let selectedPhotos = document.querySelectorAll('.selected')
+
+    selectedPhotos.forEach(selectedPhoto => {
+      var selectedPhotoId = selectedPhoto.getAttribute('data-photo-id')
+      $.ajax({
+        url: `/photos/${selectedPhotoId}/15`, // <%= @album_id %> 15
+        method: 'put',
+        data: {
+          id: selectedPhotoId,
+          album_id: 15
+        }
+      })      
+    })
+  }
+  groupPhotoBtn.addEventListener('click', handleGroupPhotos)
+
 </script>
+
+
+
 
 
 

@@ -280,6 +280,14 @@ get '/api/photos/:user_id' do
   }.to_json
 end
 
+# group an unarchived photo into an album
+put '/photos/:id/:album_id' do
+  photo = Photo.find_by(id: params[:id])
+  photo.album_id = params[:album_id]
+  photo.save
+end
+
+
 
 
 
