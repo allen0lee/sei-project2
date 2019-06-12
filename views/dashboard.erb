@@ -127,15 +127,14 @@
     }
   }
 
-  const enlargeImage = (imgs) => {
+  const enlargeImage = (img) => {
     let enlargedImageBackground = document.querySelector('.enlarged-image-container')
     let enlargeImg = document.getElementById('enlargedImg')
     enlargedImageBackground.style.display = 'block'
-    enlargeImg.src = imgs.src
-
+    enlargeImg.src = img.src
     let span = document.querySelector('.close-image-btn')
     span.onclick = () => { 
-        enlargedImageBackground.style.display = 'none'
+      enlargedImageBackground.style.display = 'none'
     }
   }
 
