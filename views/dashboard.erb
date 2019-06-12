@@ -2,11 +2,8 @@
 
 <div class="dashboard-albums-container"> 
   <%# <label for="">&nbsp</label> %>
-  <div class="display-box">
+  <div class="display-box"></div>
 
-  </div>
-
-  <%# 'create album' button -> take user to create_new_album.erb %>
   <div class="create-album">  
     <button class="button show-create-albums-btn" onclick="openCreateAlbumForm()">create album</button>
   </div>
@@ -37,12 +34,16 @@
 
 
 <div class="dashboard-photos-container"> 
-  <div class="display-box1">
+  <div class="display-box1"></div>
 
-  </div>
+  <div>
+    <div class="upload-photo">
+      <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
+    </div>
 
-  <div class="upload-photo">
-    <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
+    <div class="group-photo">
+      <button class="button show-group-photo-form" onclick="openGroupPhotoForm()">group photos</button>
+    </div>
   </div>
 </div>
 
@@ -66,6 +67,24 @@
 
   <div>
     <button class="button upload-photo-btn" onclick="closeUploadPhotoForm()">upload photo</button>
+  </div>
+</div>
+
+<div class="group-photo-form">
+  <span class="close-group-photo-form-btn">&times</span>
+
+  <div>
+    <label for="">choose album</label>
+    <input list="albums" name="album">
+    <datalist id="albums">
+      <% @albums.each do |album|%>
+        <option value="<%= album.name %>">
+      <% end %>
+    </datalist>
+  </div>
+
+  <div>
+    <button class="button group-photo-btn">group photos</button>
   </div>
 </div>
 
@@ -94,15 +113,23 @@
     }
   }
 
+  let groupPhotoForm = document.querySelector('.group-photo-form')
+  const openGroupPhotoForm = () => {
+    groupPhotoForm.style.display = 'block'
+    let span = document.querySelector('.close-group-photo-form-btn')
+    span.onclick = () => { 
+      groupPhotoForm.style.display = 'none'
+    }
+  }
+
+
   async function getAllAlbums() {
     const options = {
       url: `/api/albums/<%= @user_id %>`,
       method: 'get'
     } 
-
     return await $.ajax(options)
   }
-
 
   let loadNext8Albums = document.querySelector('.next-8-albums')
   let loadPrev8Albums = document.querySelector('.prev-8-albums')
@@ -303,7 +330,6 @@
       url: `/api/photos/<%= @user_id %>`,
       method: 'get'
     } 
-
     return await $.ajax(options)
   }
 
