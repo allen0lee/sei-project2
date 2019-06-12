@@ -73,18 +73,18 @@
 <div class="group-photo-form">
   <span class="close-group-photo-form-btn">&times</span>
 
+<%# Array.from(document.querySelector('#albums').options).find(option => option.selected).dataset.albumId %>
   <div>
     <label for="">choose album</label>
-    <input list="albums" name="album">
-    <datalist id="albums">
+    <select class="albums-list">
       <% @albums.each do |album|%>
-        <option value="<%= album.name %>">
+        <option value="<%= album.id %>"><%= album.name %></option>
       <% end %>
-    </datalist>
+    </select>
   </div>
 
   <div>
-    <button class="button group-photo-btn">group photos</button>
+    <button class="button group-photo-btn" onclick="closeGroupPhotoForm()">group photos</button>
   </div>
 </div>
 
@@ -329,19 +329,32 @@
   const handleGroupPhotos = () => {
     let selectedPhotos = document.querySelectorAll('.selected')
 
-    selectedPhotos.forEach(selectedPhoto => {
-      var selectedPhotoId = selectedPhoto.getAttribute('data-photo-id')
-      $.ajax({
-        url: `/photos/${selectedPhotoId}/15`, // <%= @album_id %> 15
-        method: 'put',
-        data: {
-          id: selectedPhotoId,
-          album_id: 15
-        }
-      })      
-    })
+    let selectedAlbumId = document.querySelector('.albums-list').value
+    
+    let selectedPhotosIds = Array.from(selectedPhotos).map(photo => photo.getAttribute('data-photo-id')) // ["255", "256"]
+    
+    $.ajax({
+      url: `/photos-move-to-album`, 
+      method: 'put',
+      data: {
+        id: selectedPhotosIds, // array of selected photos' ids
+        album_id: selectedAlbumId
+      }
+    }).done(() => {
+      getAllPhotos().then(res => {
+        let numOfPhotos = res.num_of_photos
+        console.log(numOfPhotos)
+        let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+        photosPage = lastPage // update page number
+        requestPhotos(photosOffset, lastPage)
+      })
+    })  
   }
   groupPhotoBtn.addEventListener('click', handleGroupPhotos)
+
+  closeGroupPhotoForm = () => { 
+    groupPhotoForm.style.display = 'none'
+  }
 
 </script>
 
