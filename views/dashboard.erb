@@ -128,17 +128,16 @@
   }
 
   const enlargeImage = (imgs) => {
-      let enlargedImageBackground = document.querySelector('.enlarged-image-container')
-      let enlargeImg = document.getElementById('enlargedImg')
-      enlargedImageBackground.style.display = 'block'
-      enlargeImg.src = imgs.src
+    let enlargedImageBackground = document.querySelector('.enlarged-image-container')
+    let enlargeImg = document.getElementById('enlargedImg')
+    enlargedImageBackground.style.display = 'block'
+    enlargeImg.src = imgs.src
 
-      let span = document.querySelector('.close-image-btn')
-      span.onclick = () => { 
-          enlargedImageBackground.style.display = 'none'
-      }
+    let span = document.querySelector('.close-image-btn')
+    span.onclick = () => { 
+        enlargedImageBackground.style.display = 'none'
+    }
   }
-
 
   async function getAllAlbums() {
     const options = {
@@ -152,68 +151,46 @@
   let loadPrev8Albums = document.querySelector('.prev-8-albums')
   let displayBox = document.querySelector('.display-box')
   let albumsOffset = 8 
-  let albumsPage = 1    // increase up to 10, assuming user can have max 8*10=80 albums
+  let albumsPage = 1    // increase up to 10, assuming user can have max 8*10=80 albums?
   let albumsPerPage = 8
 
-  // 1st request - show first 8 albums
-  $.ajax({
-    url: `/api/albums/<%= @user_id %>/${albumsOffset}/${albumsPage}`,
-    method: 'get'
-  }).done(res => {
-    for(let i = 0; i < res.length; i++) {             // show 8 albums
-      let article = document.createElement('article')
-      displayBox.append(article)
-
-      article.innerHTML = 
-      `<div class="album-container">
-        <img src="${res[i].theme_image_url}" alt="">
-        <div class="album-name">
-          <a href="/photos/${res[i].name}/${res[i].id}">
-            ${res[i].name}
-          </a>
-        </div>
-      </div>`
+  const requestAlbums = (albumsOffset, albumsPage) => {
+    const options = {
+      url: `/api/albums/<%= @user_id %>/${albumsOffset * albumsPage}/${albumsPage}`,
+      method: 'get'
     }
-  })
+    $.ajax(options).done(res => {
+      displayBox.querySelectorAll('article').forEach(album => { // clear prev 8 albums
+        album.remove()
+      })  
+      for(let i = 0; i < res.length; i++) {             // show 8 albums
+        let article = document.createElement('article')
+        displayBox.append(article)
+        article.innerHTML = 
+        `<div class="album-container">
+          <img src="${res[i].theme_image_url}" alt="">
+          <div class="album-name">
+            <a href="/photos/${res[i].name}/${res[i].id}">
+              ${res[i].name}
+            </a>
+          </div>
+        </div>`
+      }
+    })    
+  }
+
+  // 1st request - show first 8 albums
+  requestAlbums(albumsOffset, albumsPage)
 
   const handleNext8Albums = () => {
     getAllAlbums().then(res => {
       let numOfAlbums = res.num_of_albums
-      console.log(numOfAlbums)
-
-      let lastPage = Math.ceil(numOfAlbums/albumsPerPage) // max is 10
-
-      if(albumsPage < lastPage && lastPage <= 10) {
+      // console.log(numOfAlbums)
+      let lastPage = Math.ceil(numOfAlbums/albumsPerPage) // max set to 10 ?
+      if(albumsPage < lastPage) {
         albumsPage += 1
       }
-
-      const options = {
-        url: `/api/albums/<%= @user_id %>/${albumsOffset * albumsPage}/${albumsPage}`,
-        method: 'get'
-      }
-
-      $.ajax(options).done(res => {
-        if(albumsPage <= 10) {
-          displayBox.querySelectorAll('article').forEach(album => { // clear prev 8 albums
-            album.remove()
-          })  
-
-          for(let i = 0; i < res.length; i++) {             // draw 8 albums
-            let article = document.createElement('article')
-            displayBox.append(article)
-
-            article.innerHTML = 
-            `<div class="album-container">
-              <img src="${res[i].theme_image_url}" alt="">
-              <div class="album-name">
-                <a href="/photos/${res[i].name}/${res[i].id}">
-                  ${res[i].name}
-                </a>
-              </div>
-            </div>`
-          }
-        }
-      })
+      requestAlbums(albumsOffset, albumsPage)
     })
   }
   loadNext8Albums.addEventListener('click', handleNext8Albums)
@@ -222,34 +199,7 @@
     if(albumsPage > 1) {
       albumsPage -= 1
     }
-
-    const options = {
-      url: `/api/albums/<%= @user_id %>/${albumsOffset * albumsPage}/${albumsPage}`,
-      method: 'get'
-    }
-
-    $.ajax(options).done(res => {
-      if(albumsPage >= 1) {
-        displayBox.querySelectorAll('article').forEach(album => { // clear prev 8 albums
-          album.remove()
-        })  
-
-        for(let i = 0; i < res.length; i++) {             // draw 8 albums
-          let article = document.createElement('article')
-          displayBox.append(article)
-
-          article.innerHTML = 
-          `<div class="album-container">
-            <img src="${res[i].theme_image_url}" alt="">
-            <div class="album-name">
-              <a href="/photos/${res[i].name}/${res[i].id}">
-                ${res[i].name}
-              </a>
-            </div>
-          </div>`
-        }
-      }
-    })
+    requestAlbums(albumsOffset, albumsPage)
   }
   loadPrev8Albums.addEventListener('click', handlePrev8Albums)
 
@@ -265,46 +215,13 @@
         theme_image_url: document.querySelector('.theme-image-url').value 
       }
     }).done(() => {
-
       getAllAlbums().then(res => {
-
         let numOfAlbums = res.num_of_albums
         console.log(numOfAlbums)
-
         let lastPage = Math.ceil(numOfAlbums/albumsPerPage)
-
         albumsPage = lastPage // update page number
-        
-        const options = {
-          url: `/api/albums/<%= @user_id %>/${albumsOffset * lastPage}/${lastPage}`,
-          method: 'get'
-        }
-
-        $.ajax(options).done(res => {
-          if(lastPage <= 10) {
-            displayBox.querySelectorAll('article').forEach(album => { // clear display area for redraw
-              album.remove()
-            })  
-
-            for(let i = 0; i < res.length; i++) {             // draw 8 albums
-              let article = document.createElement('article')
-              displayBox.append(article)
-
-              article.innerHTML = 
-              `<div class="album-container">
-                <img src="${res[i].theme_image_url}" alt="">
-                <div class="album-name">
-                  <a href="/photos/${res[i].name}/${res[i].id}">
-                    ${res[i].name}
-                  </a>
-                </div>
-              </div>`
-            }
-          }
-        })
-
+        requestAlbums(albumsOffset, lastPage)
       })
-
     })
   }
   createAlbumBtn.addEventListener('click', handleCreateAlbum)
@@ -321,26 +238,33 @@
   let photosPage = 1    // increase up to 10
   let photosPerPage = 12
 
-  // 1st request - show first 12 unarchived photos
-  $.ajax({
-    url: `/api/photos/<%= @user_id %>/${photosOffset}/${photosPage}`,
-    method: 'get'
-  }).done(res => {
-    for(let i = 0; i < res.length; i++) {             // draw 12 photos
-      let article = document.createElement('article')
-      displayBox1.append(article)
-
-      article.innerHTML = 
-      `<div class="photo-display">
-        <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-        <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
-          <a href="/photos/${res[i].id}">
-            ${res[i].name}
-          </a>
-        </div>
-      </div>`
+  const requestPhotos = (photosOffset, photosPage) => {
+    const options = {
+      url: `/api/photos/<%= @user_id %>/${photosOffset * photosPage}/${photosPage}`,
+      method: 'get'
     }
-  })
+    $.ajax(options).done(res => {
+      displayBox1.querySelectorAll('article').forEach(photo => { // clear display area for redraw
+        photo.remove()
+      }) 
+      for(let i = 0; i < res.length; i++) {             // draw 12 photos
+        let article = document.createElement('article')
+        displayBox1.append(article)
+        article.innerHTML = 
+        `<div class="photo-display">
+          <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+          <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
+            <a href="/photos/${res[i].id}">
+              ${res[i].name}
+            </a>
+          </div>
+        </div>`
+      }
+    })
+  }
+
+  // 1st request - show first 12 unarchived photos
+  requestPhotos(photosOffset, photosPage)
 
   async function getAllPhotos() {
     const options = {
@@ -362,46 +286,13 @@
         image_url: document.querySelector('.image-url').value 
       }
     }).done(() => {
-
       getAllPhotos().then(res => {
-
         let numOfPhotos = res.num_of_photos
         console.log(numOfPhotos)
-
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
-
         photosPage = lastPage // update page number
-        
-        const options = {
-          url: `/api/photos/<%= @user_id %>/${photosOffset * lastPage}/${lastPage}`,
-          method: 'get'
-        }
-
-        $.ajax(options).done(res => {
-          if(lastPage <= 10) {
-            displayBox1.querySelectorAll('article').forEach(photo => { // clear display area for redraw
-              photo.remove()
-            })  
-
-            for(let i = 0; i < res.length; i++) {             // draw 12 photos
-              let article = document.createElement('article')
-              displayBox1.append(article)
-
-              article.innerHTML = 
-              `<div class="photo-display">
-                <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-                <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
-                  <a href="/photos/${res[i].id}">
-                    ${res[i].name}
-                  </a>
-                </div>
-              </div>`
-            }
-          }
-        })
-
+        requestPhotos(photosOffset, lastPage)
       })
-
     })
   }
   uploadPhotoBtn.addEventListener('click', handleUploadPhoto)
@@ -411,45 +302,14 @@
   }
 
   const handleNext12Photos = () => {
-
     getAllPhotos().then(res => {
-
       let numOfPhotos = res.num_of_photos
       console.log(numOfPhotos)
-
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
-
-      if(photosPage < lastPage && lastPage <= 10) {
+      if(photosPage < lastPage) {
         photosPage += 1
       }
-
-      const options = {
-        url: `/api/photos/<%= @user_id %>/${photosOffset * photosPage}/${photosPage}`,
-        method: 'get'
-      }
-
-      $.ajax(options).done(res => {
-        if(photosPage <= 10) {
-          displayBox1.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
-            photo.remove()
-          })  
-
-          for(let i = 0; i < res.length; i++) {             // draw 12 photos
-            let article = document.createElement('article')
-            displayBox1.append(article)
-
-            article.innerHTML = 
-            `<div class="photo-display">
-              <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-              <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
-                <a href="/photos/${res[i].id}">
-                  ${res[i].name}
-                </a>
-              </div>
-            </div>`
-          }
-        }
-      })
+      requestPhotos(photosOffset, photosPage)
     })
   }
   loadNext12Photos.addEventListener('click', handleNext12Photos)
@@ -458,34 +318,7 @@
     if(photosPage > 1) {
       photosPage -= 1
     }
-
-    const options = {
-      url: `/api/photos/<%= @user_id %>/${photosOffset * photosPage}/${photosPage}`,
-      method: 'get'
-    }
-
-    $.ajax(options).done(res => {
-      if(photosPage >= 1) {
-        displayBox1.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
-          photo.remove()
-        })  
-
-        for(let i = 0; i < res.length; i++) {             // draw 12 photos
-          let article = document.createElement('article')
-          displayBox1.append(article)
-
-          article.innerHTML = 
-          `<div class="photo-display">
-            <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-            <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
-              <a href="/photos/${res[i].id}">
-                ${res[i].name}
-              </a>
-            </div>
-          </div>`
-        }
-      }
-    })
+    requestPhotos(photosOffset, photosPage)
   }
   loadPrev12Photos.addEventListener('click', handlePrev12Photos)
 
