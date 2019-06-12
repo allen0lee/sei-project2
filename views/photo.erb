@@ -1,0 +1,103 @@
+<div class="one-photo-page-container">
+    <div class="photo-btn-container">
+      <div class="photo-container">
+        <img src="<%= @photo.image_url %>" alt="">
+        <div class="photo-name">
+          <a><%= @photo.name %></a>
+        </div>
+      </div>
+
+      <div class="edit-delete-forms">
+        <%# edit button should show to photo owner, hidden for not photo owner %>
+        <% if session[:user_id] == @photo.user_id  %>
+          <div class="edit-photo-form">
+            <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
+              <button class="button edit-photo-btn">edit</button>
+            </form>
+          </div>
+        <% end %>
+
+        <%# delete button should show to photo owner, hidden for not photo owner %>
+        <% if session[:user_id] == @photo.user_id  %>
+          <div class="delete-photo-form">
+            <form action="/photos/<%= @photo.id %>" method="post">
+              <input type="hidden" name="photo_id" value="<%= @photo.id %>"> 
+              <input type="hidden" name="_method" value="delete">
+              <button class="button delete-photo-btn">delete</button>
+            </form>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <span>&nbsp &nbsp</span>
+
+    <div class="comment-like-container">
+      <div class="post-comment-form">
+        <form action="/comments" method="post">
+          <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+          <div class="comment-input-field">
+            <textarea name="content" placeholder="comment"></textarea>
+          </div>   
+          <div class="post-comment-btn-holder">
+            <button class="button post-comment-btn">post</button>
+          </div> 
+        </form>
+      </div>
+
+      <% if logged_in? %>
+        <div class="image-link">
+          <a href="<%= @photo.image_url %>" target="_blank">
+            image link
+          </a>
+        </div>
+      <% end %>
+
+      <div class="like-container">
+        <div class="like-btn">
+          <button class="add-like-btn"><img src="/images/heart.png" alt=""></button>
+        </div>     
+        <div class="like-holder"><%= @like.number %></div> 
+      </div>
+    </div>
+</div>
+
+
+<%# list all comments of a photo %>
+<div class="list-of-comments">
+  <% @comments.each do |comment|%>
+    <p><%= User.find_by(id: comment.user_id).email %> &nbsp &nbsp &nbsp
+      <%= comment.time %>
+    </p>
+    <div class="comment">
+      <p><%= comment.content %></p>
+    </div>
+  <% end %>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+  let addLikeBtn = document.querySelector('.add-like-btn')
+  const handleAddLike = () => {
+    const options = {
+      url: '/likes',
+      method: 'put',
+      data: {
+        photo_id: <%= @photo.id %>
+      }
+    }
+    $.ajax(options).done(res => {
+      let likeCount = document.querySelector('.like-holder')
+      likeCount.textContent = res.like_count
+    })
+  }
+  addLikeBtn.addEventListener('click', handleAddLike)
+
+</script>
+
+
+
+
+
+
+

@@ -132,7 +132,7 @@ get '/photos/:id' do
     @like = Like.find_by(photo_id: params[:id])
   end
   @comments = Comment.where(photo_id: @photo.id)
-  erb :one_photo
+  erb :photo
 end
 # create a comment of a photo
 post '/comments' do
@@ -152,10 +152,15 @@ end
 put '/likes' do
   like = Like.find_by(photo_id: params[:photo_id])
   like.photo_id = params[:photo_id]
-  num_of_likes = like.number
-  like.number = num_of_likes + 1
+  like.number += 1
   like.save
-  redirect "/photos/#{like.photo_id}"
+
+  content_type :json
+  {
+    like_count: like.number
+  }.to_json 
+  
+  # redirect "/photos/#{like.photo_id}"
 end
 
 # edit a photo

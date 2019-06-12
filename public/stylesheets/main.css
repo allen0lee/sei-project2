@@ -240,7 +240,7 @@ header {
     justify-content: center;
     padding-top: 30px;
     background-color: snow;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .photo-btn-container {
