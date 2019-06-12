@@ -228,17 +228,7 @@ header {
 }
 
 
-.upload-photo {
-    text-align: center;
-    margin: 10px 0 0 20px;
-}
-
-.group-photo {
-    margin: 10px 0 0 20px;
-    text-align: center;
-}
-
-.create-album {
+.upload-photo, .group-photo, .create-album, .ungroup-photo {
     text-align: center;
     margin: 10px 0 0 20px;
 }

@@ -328,13 +328,10 @@
   let groupPhotoBtn = document.querySelector('.group-photo-btn')
   const handleGroupPhotos = () => {
     let selectedPhotos = document.querySelectorAll('.selected')
-
     let selectedAlbumId = document.querySelector('.albums-list').value
-    
     let selectedPhotosIds = Array.from(selectedPhotos).map(photo => photo.getAttribute('data-photo-id')) // ["255", "256"]
-    
     $.ajax({
-      url: `/photos-move-to-album`, 
+      url: `/photos-move-in-album`, 
       method: 'put',
       data: {
         id: selectedPhotosIds, // array of selected photos' ids

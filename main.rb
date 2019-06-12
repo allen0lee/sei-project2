@@ -281,11 +281,21 @@ get '/api/photos/:user_id' do
 end
 
 # group an unarchived photo into an album
-put '/photos-move-to-album' do
+put '/photos-move-in-album' do
   # array
   params[:id].each do |id|
     photo = Photo.find_by(id: id)
     photo.album_id = params[:album_id]
+    photo.save
+  end
+end
+
+# move photos out of an album
+put '/photos-move-out-album' do
+  # array
+  params[:id].each do |id|
+    photo = Photo.find_by(id: id)
+    photo.album_id = nil
     photo.save
   end
 end

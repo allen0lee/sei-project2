@@ -5,12 +5,18 @@
 <div class="all-photos-container">
     <div class="display-box"></div>
 
-    <%# upload photo button should show to album owner, hidden for not album owner %>
-    <% if @user_id == @album.user_id  %>
-        <div class="upload-photo">
-          <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
-        </div>
-    <% end %>
+  <%# upload photo button should show to album owner, hidden for not album owner %>
+  <% if @user_id == @album.user_id  %>
+    <div>
+      <div class="upload-photo">
+        <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
+      </div>
+
+      <div class="ungroup-photo">
+        <button class="button ungroup-photo-btn">ungroup photos</button>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <div>
@@ -22,23 +28,23 @@
   <span class="close-upload-photo-form-btn">&times</span>
   
   <div>
-      <label for="">name</label>
-      <input class="image-name" type="text" name="name" required>    
+    <label for="">name</label>
+    <input class="image-name" type="text" name="name" required>    
   </div>
   
   <div>
-      <label for="">image url</label>
-      <input class="image-url" type="text" name="image_url" required>   
+    <label for="">image url</label>
+    <input class="image-url" type="text" name="image_url" required>   
   </div>
 
   <div>
-      <button class="button upload-photo-btn" onclick="closeUploadPhotoForm()">upload photo</button>
+    <button class="button upload-photo-btn" onclick="closeUploadPhotoForm()">upload photo</button>
   </div>
 </div>
 
 <div class="enlarged-image-container">
-    <span class="close-image-btn">&times</span>
-    <img id="enlargedImg">
+  <span class="close-image-btn">&times</span>
+  <img id="enlargedImg">
 </div>
 
 
@@ -97,7 +103,7 @@
         article.innerHTML = 
         `<div class="photo-display">
           <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
-          <div class="photo-name">
+          <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
             <a href="/photos/${res[i].id}">
               ${res[i].name}
             </a>
@@ -168,6 +174,33 @@
   closeUploadPhotoForm = () => { 
     uploadPhotoForm.style.display = 'none'
   }
+
+  const selectPhoto = (photo) => {
+    photo.classList.toggle('selected')
+  }
+
+  let ungroupPhotoBtn = document.querySelector('.ungroup-photo-btn')
+  const handleUngroupPhotos = () => {
+    let selectedPhotos = document.querySelectorAll('.selected')
+    let selectedPhotosIds = Array.from(selectedPhotos).map(photo => photo.getAttribute('data-photo-id')) // ["255", "256"]
+    $.ajax({
+      url: `/photos-move-out-album`, 
+      method: 'put',
+      data: {
+        id: selectedPhotosIds, // array of selected photos' ids
+        album_id: null
+      }
+    }).done(() => {
+      getAllPhotos().then(res => {
+        let numOfPhotos = res.num_of_photos
+        console.log(numOfPhotos)
+        let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+        page = lastPage // update page number
+        requestPhotos(offset, lastPage)
+      })
+    })  
+  }
+  ungroupPhotoBtn.addEventListener('click', handleUngroupPhotos)
 
 </script>
 
