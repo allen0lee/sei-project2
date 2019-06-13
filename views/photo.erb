@@ -31,15 +31,15 @@
 
   <div class="comment-like-container">
     <div class="post-comment-form">
-        <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+      <input type="hidden" name="photo_id" value="<%= @photo.id %>">
 
-        <div class="comment-input-field">
-          <textarea class="content" name="content" placeholder="comment"></textarea>
-        </div>   
+      <div class="comment-input-field">
+        <textarea class="content" name="content" placeholder="comment"></textarea>
+      </div>   
 
-        <div class="post-comment-btn-holder">
-          <button class="button post-comment-btn">post</button>
-        </div> 
+      <div class="post-comment-btn-holder">
+        <button class="button post-comment-btn">post</button>
+      </div> 
     </div>
 
     <% if logged_in? %>

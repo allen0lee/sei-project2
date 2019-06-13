@@ -16,7 +16,7 @@
         <button class="button ungroup-photo-btn">ungroup photos</button>
       </div>
     </div>
-  <% elsif @user_id != @album.user_id  %>
+  <% elsif @user_id != @album.user_id && @user_id != nil %>
     <div class="bookmark-photos">
       <button class="button bookmark-photos-btn">bookmark photos</button>
     </div>
@@ -162,15 +162,19 @@
   loadNext12Photos.addEventListener('click', handleNext)
   loadPrev12Photos.addEventListener('click', handlePrev)
 
-
   let uploadPhotoBtn = document.querySelector('.upload-photo-btn')
   const handleUploadPhoto = () => {
+    let userId = <%= @user_id %>
+    <% if !logged_in? %>
+      userId = null
+    <% end %>
+
     $.ajax({
       url: '/photos/<%= @album_id %>/<%= @user_id %>',
       method: 'post',
       data: {
         album_id: <%= @album_id %>,
-        user_id: <%= @user_id %>,
+        user_id: userId,
         name: document.querySelector('.image-name').value,
         image_url: document.querySelector('.image-url').value 
       }
@@ -215,10 +219,9 @@
       })
     })  
   }
-  if(<%= @user_id %> == <%= @album.user_id %>) {
-    ungroupPhotoBtn.addEventListener('click', handleUngroupPhotos)    
-  }
-
+  <% if logged_in?  && @user_id == @album.user_id %>
+    ungroupPhotoBtn.addEventListener('click', handleUngroupPhotos) 
+  <% end %>
 
 </script>
 
