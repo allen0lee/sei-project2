@@ -16,11 +16,16 @@
         <button class="button ungroup-photo-btn">ungroup photos</button>
       </div>
     </div>
+  <% elsif @user_id != @album.user_id  %>
+    <div class="bookmark-photos">
+      <button class="button bookmark-photos-btn">bookmark photos</button>
+    </div>
   <% end %>
 </div>
 
 <div class="prev-next">
   <a class="prev-12-photos">prev</a>
+  <span class="page">1</span>
   <a class="next-12-photos">next</a>
 </div>
 
@@ -50,16 +55,21 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-  const enlargeImage = (img) => {
+  let displayBox = document.querySelector('.display-box')
+  const enlargeImage = (event) => {
     let enlargedImageBackground = document.querySelector('.enlarged-image-container')
-    let enlargeImg = document.getElementById('enlargedImg')
-    enlargedImageBackground.style.display = 'block'
-    enlargeImg.src = img.src
+    if(event.target.classList.contains('img')) {
+      let enlargeImg = document.getElementById('enlargedImg')
+      enlargedImageBackground.style.display = 'block'
+      let imgHolder = event.target.closest('.img-holder')
+      enlargeImg.src = imgHolder.querySelector('.img').src
+    }
     let span = document.querySelector('.close-image-btn')
     span.onclick = () => { 
       enlargedImageBackground.style.display = 'none'
     }
   }
+  displayBox.addEventListener('click', enlargeImage)
 
   let uploadPhotoForm = document.querySelector('.upload-photo-form')
   const openUploadPhotoForm = () => {
@@ -83,7 +93,6 @@
 
   let loadNext12Photos = document.querySelector('.next-12-photos')
   let loadPrev12Photos = document.querySelector('.prev-12-photos')
-  let displayBox = document.querySelector('.display-box')
   let offset = 12 
   let page = 1    // increase up to 10
   let photosPerPage = 12
@@ -102,7 +111,9 @@
         displayBox.append(article)
         article.innerHTML = 
         `<div class="photo-display">
-          <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+          <div class="img-holder">
+            <img class="img" src="${res[i].image_url}" alt="">
+          </div>
           <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
             <a href="/photos/${res[i].id}">
               ${res[i].name}
@@ -132,6 +143,8 @@
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max set to 10?
       if(page < lastPage) {
         page += 1
+        let setPage = document.querySelector('.page')
+        setPage.textContent = page
       }
       requestPhotos(offset, page)
     })
@@ -140,6 +153,8 @@
   const handlePrev = () => {
     if(page > 1) {
       page -= 1
+      let setPage = document.querySelector('.page')
+      setPage.textContent = page
     }
     requestPhotos(offset, page)
   }

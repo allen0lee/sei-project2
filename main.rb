@@ -45,10 +45,6 @@ delete '/session' do
   redirect '/'
 end
 
-# page that lists all users' albums - albums.erb
-get '/albums' do
-  erb :albums
-end
 
 # page that lists one user's albums - dashboard
 get '/albums/:user_id' do
@@ -176,11 +172,23 @@ post '/users' do
 end
 
 
-# api for all albums - show 16 per page
-get '/api/albums' do
-  albums = Album.all
+# api for all albums - show 16 per page, offset is 16
+get '/api/albums/:offset/:page' do
+  albums_per_page = 16
+  all_albums = Album.all
+  page_start = albums_per_page * (params[:page].to_i - 1)
+  page_end = params[:offset].to_i - 1
+  albums = all_albums[page_start..page_end]
   content_type :json
   albums.to_json
+end
+
+# api for number of all albums
+get '/api/albums' do
+  content_type :json
+  {
+    num_of_albums: Album.all.length
+  }.to_json
 end
 
 # api for one user's all albums - show 8 per page, offset is 8 - in dashboard
@@ -226,7 +234,6 @@ post '/photos/:user_id' do
   photo.name = params[:name]
   photo.image_url = params[:image_url]
   photo.user_id = params[:user_id]
-
   if photo.name != "" && photo.image_url != ""
     photo.save
   end

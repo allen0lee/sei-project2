@@ -19,7 +19,6 @@
     <div class="nav-bar">
       <nav>
         <div><a href="/">Home</a></div>
-        <div><a href="/albums">Albums</a></div>
 
       <% if logged_in? %>
         <form action="/albums/<%= current_user.id %>">

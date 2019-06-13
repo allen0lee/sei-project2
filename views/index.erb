@@ -1,14 +1,98 @@
 <div class="index-container">
-  <h1>Photos Sharing</h1>
+  <h1>imgAlb</h1>
 
   <div class="search-container">
     <div class="search-input-field">
-      <input type="text" name="title" placeholder="image">
+      <input type="text" name="title" placeholder="image#album">
     </div>
     <form action="">
       <div class="search-btn">
         <button><img src="/images/search.png" alt=""></button>
       </div>
     </form>
+  </div>
+
+  <div class="all-albums-container">
+    <div class="display-box"></div>
+  </div>
+  
+  <div class="home-prev-next">
+    <a class="prev-16-albums">prev</a>
+    <span class="albums-page">1</span>
+    <a class="next-16-albums">next</a>
   </div>   
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+  async function getNumOfAllAlbums() {
+    const options = {
+      url: '/api/albums',
+      method: 'get'
+    } 
+    return await $.ajax(options)
+  }
+
+  let loadNext16Albums = document.querySelector('.next-16-albums')
+  let loadPrev16Albums = document.querySelector('.prev-16-albums')
+  let displayBox = document.querySelector('.display-box')
+  let offset = 16 
+  let page = 1    
+  let albumsPerPage = 16
+
+  const requestAlbums = (offset, page) => {
+    const options = {
+      url: `/api/albums/${offset * page}/${page}`,
+      method: 'get'
+    }
+    $.ajax(options).done(res => {
+      displayBox.querySelectorAll('article').forEach(album => { // clear prev 16 albums
+        album.remove()
+      })  
+      for(let i = 0; i < res.length; i++) {             // show 16 albums
+        let article = document.createElement('article')
+        displayBox.append(article)
+        article.innerHTML = 
+        `<div class="album-container">
+          <img src="${res[i].theme_image_url}" alt="">
+          <div class="album-name">
+            <a href="/photos/${res[i].name}/${res[i].id}">
+              ${res[i].name}
+            </a>
+          </div>
+        </div>`
+      }
+    })    
+  }
+
+  // 1st request - show first 16 albums
+  requestAlbums(offset, page)
+
+  const handleNext16Albums = () => {
+    getNumOfAllAlbums().then(res => {
+      let numOfAlbums = res.num_of_albums
+      let lastPage = Math.ceil(numOfAlbums/albumsPerPage)
+      if(page < lastPage) {
+        page += 1
+        let setAlbumsPage = document.querySelector('.albums-page')
+        setAlbumsPage.textContent = page
+      }
+      requestAlbums(offset, page)
+    })
+  }
+  loadNext16Albums.addEventListener('click', handleNext16Albums)
+
+  const handlePrev16Albums = () => {
+    if(page > 1) {
+      page -= 1
+      let setAlbumsPage = document.querySelector('.albums-page')
+      setAlbumsPage.textContent = page
+    }
+    requestAlbums(offset, page)
+  }
+  loadPrev16Albums.addEventListener('click', handlePrev16Albums)
+
+</script>
+
+

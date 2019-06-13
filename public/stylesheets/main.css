@@ -23,7 +23,7 @@ textarea {
 
 h1 {
   font-family: 'Playball', cursive;
-  font-style: italic;
+  /* font-style: italic; */
   font-size: 40px;
   color: crimson;
 }
@@ -123,10 +123,10 @@ header {
 }
 
 .album-name {
-  height: 40px;
-  line-height: 40px;
+  height: 50px;
+  line-height: 50px;
   text-align: center; 
-  /* background-color: ivory; */
+  display: block;
 }
 
 .album-name a {
@@ -149,6 +149,8 @@ header {
   height: 200px;
   cursor: pointer;
   object-fit: cover; /* keep image aspect ratio when resizing */
+  display: block;
+  /* vertical-align: bottom; */
 }
 
 .photo-container {
@@ -161,14 +163,15 @@ header {
   height: 200px;
   cursor: pointer;
   object-fit: cover; /* keep image aspect ratio when resizing */
+  border-radius: 20px;
+  border: 7px solid lightgray;
 }
 
 .photo-name {
-  height: 40px;
-  line-height: 40px;
+  height: 50px;
+  line-height: 50px;
   text-align: center; 
   cursor: pointer;
-  /* background-color: ivory; */
 }
 
 .photo-name a {
@@ -227,7 +230,7 @@ header {
 }
 
 
-.upload-photo, .group-photo, .create-album, .ungroup-photo {
+.upload-photo, .group-photo, .create-album, .ungroup-photo, .bookmark-photos {
   text-align: center;
   margin: 10px 0 0 20px;
 }
@@ -321,7 +324,7 @@ header {
 
 .index-container {
   text-align: center;
-  padding-top: 10px;
+  padding-top: 0.5px;
 }
 
 .search-container {
@@ -331,7 +334,7 @@ header {
 
 .search-input-field input {
   height: 34px;
-  width: 400px;
+  width: 250px;
 }
 
 .search-btn button {
@@ -339,10 +342,6 @@ header {
   padding: 0; 
   background: none;
   cursor: pointer;
-}
-
-.login-form { /* in home page */
-  margin-top: 30px;
 }
 
 
@@ -376,8 +375,10 @@ header {
 }
 
 .login-form {
-  margin-top: 30px;
+  padding-top: 1%;
   text-align: center;
+  background-color: snow;
+  height: 100vh;
 }
 
 .login-form label {
@@ -447,8 +448,10 @@ header {
 
 
 .create-new-user-form {
-  margin-top: 30px;
+  padding-top: 1%;
   text-align: center;
+  background-color: snow;
+  height: 100vh;
 }
 
 .create-new-user-form label {
@@ -501,3 +504,10 @@ header {
   padding-bottom: 10px;
   cursor: pointer;
 }
+
+.home-prev-next {
+  background-color: snow;
+  cursor: pointer;
+  padding: 1.5% 0 1.5% 0;
+}
+

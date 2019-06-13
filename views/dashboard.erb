@@ -1,7 +1,6 @@
 <%# list one user's all albums and unarchived photos %>
 
 <div class="dashboard-albums-container"> 
-  <%# <label for="">&nbsp</label> %>
   <div class="display-box"></div>
 
   <div class="create-album">  
@@ -11,6 +10,7 @@
 
 <div class="prev-next">
   <a class="prev-8-albums">prev</a>
+  <span class="albums-page">1</span>
   <a class="next-8-albums">next</a>
 </div>
 
@@ -49,6 +49,7 @@
 
 <div class="prev-next">
   <a class="prev-12-photos">prev</a>
+  <span class="photos-page">1</span>
   <a class="next-12-photos">next</a>
 </div>
 
@@ -123,16 +124,21 @@
     }
   }
 
-  const enlargeImage = (img) => {
+  let displayBox1 = document.querySelector('.display-box1')
+  const enlargeImage = (event) => {
     let enlargedImageBackground = document.querySelector('.enlarged-image-container')
-    let enlargeImg = document.getElementById('enlargedImg')
-    enlargedImageBackground.style.display = 'block'
-    enlargeImg.src = img.src
+    if(event.target.classList.contains('img')) {
+      let enlargeImg = document.getElementById('enlargedImg')
+      enlargedImageBackground.style.display = 'block'
+      let imgHolder = event.target.closest('.img-holder')
+      enlargeImg.src = imgHolder.querySelector('.img').src
+    }
     let span = document.querySelector('.close-image-btn')
     span.onclick = () => { 
       enlargedImageBackground.style.display = 'none'
     }
   }
+  displayBox1.addEventListener('click', enlargeImage)
 
   async function getAllAlbums() {
     const options = {
@@ -184,6 +190,8 @@
       let lastPage = Math.ceil(numOfAlbums/albumsPerPage) // max set to 10 ?
       if(albumsPage < lastPage) {
         albumsPage += 1
+        let setAlbumsPage = document.querySelector('.albums-page')
+        setAlbumsPage.textContent = albumsPage
       }
       requestAlbums(albumsOffset, albumsPage)
     })
@@ -193,6 +201,8 @@
   const handlePrev8Albums = () => {
     if(albumsPage > 1) {
       albumsPage -= 1
+      let setAlbumsPage = document.querySelector('.albums-page')
+      setAlbumsPage.textContent = albumsPage
     }
     requestAlbums(albumsOffset, albumsPage)
   }
@@ -228,7 +238,6 @@
 
   let loadNext12Photos = document.querySelector('.next-12-photos')
   let loadPrev12Photos = document.querySelector('.prev-12-photos')
-  let displayBox1 = document.querySelector('.display-box1')
   let photosOffset = 12 
   let photosPage = 1    // increase up to 10
   let photosPerPage = 12
@@ -247,7 +256,9 @@
         displayBox1.append(article)
         article.innerHTML = 
         `<div class="photo-display">
-          <img src="${res[i].image_url}" alt="" onclick="enlargeImage(this)">
+          <div class="img-holder">
+            <img class="img" src="${res[i].image_url}" alt="">
+          </div>
           <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
             <a href="/photos/${res[i].id}">
               ${res[i].name}
@@ -303,6 +314,8 @@
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
       if(photosPage < lastPage) {
         photosPage += 1
+        let setPhotosPage = document.querySelector('.photos-page')
+        setPhotosPage.textContent = photosPage
       }
       requestPhotos(photosOffset, photosPage)
     })
