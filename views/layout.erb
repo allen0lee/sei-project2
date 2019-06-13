@@ -6,32 +6,35 @@
   <link rel='stylesheet' href='/stylesheets/main.css'>
 </head>
 <body>
-
   <header>
-      <div class="login-infor">
-        <span>&nbsp</span>
-        <% if logged_in? %>
-            <span><%= current_user.email %></span> 
-        <% end %>
-      </div> 
+    <div class="login-infor">
+      <span>&nbsp</span>
+      <% if logged_in? %>
+        <span><%= current_user.email %></span> 
+      <% end %>
+    </div> 
 
-      <div class="icon"><img src="https://tripletsisters.files.wordpress.com/2013/11/ios-7-photo-icon-pn.png?w=514&h=514"></div>       
+    <div class="icon"><img src="https://tripletsisters.files.wordpress.com/2013/11/ios-7-photo-icon-pn.png?w=514&h=514"></div>       
       
-      <div class="nav-bar">
-        <nav>
-          <div><a href="/">Home</a></div>
-          <div><a href="/albums">Albums</a></div>
-          <%# <div><a href="/about">About</a></div>  %>
+    <div class="nav-bar">
+      <nav>
+        <div><a href="/">Home</a></div>
+        <div><a href="/albums">Albums</a></div>
 
-          <% if logged_in? %>
-            <form action="/session" method="post">
-              <input type="hidden" name="_method" value="delete">
-              <div class="logout-btn"><button>Logout</button></div>     
-            </form>
-          <% end %>
+      <% if logged_in? %>
+        <form action="/albums/<%= current_user.id %>">
+          <div class="dashboard-btn"><button>Dashboard</button></div>
+        </form>
 
-        </nav>
-      </div>
+        <form action="/session" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <div class="logout-btn"><button>Logout</button></div>     
+        </form>
+      <% else %>
+        <div><a href="/login">Login</a></div>
+      <% end %>
+      </nav>
+    </div>
   </header>
 
   <%= yield %>

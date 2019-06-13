@@ -1,35 +1,14 @@
 <div class="index-container">
-    <h1>Photos Sharing</h1>
+  <h1>Photos Sharing</h1>
 
-    <div class="search-container">
-        <div class="search-input-field">
-            <input type="text" name="title" placeholder="image">
-        </div>
-        <form action="">
-            <div class="search-btn">
-                <button><img src="/images/search.png" alt=""></button>
-            </div>
-        </form>
+  <div class="search-container">
+    <div class="search-input-field">
+      <input type="text" name="title" placeholder="image">
     </div>
-
-    <% if !logged_in? %>
-        <div class="login-form">
-            <form action="/login">
-                <button class="button login-btn">login</button>
-            </form>
-        </div>
-    <% elsif logged_in? %>
-        <div class="own-albums-form">
-            <form action="/albums/<%= current_user.id %>">
-                <button class="button own-albums-btn">dashboard</button>
-            </form>
-        </div>
-    <% end %>
-
-    <%# <div class="all-albums-form">
-        <form action="/albums">
-            <button class="button all-albums-btn">all albums</button>
-        </form>
-    </div> %>
-    
+    <form action="">
+      <div class="search-btn">
+        <button><img src="/images/search.png" alt=""></button>
+      </div>
+    </form>
+  </div>   
 </div>

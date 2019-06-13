@@ -1,389 +1,389 @@
 @import url('https://fonts.googleapis.com/css?family=Crimson+Text|Playball');
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: lightgrey;
-    font-family: Raleway;
-    margin: 0;
-    padding: 0 10% 0 10%;
+  background-color: lightgrey;
+  font-family: Raleway;
+  margin: 0;
+  padding: 0 10% 0 10%;
 }
 
 input {
-    font-family: 'Crimson Text', serif;
-    font-size: 15px;
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
 }
 
 textarea {
-    font-family: 'Crimson Text', serif;
-    font-size: 15px;
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
 }
 
 h1 {
-    font-family: 'Playball', cursive;
-    font-style: italic;
-    font-size: 40px;
-    color: crimson;
+  font-family: 'Playball', cursive;
+  font-style: italic;
+  font-size: 40px;
+  color: crimson;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 header {
-    background: url('/images/snow.jpg');
-    background-size: cover;
+  background: url('/images/snow.jpg');
+  background-size: cover;
 }
 
 .icon {
-    /* padding-top: 5px; */
-    text-align: center;
+  /* padding-top: 5px; */
+  text-align: center;
 }
 
 .icon img {
-    width: 10%;
+  width: 10%;
 }
 
 .nav-bar {
-    background-color: black;
-    opacity: 0.6;
-    display: flex;
+  background-color: black;
+  opacity: 0.6;
+  display: flex;
 }
 
 .nav-bar nav {
-    display: flex;                
-    flex-direction: row;
-    margin: 0 auto;    
+  display: flex;                
+  flex-direction: row;
+  margin: 0 auto;    
 }
 
 .nav-bar nav div {
-    margin: 0 10px 0 10px;
+  margin: 0 10px 0 10px;
 }
 
 .nav-bar a {
-    color: white;
-    font-size: 20px;
-    font-family: 'Crimson Text', serif;
+  color: white;
+  font-size: 20px;
+  font-family: 'Crimson Text', serif;
 }
 
 /* style logout-btn to look like a link */
-.logout-btn button {
-    border: none; 
-    padding: 0; 
-    background: none;
-    color: white;
-    font-family: 'Crimson Text', serif;
-    font-size: 20px;
-    cursor: pointer;
+.logout-btn button, .dashboard-btn button {
+  border: none; 
+  padding: 0; 
+  background: none;
+  color: white;
+  font-family: 'Crimson Text', serif;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .logout-btn {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .login-infor {
-    /* color: black;
-    float: right; align div to right side and responsive */
-    text-align: right;
+  color: snow;
+  /* float: right; align div to right side and responsive */
+  text-align: right;
 }
 
 .index-container {
-    background-color: snow;
-    height: 100vh;
+  background-color: snow;
+  height: 100vh;
 }
 
 
 .display-box, .display-box1 {
-    display: grid; 
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    border: 1px solid black;
-    width: 90%;
-    padding: 5px;
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  border: 1px solid black;
+  width: 90%;
+  padding: 5px;
 }
 
 .all-albums-container, .dashboard-albums-container, .dashboard-photos-container, .all-photos-container {
-    display: flex;
-    justify-content: center;
-    padding: 2% 5% 3% 5%;
-    background-color: snow;
+  display: flex;
+  justify-content: center;
+  padding: 2% 5% 0 5%;
+  background-color: snow;
 }
 
 .album-container {
-    border: 1px solid black;
-    margin: 5px;
-    /* width: 200px; */
+  border: 1px solid black;
+  margin: 5px;
+  /* width: 200px; */
 }
 
 .album-container img {
-    width: 100%;
-    /* height: 200px; */
-    object-fit: cover; /* keep image aspect ratio when resizing */
+  width: 100%;
+  /* height: 200px; */
+  object-fit: cover; /* keep image aspect ratio when resizing */
 }
 
 .album-name {
-    height: 40px;
-    line-height: 40px;
-    text-align: center; 
-    /* background-color: ivory; */
+  height: 40px;
+  line-height: 40px;
+  text-align: center; 
+  /* background-color: ivory; */
 }
 
 .album-name a {
-    color: black;
+  color: black;
 }
 
 .album-container:hover {
-    border: 1px solid gold;
+  border: 1px solid gold;
 }
 
 
 .photo-display {
-    border: 1px solid black;
-    margin: 5px;
-    /* width: 200px; */
+  border: 1px solid black;
+  margin: 5px;
+  /* width: 200px; */
 }
 
 .photo-display img {
-    width: 100%;
-    height: 200px;
-    cursor: pointer;
-    object-fit: cover; /* keep image aspect ratio when resizing */
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  object-fit: cover; /* keep image aspect ratio when resizing */
 }
 
 .photo-container {
-    border: 1px solid black;
-    margin: 5px;
-    width: 200px;
+  margin: 5px;
+  width: 200px;
 }
 
 .photo-container img {
-    width: 100%;
-    height: 200px;
-    cursor: pointer;
-    object-fit: cover; /* keep image aspect ratio when resizing */
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  object-fit: cover; /* keep image aspect ratio when resizing */
 }
 
 .photo-name {
-    height: 40px;
-    line-height: 40px;
-    text-align: center; 
-    cursor: pointer;
-    /* background-color: ivory; */
+  height: 40px;
+  line-height: 40px;
+  text-align: center; 
+  cursor: pointer;
+  /* background-color: ivory; */
 }
 
 .photo-name a {
-    color: black;
+  color: black;
 }
 
 .show-edit-delete {
 
 }
 
-.photo-container:hover, .photo-display:hover {
-    border: 1px solid gold;
+.photo-display:hover {
+  border: 1px solid gold;
 }
 
 .enlarged-image-container {
-    text-align: center;
-    display: none;
-    position: fixed; 
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.9);
+  text-align: center;
+  display: none;
+  position: fixed; 
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.9);
 }
 
 #enlargedImg {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 /* animation effect */
 #enlargedImg {  
-    animation-name: zoom;
-    animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
 }
 @keyframes zoom {
-    from {transform:scale(0)} 
-    to {transform:scale(1)}
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
 }
 
 /* close button */
 .close-image-btn, .close-upload-photo-form-btn, .close-create-album-form-btn, .close-group-photo-form-btn {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 .close-image-btn:hover, .close-image-btn:focus, .close-upload-photo-form-btn:hover, .close-upload-photo-form-btn:focus, .close-create-album-form-btn:hover, .close-create-album-form-btn:focus, .close-group-photo-form-btn:hover, .close-group-photo-form-btn:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 
 .upload-photo, .group-photo, .create-album, .ungroup-photo {
-    text-align: center;
-    margin: 10px 0 0 20px;
+  text-align: center;
+  margin: 10px 0 0 20px;
 }
 
 
 .one-photo-page-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-top: 30px;
-    background-color: snow;
-    /* height: 100vh; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 2%;
+  background-color: snow;
+  /* height: 100vh; */
 }
 
 .photo-btn-container {
-    text-align: center;
+  text-align: center;
 }
 
 .edit-delete-forms {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .edit-photo-form {
-    /* margin-left: 20px; */
+  /* margin-left: 20px; */
 }
 
 .delete-photo-form {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .comment-like-container {
-    padding-top: 5px;
-    text-align: center;
-    /* padding-left: 20px; */
+  padding-top: 5px;
+  text-align: center;
+  /* padding-left: 20px; */
 }
 
 .post-comment-form {
-    /* margin-top: 10px; */
-    /* text-align: center; */
+  /* margin-top: 10px; */
+  /* text-align: center; */
 }
 
 .comment-input-field textarea {
-    width: 22rem;
-    height: 100px;
+  width: 22rem;
+  height: 100px;
 }
 
 .post-comment-btn-holder {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .image-link {
-    margin-top: 10px;
-    text-align: center;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .like-container {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .like-btn {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .like-btn button {
-    border: none; 
-    padding: 0; 
-    background: none;
-    cursor: pointer;
+  border: none; 
+  padding: 0; 
+  background: none;
+  cursor: pointer;
 }
 
 .like-holder {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .list-of-comments {
-    padding-top: 10px;
-    width: 500px;
-    margin: auto;
+  padding: 3% 20% 10% 20%;
+  /* margin: auto; */
+  text-align: left;
+  background-color: snow;
 }
 
 .comment {
-    border-bottom: 1px solid gray;
-    padding-left: 20px;
+  border-bottom: 1px solid gray;
+  padding-left: 20px;
 }
 
 
 .index-container {
-    text-align: center;
-    padding-top: 10px;
+  text-align: center;
+  padding-top: 10px;
 }
 
 .search-container {
-    display: flex;
-    justify-content: center; /* center 2 divs and responsive */
+  display: flex;
+  justify-content: center; /* center 2 divs and responsive */
 }
 
 .search-input-field input {
-    height: 34px;
-    width: 400px;
+  height: 34px;
+  width: 400px;
 }
 
 .search-btn button {
-    border: none; 
-    padding: 0; 
-    background: none;
-    cursor: pointer;
+  border: none; 
+  padding: 0; 
+  background: none;
+  cursor: pointer;
 }
 
-.login-form, .own-albums-form { /* in home page */
-    margin-top: 30px;
+.login-form { /* in home page */
+  margin-top: 30px;
 }
 
 
 .button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    transition-duration: 0.4s;
-    cursor: pointer;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
 .delete-photo-btn {
-    background-color: #f44336;
+  background-color: #f44336;
 }
 
-.login-btn:hover, .own-albums-btn:hover, .create-albums-btn:hover, .sign-up-btn:hover, 
+.login-btn:hover, .create-albums-btn:hover, .sign-up-btn:hover, 
 .upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover, 
 .update-photo-btn:hover, .create-account-btn:hover {
-    background-color: ivory;
-    color: #4CAF50;
+  background-color: ivory;
+  color: #4CAF50;
 }
 
 .delete-photo-btn:hover {
-    background-color: ivory;
-    color: #f44336;
+  background-color: ivory;
+  color: #f44336;
 }
 
 .login-form {
-    margin-top: 30px;
-    text-align: center;
+  margin-top: 30px;
+  text-align: center;
 }
 
 .login-form label {
-    display: inline-block;
-    width: 80px;
-    text-align: left;
+  display: inline-block;
+  width: 80px;
+  text-align: left;
 }
 
 .login-form input {
@@ -392,103 +392,112 @@ header {
 }
 
 .login-form div {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 
 .upload-photo-form, .create-album-form, .group-photo-form {
-    display: none;
-    padding-top: 10rem; 
-    text-align: center;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0,0,0,0.85); 
+  display: none;
+  padding-top: 10rem; 
+  text-align: center;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.85); 
 }
 
 .upload-photo-form label, .create-album-form label, .group-photo-form label {
-    display: inline-block;
-    width: 110px;
-    text-align: left;
-    color: white;
+  display: inline-block;
+  width: 110px;
+  text-align: left;
+  color: white;
 }
 
 .upload-photo-form input, .create-album-form input, .group-photo-form input {
-    height: 25px;
-    width: 250px;
+  height: 25px;
+  width: 250px;
 }
 
 .upload-photo-form div, .create-album-form div, .group-photo-form div {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 
 .handle-edit-photo-form {
-    margin-top: 60px;
-    text-align: center;
+  margin-top: 60px;
+  text-align: center;
 }
 
 .handle-edit-photo-form label {
-    display: inline-block;
-    width: 110px;
-    text-align: left;
+  display: inline-block;
+  width: 110px;
+  text-align: left;
 }
 
 .handle-edit-photo-form input {
-    height: 25px;
-    width: 300px;
+  height: 25px;
+  width: 300px;
 }
 
 .handle-edit-photo-form div {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 
 .create-new-user-form {
-    margin-top: 30px;
-    text-align: center;
+  margin-top: 30px;
+  text-align: center;
 }
 
 .create-new-user-form label {
-    display: inline-block;
-    width: 120px;
-    text-align: left;
+  display: inline-block;
+  width: 120px;
+  text-align: left;
 }
 
 .create-new-user-form input {
-    height: 25px;
-    width: 200px;
+  height: 25px;
+  width: 200px;
 }
 
 .create-new-user-form div {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 
 /* @media (max-width: 400px) {
-    .nav-bar nav {
-        display: flex;
-        flex-wrap: wrap;
-    }    
+  .nav-bar nav {
+    display: flex;
+    flex-wrap: wrap;
+  }    
 } */
 
 @media only screen and (max-width: 30rem) {
-    .display-box, .display-box1 {
-        /* display: grid; */
-        grid-template-columns: 1fr;
-    }
+  .display-box, .display-box1 {
+    /* display: grid; */
+    grid-template-columns: 1fr;
+  }
 
-    .comment-input-field textarea {
-        width: 20rem;
-    }
+  .comment-input-field textarea {
+    width: 20rem;
+  }
 }
 
 .label {
-    background-color: snow;
+  background-color: snow;
 }
 
 .selected {
-    background-color: lightgreen;
+  background-color: lightgreen;
+}
+
+.prev-next {
+  background-color: snow;
+  text-align: left;
+  padding-left: 5%;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  cursor: pointer;
 }

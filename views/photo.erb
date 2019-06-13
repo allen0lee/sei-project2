@@ -1,69 +1,62 @@
 <div class="one-photo-page-container">
-    <div class="photo-btn-container">
-      <div class="photo-container">
-        <img src="<%= @photo.image_url %>" alt="">
-        <div class="photo-name">
-          <a><%= @photo.name %></a>
-        </div>
-      </div>
-
-      <div class="edit-delete-forms">
-        <%# edit button should show to photo owner, hidden for not photo owner %>
-        <% if session[:user_id] == @photo.user_id  %>
-          <div class="edit-photo-form">
-            <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
-              <button class="button edit-photo-btn">edit</button>
-            </form>
-          </div>
-        <% end %>
-
-        <%# delete button should show to photo owner, hidden for not photo owner %>
-        <% if session[:user_id] == @photo.user_id  %>
-          <div class="delete-photo-form">
-            <form action="/photos/<%= @photo.id %>" method="post">
-              <input type="hidden" name="photo_id" value="<%= @photo.id %>"> 
-              <input type="hidden" name="_method" value="delete">
-              <button class="button delete-photo-btn">delete</button>
-            </form>
-          </div>
-        <% end %>
-      </div>
+  <div class="photo-btn-container">
+    <div class="photo-container">
+      <img src="<%= @photo.image_url %>" alt="">
     </div>
 
-    <span>&nbsp &nbsp</span>
-
-    <div class="comment-like-container">
-      <div class="post-comment-form">
-
-        <%# <form action="/comments" method="post"> %>
-          <input type="hidden" name="photo_id" value="<%= @photo.id %>">
-
-          <div class="comment-input-field">
-            <textarea class="content" name="content" placeholder="comment"></textarea>
-          </div>   
-
-          <div class="post-comment-btn-holder">
-            <button class="button post-comment-btn">post</button>
-          </div> 
-        <%# </form> %>
-
-      </div>
-
-      <% if logged_in? %>
-        <div class="image-link">
-          <a href="<%= @photo.image_url %>" target="_blank">
-            image link
-          </a>
+    <div class="edit-delete-forms">
+      <%# edit button should show to photo owner, hidden for not photo owner %>
+      <% if session[:user_id] == @photo.user_id  %>
+        <div class="edit-photo-form">
+          <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
+            <button class="button edit-photo-btn">edit</button>
+          </form>
         </div>
       <% end %>
 
-      <div class="like-container">
-        <div class="like-btn">
-          <button class="add-like-btn"><img src="/images/heart.png" alt=""></button>
-        </div>     
-        <div class="like-holder"><%= @like.number %></div> 
-      </div>
+      <%# delete button should show to photo owner, hidden for not photo owner %>
+      <% if session[:user_id] == @photo.user_id  %>
+        <div class="delete-photo-form">
+          <form action="/photos/<%= @photo.id %>" method="post">
+            <input type="hidden" name="photo_id" value="<%= @photo.id %>"> 
+            <input type="hidden" name="_method" value="delete">
+            <button class="button delete-photo-btn">delete</button>
+          </form>
+        </div>
+      <% end %>
     </div>
+  </div>
+
+  <span>&nbsp &nbsp</span>
+
+  <div class="comment-like-container">
+    <div class="post-comment-form">
+        <input type="hidden" name="photo_id" value="<%= @photo.id %>">
+
+        <div class="comment-input-field">
+          <textarea class="content" name="content" placeholder="comment"></textarea>
+        </div>   
+
+        <div class="post-comment-btn-holder">
+          <button class="button post-comment-btn">post</button>
+        </div> 
+    </div>
+
+    <% if logged_in? %>
+      <div class="image-link">
+        <a href="<%= @photo.image_url %>" target="_blank">
+          image link
+        </a>
+      </div>
+    <% end %>
+
+    <div class="like-container">
+      <div class="like-btn">
+        <button class="add-like-btn"><img src="/images/heart.png" alt=""></button>
+      </div>     
+      <div class="like-holder"><%= @like.number %></div> 
+    </div>
+  </div>
 </div>
 
 
@@ -112,20 +105,25 @@
       commentsArea.querySelectorAll('article').forEach(comment => { 
         comment.remove()
       })  
-      for(let i = 0; i < res.length; i++) {             // show 8 albums
+      for(let i = 0; i < res.length; i++) {             // show 5 comments
         let article = document.createElement('article')
         commentsArea.append(article)
 
-        // let userId = res[i].user_id
+        let userId = res[i].user_id
+        console.log(typeof(userId))
+        console.log(`<%= User.find_by(id: 2).email %>`)
+
 
         article.innerHTML = 
-        `<p>${res[i].user_id} &nbsp &nbsp &nbsp
+        `<p><%= User.find_by(id: 2).email %> &nbsp &nbsp &nbsp
           ${res[i].time}
         </p>
         <div class="comment">
           <p>${res[i].content}</p>
         </div>`
       }
+
+
     })    
   }
 

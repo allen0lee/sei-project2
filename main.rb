@@ -47,61 +47,38 @@ end
 
 # page that lists all users' albums - albums.erb
 get '/albums' do
-  # @albums = Album.all
   erb :albums
 end
 
 # page that lists one user's albums - dashboard
 get '/albums/:user_id' do
-  @albums = Album.where(user_id: params[:user_id])
   @user_id = session[:user_id]
   erb :dashboard
 end
 
-# in user's own album page (or index after login), click 'create album' button, 
-# go to create_album page - create_album.erb
-# get '/albums/:user_id/new' do
-#   redirect '/login' if !logged_in?
-#   @user_id = params[:user_id]
-#   erb :create_album
-# end
 # create new album
 post '/albums/:user_id' do         
   album = Album.new
   album.name = params[:name]          # params[] - get value from a route or get user input 
   album.theme_image_url = params[:theme_image_url]
-
   # album.user_id = session[:user_id]
   album.user_id = params[:user_id]
-
   if album.name != "" && album.theme_image_url != ""
     album.save
   end
-
-  # redirect "/albums/#{album.user_id}"
 end
 
 # show all photos of an album, with 'upload photo' button here - take user to upload_photo.erb
 get '/photos/:album_name/:album_id' do
-  # @photos = Photo.order(:id).where(album_id: params[:album_id])
   # need to determine the album owner, because 'upload photo' button is only visible to album owner 
   @album = Album.find_by(id: params[:album_id])
   @album_owner = User.find_by(id: @album.user_id).email
-
   @album_name = params[:album_name]
-
   @album_id = params[:album_id]
   @user_id = session[:user_id]     
   erb :photos
 end
 
-# go to upload photo page
-# get '/photos/:album_id/:user_id/new' do
-#   redirect '/login' if !logged_in?
-#   @album_id = params[:album_id]
-#   @user_id = session[:user_id]
-#   erb :upload_photo
-# end
 # upload a photo inside an album                               
 post '/photos/:album_id/:user_id' do          
   album = Album.find_by(id: params[:album_id]) 
@@ -110,11 +87,9 @@ post '/photos/:album_id/:user_id' do
   photo.image_url = params[:image_url]
   photo.user_id = params[:user_id]
   photo.album_id = album.id
-  
   if photo.name != "" && photo.image_url != ""
     photo.save
   end
-
   # remove space in album name, otherwise route not known by browser
   # redirect "/photos/#{(album.name).split(" ").join("")}/#{photo.album_id}"
 end
@@ -131,7 +106,6 @@ get '/photos/:id' do
   else # a photo has likes and can be found in table 'likes'
     @like = Like.find_by(photo_id: params[:id])
   end
-  @comments = Comment.where(photo_id: @photo.id)
   erb :photo
 end
 # create a comment of a photo
@@ -145,9 +119,6 @@ post '/comments' do
   if comment.content != ""
     comment.save
   end
-
-  redirect "/photos/#{comment.photo_id}"
-  # redirect "/photos/#{params[:photo_id]}"
 end
 # add likes to a photo - update likes
 put '/likes' do
@@ -155,13 +126,10 @@ put '/likes' do
   like.photo_id = params[:photo_id]
   like.number += 1
   like.save
-
   content_type :json
   {
     like_count: like.number
   }.to_json 
-
-  # redirect "/photos/#{like.photo_id}"
 end
 
 # edit a photo
@@ -191,7 +159,7 @@ end
 
 # create new user
 get '/users/new' do
-  erb :create_new_user
+  erb :signup
 end
 # create new user here
 post '/users' do
@@ -205,7 +173,6 @@ post '/users' do
   else
     redirect '/'
   end
-  
 end
 
 
@@ -227,14 +194,12 @@ get '/api/albums/:user_id/:offset/:page' do
   albums.to_json
 end
 
-# api for number of albums an user has
+# api for albums and number of albums an user has
 get '/api/albums/:user_id' do 
+  albums = Album.where(user_id: params[:user_id])
   content_type :json
-  {
-    num_of_albums: Album.where(user_id: params[:user_id]).length
-  }.to_json
+  albums.to_json
 end
-
 
 # api for album page, each page shows 12 photos, offset is 12
 get '/api/photos/:album_name/:album_id/:offset/:page' do
@@ -255,7 +220,7 @@ get '/api/photos/:album_name/:album_id' do
   }.to_json
 end
 
-# upload a photo in dashboard - unarchived photos                               
+# upload a photo in dashboard - unarchived photos   
 post '/photos/:user_id' do          
   photo = Photo.new
   photo.name = params[:name]

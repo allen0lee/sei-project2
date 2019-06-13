@@ -19,7 +19,7 @@
   <% end %>
 </div>
 
-<div>
+<div class="prev-next">
   <a class="prev-12-photos">prev</a>
   <a class="next-12-photos">next</a>
 </div>
@@ -116,7 +116,7 @@
   // 1st request - show first 12 photos
   requestPhotos(offset, page)
 
-  async function getAllPhotos() {
+  async function getNumOfAllPhotos() {
     const options = {
       url: `/api/photos/<%= @album_name %>/<%= @album_id %>`,
       method: 'get'
@@ -126,7 +126,7 @@
 
   const handleNext = () => {
     // need to make new request to get the number of all photos
-    getAllPhotos().then(res => {
+    getNumOfAllPhotos().then(res => {
       let numOfPhotos = res.num_of_photos
       console.log(numOfPhotos)
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max set to 10?
@@ -160,7 +160,7 @@
         image_url: document.querySelector('.image-url').value 
       }
     }).done(() => {
-      getAllPhotos().then(res => {
+      getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
         console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
@@ -191,7 +191,7 @@
         album_id: null
       }
     }).done(() => {
-      getAllPhotos().then(res => {
+      getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
         console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)

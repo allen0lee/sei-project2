@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<div>
+<div class="prev-next">
   <a class="prev-8-albums">prev</a>
   <a class="next-8-albums">next</a>
 </div>
@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<div>
+<div class="prev-next">
   <a class="prev-12-photos">prev</a>
   <a class="next-12-photos">next</a>
 </div>
@@ -76,11 +76,7 @@
 <%# Array.from(document.querySelector('#albums').options).find(option => option.selected).dataset.albumId %>
   <div>
     <label for="">choose album</label>
-    <select class="albums-list">
-      <% @albums.each do |album|%>
-        <option value="<%= album.id %>"><%= album.name %></option>
-      <% end %>
-    </select>
+    <select class="albums-list"></select>
   </div>
 
   <div>
@@ -183,7 +179,7 @@
 
   const handleNext8Albums = () => {
     getAllAlbums().then(res => {
-      let numOfAlbums = res.num_of_albums
+      let numOfAlbums = res.length
       // console.log(numOfAlbums)
       let lastPage = Math.ceil(numOfAlbums/albumsPerPage) // max set to 10 ?
       if(albumsPage < lastPage) {
@@ -215,7 +211,7 @@
       }
     }).done(() => {
       getAllAlbums().then(res => {
-        let numOfAlbums = res.num_of_albums
+        let numOfAlbums = res.length
         console.log(numOfAlbums)
         let lastPage = Math.ceil(numOfAlbums/albumsPerPage)
         albumsPage = lastPage // update page number
@@ -265,7 +261,7 @@
   // 1st request - show first 12 unarchived photos
   requestPhotos(photosOffset, photosPage)
 
-  async function getAllPhotos() {
+  async function getNumOfAllPhotos() {
     const options = {
       url: `/api/photos/<%= @user_id %>`,
       method: 'get'
@@ -285,7 +281,7 @@
         image_url: document.querySelector('.image-url').value 
       }
     }).done(() => {
-      getAllPhotos().then(res => {
+      getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
         console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
@@ -301,7 +297,7 @@
   }
 
   const handleNext12Photos = () => {
-    getAllPhotos().then(res => {
+    getNumOfAllPhotos().then(res => {
       let numOfPhotos = res.num_of_photos
       console.log(numOfPhotos)
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
@@ -338,7 +334,7 @@
         album_id: selectedAlbumId
       }
     }).done(() => {
-      getAllPhotos().then(res => {
+      getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
         console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
@@ -352,6 +348,21 @@
   closeGroupPhotoForm = () => { 
     groupPhotoForm.style.display = 'none'
   }
+
+  let showGroupPhotoFormBtn = document.querySelector('.show-group-photo-form')
+  const handleGetAllAlbums = () => {
+    getAllAlbums().then(res => {
+      let albums = res
+      let albumsList = document.querySelector('.albums-list')
+      for(let i = 0; i < res.length; i++) {
+        let option = document.createElement('option')
+        albumsList.append(option)
+        option.value = res[i].id
+        option.textContent = res[i].name
+      }
+    })
+  }
+  showGroupPhotoFormBtn.addEventListener('click', handleGetAllAlbums) 
 
 </script>
 
