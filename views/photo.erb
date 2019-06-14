@@ -7,10 +7,8 @@
     <div class="edit-delete-forms">
       <%# edit button should show to photo owner, hidden for not photo owner %>
       <% if session[:user_id] == @photo.user_id  %>
-        <div class="edit-photo-form">
-          <form action="/photos/<%= @photo.id %>/<%= @photo.album_id %>/edit">
-            <button class="button edit-photo-btn">edit</button>
-          </form>
+        <div class="edit-photo">
+          <button class="button edit-photo-btn" onclick="showUpdatePhotoForm()">edit</button>
         </div>
       <% end %>
 
@@ -38,7 +36,7 @@
       </div>   
 
       <div class="post-comment-btn-holder">
-        <button class="button post-comment-btn">post</button>
+        <button class="button post-comment-btn" onclick="clearTextarea()">post</button>
       </div> 
     </div>
 
@@ -59,11 +57,39 @@
   </div>
 </div>
 
-
 <%# list all comments of a photo %>
 <div class="list-of-comments">
   <div class="comments-area"></div>
 </div>
+
+<div class="comment-prev-next">
+  <a class="prev-5-comments">prev</a>
+  <span class="comments-page">1</span>
+  <a class="next-5-comments">next</a>
+</div>
+
+<div class="edit-photo-form">
+  <span class="close-edit-photo-form-btn">&times</span>
+
+  <form action="/photos/<%= @photo.id %>" method="post">
+    <input type="hidden" name="_method" value="put">
+
+    <div>
+      <label for="">name</label>
+      <input type="text" name="name" value="<%= @photo.name %>">
+    </div>
+    
+    <div>
+      <label for="">image url</label>
+      <input type="text" name="image_url" value="<%= @photo.image_url %>">    
+    </div>
+
+    <div>
+      <button class="button update-photo-btn">update photo</button>
+    </div>
+  </form>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -83,7 +109,7 @@
   }
   addLikeBtn.addEventListener('click', handleAddLike)
 
-  async function getAllComments() {
+  async function getNumOfAllComments() {
     const options = {
       url: `/api/comments/<%= @photo.id %>`,
       method: 'get'
@@ -94,6 +120,7 @@
   let offset = 5 
   let page = 1    
   let commentsPerPage = 5
+  let setCommentsPage = document.querySelector('.comments-page')
 
   let commentsArea = document.querySelector('.comments-area')
   const requestComments = (offset, page) => {
@@ -109,8 +136,10 @@
         let article = document.createElement('article')
         commentsArea.append(article)
 
+
         let userId = res[i].user_id
-        console.log(typeof(userId))
+
+        console.log(userId)
         console.log(`<%= User.find_by(id: 2).email %>`)
 
 
@@ -140,15 +169,55 @@
       }
     }
     $.ajax(options).done(() => {
-      getAllComments().then(res => {
+      getNumOfAllComments().then(res => {
         let numOfComments = res.num_of_comments
         let lastPage = Math.ceil(numOfComments/commentsPerPage)
         page = lastPage // update page number
+        setCommentsPage.textContent = page
         requestComments(offset, lastPage)
       })
     })
   }
   postCommentBtn.addEventListener('click', handlePostComment)
+
+  let loadNext5Comments = document.querySelector('.next-5-comments')
+  const handleNext5Comments = () => {
+    getNumOfAllComments().then(res => {
+      let numOfComments = res.num_of_comments
+      let lastPage = Math.ceil(numOfComments/commentsPerPage) 
+      if(page < lastPage) {
+        page += 1
+        setCommentsPage.textContent = page
+      }
+      requestComments(offset, page)
+    })
+  }
+  loadNext5Comments.addEventListener('click', handleNext5Comments)
+
+  let loadPrev5Comments = document.querySelector('.prev-5-comments')
+  const handlePrev5Comments = () => {
+    if(page > 1) {
+      page -= 1
+      setCommentsPage.textContent = page
+    }
+    requestComments(offset, page)
+  }
+  loadPrev5Comments.addEventListener('click', handlePrev5Comments)
+
+  const clearTextarea = () => {
+    // let textAreaContent = document.querySelector('.content')
+    // textAreaContent.value = ''
+  }
+
+  let editPhotoBtn = document.querySelector('.edit-photo-btn')
+  let editPhotoForm = document.querySelector('.edit-photo-form')
+  const showUpdatePhotoForm = () => {
+    editPhotoForm.style.display = 'block'
+    let span = document.querySelector('.close-edit-photo-form-btn')
+    span.onclick = () => { 
+      editPhotoForm.style.display = 'none'
+    }
+  }
 
 </script>
 

@@ -183,6 +183,7 @@
   // 1st request - show first 8 albums
   requestAlbums(albumsOffset, albumsPage)
 
+  let setAlbumsPage = document.querySelector('.albums-page')
   const handleNext8Albums = () => {
     getAllAlbums().then(res => {
       let numOfAlbums = res.length
@@ -190,7 +191,6 @@
       let lastPage = Math.ceil(numOfAlbums/albumsPerPage) // max set to 10 ?
       if(albumsPage < lastPage) {
         albumsPage += 1
-        let setAlbumsPage = document.querySelector('.albums-page')
         setAlbumsPage.textContent = albumsPage
       }
       requestAlbums(albumsOffset, albumsPage)
@@ -201,7 +201,6 @@
   const handlePrev8Albums = () => {
     if(albumsPage > 1) {
       albumsPage -= 1
-      let setAlbumsPage = document.querySelector('.albums-page')
       setAlbumsPage.textContent = albumsPage
     }
     requestAlbums(albumsOffset, albumsPage)
@@ -225,6 +224,7 @@
         console.log(numOfAlbums)
         let lastPage = Math.ceil(numOfAlbums/albumsPerPage)
         albumsPage = lastPage // update page number
+        setAlbumsPage.textContent = albumsPage
         requestAlbums(albumsOffset, lastPage)
       })
     })
@@ -282,6 +282,7 @@
 
 // upload unarchived photos - photos not grouped in album yet
   let uploadPhotoBtn = document.querySelector('.upload-photo-btn')
+  let setPhotosPage = document.querySelector('.photos-page')
   const handleUploadPhoto = () => {
     $.ajax({
       url: '/photos/<%= @user_id %>',
@@ -297,6 +298,7 @@
         console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
         photosPage = lastPage // update page number
+        setPhotosPage.textContent = photosPage
         requestPhotos(photosOffset, lastPage)
       })
     })
@@ -314,7 +316,6 @@
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max is 10
       if(photosPage < lastPage) {
         photosPage += 1
-        let setPhotosPage = document.querySelector('.photos-page')
         setPhotosPage.textContent = photosPage
       }
       requestPhotos(photosOffset, photosPage)
@@ -325,6 +326,7 @@
   const handlePrev12Photos = () => {
     if(photosPage > 1) {
       photosPage -= 1
+      setPhotosPage.textContent = photosPage
     }
     requestPhotos(photosOffset, photosPage)
   }

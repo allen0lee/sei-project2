@@ -213,7 +213,7 @@ header {
 }
 
 /* close button */
-.close-image-btn, .close-upload-photo-form-btn, .close-create-album-form-btn, .close-group-photo-form-btn {
+.close-image-btn, .close-upload-photo-form-btn, .close-create-album-form-btn, .close-group-photo-form-btn, .close-edit-photo-form-btn {
   position: absolute;
   top: 15px;
   right: 35px;
@@ -223,7 +223,7 @@ header {
   transition: 0.3s;
 }
 
-.close-image-btn:hover, .close-image-btn:focus, .close-upload-photo-form-btn:hover, .close-upload-photo-form-btn:focus, .close-create-album-form-btn:hover, .close-create-album-form-btn:focus, .close-group-photo-form-btn:hover, .close-group-photo-form-btn:focus {
+.close-image-btn:hover, .close-image-btn:focus, .close-upload-photo-form-btn:hover, .close-upload-photo-form-btn:focus, .close-create-album-form-btn:hover, .close-create-album-form-btn:focus, .close-group-photo-form-btn:hover, .close-group-photo-form-btn:focus, .close-edit-photo-form-btn:hover, .close-edit-photo-form-btn:focus {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
@@ -255,7 +255,7 @@ header {
   justify-content: center;
 }
 
-.edit-photo-form {
+.edit-photo {
   /* margin-left: 20px; */
 }
 
@@ -264,7 +264,7 @@ header {
 }
 
 .comment-like-container {
-  padding-top: 5px;
+  padding-top: 10px;
   text-align: center;
   /* padding-left: 20px; */
 }
@@ -310,7 +310,7 @@ header {
 }
 
 .list-of-comments {
-  padding: 3% 20% 10% 20%;
+  padding: 3% 20% 0 20%;
   /* margin: auto; */
   text-align: left;
   background-color: snow;
@@ -397,7 +397,7 @@ header {
 }
 
 
-.upload-photo-form, .create-album-form, .group-photo-form {
+.upload-photo-form, .create-album-form, .group-photo-form, .edit-photo-form {
   display: none;
   padding-top: 10rem; 
   text-align: center;
@@ -409,40 +409,19 @@ header {
   background-color: rgba(0,0,0,0.85); 
 }
 
-.upload-photo-form label, .create-album-form label, .group-photo-form label {
+.upload-photo-form label, .create-album-form label, .group-photo-form label, .edit-photo-form label {
   display: inline-block;
   width: 110px;
   text-align: left;
   color: white;
 }
 
-.upload-photo-form input, .create-album-form input, .group-photo-form input {
+.upload-photo-form input, .create-album-form input, .group-photo-form input, .edit-photo-form input {
   height: 25px;
   width: 250px;
 }
 
-.upload-photo-form div, .create-album-form div, .group-photo-form div {
-  margin-top: 20px;
-}
-
-
-.handle-edit-photo-form {
-  margin-top: 60px;
-  text-align: center;
-}
-
-.handle-edit-photo-form label {
-  display: inline-block;
-  width: 110px;
-  text-align: left;
-}
-
-.handle-edit-photo-form input {
-  height: 25px;
-  width: 300px;
-}
-
-.handle-edit-photo-form div {
+.upload-photo-form div, .create-album-form div, .group-photo-form div, .edit-photo-form div {
   margin-top: 20px;
 }
 
@@ -509,5 +488,11 @@ header {
   background-color: snow;
   cursor: pointer;
   padding: 1.5% 0 1.5% 0;
+}
+
+.comment-prev-next {
+  text-align: center;
+  background-color: snow;
+  padding: 2% 0 2% 0;
 }
 

@@ -135,6 +135,7 @@
     return await $.ajax(options)
   }
 
+  let setPage = document.querySelector('.page')
   const handleNext = () => {
     // need to make new request to get the number of all photos
     getNumOfAllPhotos().then(res => {
@@ -143,7 +144,6 @@
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max set to 10?
       if(page < lastPage) {
         page += 1
-        let setPage = document.querySelector('.page')
         setPage.textContent = page
       }
       requestPhotos(offset, page)
@@ -153,7 +153,6 @@
   const handlePrev = () => {
     if(page > 1) {
       page -= 1
-      let setPage = document.querySelector('.page')
       setPage.textContent = page
     }
     requestPhotos(offset, page)
@@ -184,6 +183,7 @@
         console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
         page = lastPage // update page number
+        setPage.textContent = page
         requestPhotos(offset, lastPage)
       })
     })
