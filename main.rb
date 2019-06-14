@@ -297,6 +297,15 @@ get '/api/comments/:photo_id' do
   }.to_json
 end
 
+# api to get user email
+get '/api/users/:user_id' do
+  content_type :json
+  {
+    user_email: User.find_by(id: params[:user_id]).email
+  }.to_json
+end
+
+
 
 
 

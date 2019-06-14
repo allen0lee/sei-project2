@@ -122,6 +122,14 @@
   let commentsPerPage = 5
   let setCommentsPage = document.querySelector('.comments-page')
 
+  async function requestUserEmail(userId) {
+    const options = {
+      url: `/api/users/${userId}`,
+      method: 'get'
+    }
+    return await $.ajax(options)
+  }
+
   let commentsArea = document.querySelector('.comments-area')
   const requestComments = (offset, page) => {
     const options = {
@@ -136,23 +144,19 @@
         let article = document.createElement('article')
         commentsArea.append(article)
 
+        // let userId = res[i].user_id
+        // console.log(`<%= User.find_by(id: 2).email %>`) // cannot embedded js in ruby
 
-        let userId = res[i].user_id
-
-        console.log(userId)
-        console.log(`<%= User.find_by(id: 2).email %>`)
-
-
-        article.innerHTML = 
-        `<p><%= User.find_by(id: 2).email %> &nbsp &nbsp &nbsp
-          ${res[i].time}
-        </p>
-        <div class="comment">
-          <p>${res[i].content}</p>
-        </div>`
+        requestUserEmail(res[i].user_id).then(response => {
+          article.innerHTML = 
+          `<p>${response.user_email} &nbsp &nbsp &nbsp
+            ${res[i].time}
+          </p>
+          <div class="comment">
+            <p>${res[i].content}</p>
+          </div>`
+        })
       }
-
-
     })    
   }
 
@@ -174,6 +178,7 @@
         let lastPage = Math.ceil(numOfComments/commentsPerPage)
         page = lastPage // update page number
         setCommentsPage.textContent = page
+        document.querySelector('.content').value = ''
         requestComments(offset, lastPage)
       })
     })
