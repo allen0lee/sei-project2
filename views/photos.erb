@@ -109,16 +109,28 @@
       for(let i = 0; i < res.length; i++) {             // draw 12 photos
         let article = document.createElement('article')
         displayBox.append(article)
+
         article.innerHTML = 
         `<div class="photo-display">
-          <div class="img-holder">
+          <div data-photo-id="${res[i].id}" class="img-holder">
             <img class="img" src="${res[i].image_url}" alt="">
+
+            <div class="panel">
+              <a class="select" onclick="selectPhoto(this)">select &nbsp</a>
+              <a class="to-comment" href="/photos/${res[i].id}">comment &nbsp</a>
+
+              <% if @user_id == @album.user_id  %>
+                <a class="edit">edit &nbsp</a>
+
+                <a class="delete">delete</a>
+
+              <% end %>
+            </div>
+
           </div>
-          <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
-            <a href="/photos/${res[i].id}">
-              ${res[i].name}
-            </a>
-          </div>
+
+
+
         </div>`
       }
     })
@@ -195,7 +207,7 @@
   }
 
   const selectPhoto = (photo) => {
-    photo.classList.toggle('selected')
+    photo.closest('.img-holder').classList.toggle('selected')
   }
 
   let ungroupPhotoBtn = document.querySelector('.ungroup-photo-btn')

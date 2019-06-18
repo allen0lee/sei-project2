@@ -5,10 +5,11 @@
 }
 
 body {
-  background-color: lightgrey;
+  background-color: snow;
   font-family: Raleway;
   margin: 0;
-  padding: 0 10% 0 10%;
+  /* background-color: lightgrey; */
+  /* padding: 0 10% 0 10%; */
 }
 
 input {
@@ -43,7 +44,7 @@ header {
 }
 
 .icon img {
-  width: 10%;
+  width: 7.5%;
 }
 
 .nav-bar {
@@ -98,9 +99,9 @@ header {
 .display-box, .display-box1 {
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  border: 1px solid black;
-  width: 90%;
-  padding: 5px;
+  border: 1px solid silver;
+  padding: 10px;
+  width: 100%;
 }
 
 .all-albums-container, .dashboard-albums-container, .dashboard-photos-container, .all-photos-container {
@@ -111,8 +112,8 @@ header {
 }
 
 .album-container {
-  border: 1px solid black;
-  margin: 5px;
+  border: 1px solid silver;
+  margin: 10px;
   /* width: 200px; */
 }
 
@@ -123,38 +124,90 @@ header {
 }
 
 .album-name {
-  height: 50px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 60px;
   text-align: center; 
   display: block;
 }
 
 .album-name a {
-  color: black;
+  color: orange;
 }
 
-.album-container:hover {
-  border: 1px solid gold;
-}
+/* .album-container:hover {
+  border: 1px solid blue;
+} */
 
 
 .photo-display {
-  border: 1px solid black;
-  margin: 5px;
+  border: 1px solid silver;
+  margin: 10px;
   /* width: 200px; */
 }
 
 .photo-display img {
   width: 100%;
-  height: 200px;
+  height: 250px;
   cursor: pointer;
   object-fit: cover; /* keep image aspect ratio when resizing */
   display: block;
   /* vertical-align: bottom; */
 }
 
+.img-holder {
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  top: 200px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(36, 62, 206, 0.5);
+  color: #fff;
+  /* visibility: hidden; */
+  opacity: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .2s, visibility .2s; /* transition effect. not necessary */
+}
+
+.img-holder:hover .panel {
+  /* visibility: visible; */
+  opacity: 1;
+}
+
+.edit, .delete, .select, .to-comment {
+  transition: .2s;
+  transform: translateY(1em);
+  cursor: pointer;
+}
+
+.img-holder:hover .edit, .img-holder:hover .delete, .img-holder:hover .select, .img-holder:hover .to-comment {
+  transform: translateY(0);
+}
+
+.to-comment {
+  color: white;
+}
+
+/* .delete button {
+  border: none; 
+  padding: 0; 
+  background: none;
+  color: white;
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  cursor: pointer;
+} */
+
+
 .photo-container {
-  margin: 5px;
+  /* margin: 5px; */
+  margin-right: 20px;
   width: 200px;
 }
 
@@ -168,23 +221,23 @@ header {
 }
 
 .photo-name {
-  height: 50px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 60px;
   text-align: center; 
   cursor: pointer;
 }
 
 .photo-name a {
-  color: black;
+  color: orange;
 }
 
 .show-edit-delete {
 
 }
 
-.photo-display:hover {
-  border: 1px solid gold;
-}
+/* .photo-display:hover {
+  border: 1px solid blue;
+} */
 
 .enlarged-image-container {
   text-align: center;
@@ -472,7 +525,8 @@ header {
 }
 
 .selected {
-  background-color: lightgreen;
+  outline: 7px solid lightgreen;
+  /* box-shadow: 0 0 0 7px lightgreen; */
 }
 
 .prev-next {
