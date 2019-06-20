@@ -105,34 +105,27 @@
     $.ajax(options).done(res => {
       displayBox.querySelectorAll('article').forEach(photo => { // clear prev 12 photos
         photo.remove()
-      }) 
-      for(let i = 0; i < res.length; i++) {             // draw 12 photos
-        let article = document.createElement('article')
-        displayBox.append(article)
-
-        article.innerHTML = 
-        `<div class="photo-display">
-          <div data-photo-id="${res[i].id}" class="img-holder">
-            <img class="img" src="${res[i].image_url}" alt="">
-
-            <div class="panel">
-              <a class="select" onclick="selectPhoto(this)">select &nbsp</a>
-              <a class="to-comment" href="/photos/${res[i].id}">comment &nbsp</a>
-
-              <% if @user_id == @album.user_id  %>
-                <a class="edit">edit &nbsp</a>
-
-                <a class="delete">delete</a>
-
-              <% end %>
+      })
+      if(res != null) {
+        for(let i = 0; i < res.length; i++) {             // draw 12 photos
+          let article = document.createElement('article')
+          displayBox.append(article)
+          article.innerHTML = 
+          `<div class="photo-display">
+            <div data-photo-id="${res[i].id}" class="img-holder">
+              <img class="img" src="${res[i].image_url}" alt="">
+              <div class="panel">
+                <a class="select" onclick="selectPhoto(this)">select &nbsp</a>
+                <a class="to-comment" href="/photos/${res[i].id}">comment &nbsp</a>
+                <% if @user_id == @album.user_id  %>
+                  <a class="edit">edit &nbsp</a>
+                  <a data-photo-id="${res[i].id}" class="delete" onclick="deletePhoto(this)">delete</a>
+                <% end %>
+              </div>
             </div>
-
-          </div>
-
-
-
-        </div>`
-      }
+          </div>`
+        }
+      } 
     })
   }
 
@@ -146,6 +139,14 @@
     } 
     return await $.ajax(options)
   }
+
+  // async function getNumOfAllUnarchivedPhotos() {
+  //   const options = {
+  //     url: `/api/photos/<%= @user_id %>`,
+  //     method: 'get'
+  //   } 
+  //   return await $.ajax(options)
+  // }
 
   let setPage = document.querySelector('.page')
   const handleNext = () => {
@@ -196,7 +197,7 @@
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
         page = lastPage // update page number
         setPage.textContent = page
-        requestPhotos(offset, lastPage)
+        requestPhotos(offset, lastPage) // always go to last page to see the change
       })
     })
   }
@@ -219,21 +220,59 @@
       method: 'put',
       data: {
         id: selectedPhotosIds, // array of selected photos' ids
-        album_id: null
+        album_id: null,
+        user_id: <%= @user_id %>
       }
     }).done(() => {
+      // // how to redirect to dashboard and then go to unarchived photos last page
+      // if (response.redirect != undefined && response.redirect) {
+      //   window.location.href = response.redirect_url
+      //   // go to unarchived photos last page
+      //   getNumOfAllUnarchivedPhotos().then(res => {
+      //     let numOfPhotos = res.num_of_photos
+      //     let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+      //     page = lastPage // update page number
+      //     requestPhotos(offset, lastPage)        
+      //   })
+      // }
+
+      // stay in current page 
       getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
-        console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
-        page = lastPage // update page number
-        requestPhotos(offset, lastPage)
+        if(page >= lastPage) {
+          requestPhotos(offset, lastPage)
+        } else if(page <= lastPage) {
+          requestPhotos(offset, page)
+        }
       })
     })  
   }
   <% if logged_in?  && @user_id == @album.user_id %>
     ungroupPhotoBtn.addEventListener('click', handleUngroupPhotos) 
   <% end %>
+
+  const deletePhoto = (photo) => {
+    let photoId = photo.getAttribute('data-photo-id')
+    $.ajax({
+      url: `/photos/${photoId}`,
+      method: 'delete',
+      data: {
+        id: photoId
+      }
+    }).done(() => {
+      // stay in current page 
+      getNumOfAllPhotos().then(res => {
+        let numOfPhotos = res.num_of_photos
+        let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+        if(page >= lastPage) {
+          requestPhotos(offset, lastPage)
+        } else if(page <= lastPage) {
+          requestPhotos(offset, page)
+        }
+      })
+    })
+  }
 
 </script>
 

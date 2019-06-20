@@ -145,9 +145,10 @@ end
 # delete a photo
 delete '/photos/:id' do
   photo = Photo.find(params[:id])
-  album = Album.where(id: photo.album_id).first
   photo.destroy
-  redirect "/photos/#{(album.name).split(" ").join("")}/#{album.id}"
+
+  # album = Album.where(id: photo.album_id).first
+  # redirect "/photos/#{(album.name).split(" ").join("")}/#{album.id}"
 end
 
 # delete an album
@@ -276,6 +277,12 @@ put '/photos-move-out-album' do
     photo.album_id = nil
     photo.save
   end
+  
+  # content_type :json
+  # {
+  #   redirect: true,
+  #   redirect_url: "/albums/#{params[:user_id]}" # redirect to dashboard
+  # }.to_json
 end
 
 # api for comments of a photo, shows 5 each time, offset is 5 

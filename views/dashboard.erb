@@ -250,22 +250,25 @@
     $.ajax(options).done(res => {
       displayBox1.querySelectorAll('article').forEach(photo => { // clear display area for redraw
         photo.remove()
-      }) 
-      for(let i = 0; i < res.length; i++) {             // draw 12 photos
-        let article = document.createElement('article')
-        displayBox1.append(article)
-        article.innerHTML = 
-        `<div class="photo-display">
-          <div class="img-holder">
-            <img class="img" src="${res[i].image_url}" alt="">
-          </div>
-          <div data-photo-id="${res[i].id}" class="photo-name" onclick="selectPhoto(this)">
-            <a href="/photos/${res[i].id}">
-              ${res[i].name}
-            </a>
-          </div>
-        </div>`
-      }
+      })
+      if(res != null) {
+        for(let i = 0; i < res.length; i++) {             // draw 12 photos
+          let article = document.createElement('article')
+          displayBox1.append(article)
+          article.innerHTML = 
+          `<div class="photo-display">
+            <div data-photo-id="${res[i].id}" class="img-holder">
+              <img class="img" src="${res[i].image_url}" alt="">
+              <div class="panel">
+                <a class="select" onclick="selectPhoto(this)">select &nbsp</a>
+                <a class="to-comment" href="/photos/${res[i].id}">comment &nbsp</a>
+                <a class="edit">edit &nbsp</a>
+                <a data-photo-id="${res[i].id}" class="delete" onclick="deletePhoto(this)">delete</a>
+              </div>
+            </div>
+          </div>`
+        }
+      } 
     })
   }
 
@@ -333,7 +336,7 @@
   loadPrev12Photos.addEventListener('click', handlePrev12Photos)
 
   const selectPhoto = (photo) => {
-    photo.classList.toggle('selected')
+    photo.closest('.img-holder').classList.toggle('selected')
   }
 
   let groupPhotoBtn = document.querySelector('.group-photo-btn')
@@ -349,12 +352,15 @@
         album_id: selectedAlbumId
       }
     }).done(() => {
+      // stay in current page 
       getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
-        console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
-        photosPage = lastPage // update page number
-        requestPhotos(photosOffset, lastPage)
+        if(photosPage >= lastPage) {
+          requestPhotos(photosOffset, lastPage)
+        } else if(photosPage <= lastPage) {
+          requestPhotos(offset, photosPage)
+        }
       })
     })  
   }
@@ -378,6 +384,28 @@
     })
   }
   showGroupPhotoFormBtn.addEventListener('click', handleGetAllAlbums) 
+
+  const deletePhoto = (photo) => {
+    let photoId = photo.getAttribute('data-photo-id')
+    $.ajax({
+      url: `/photos/${photoId}`,
+      method: 'delete',
+      data: {
+        id: photoId
+      }
+    }).done(() => {
+      // stay in current page 
+      getNumOfAllPhotos().then(res => {
+        let numOfPhotos = res.num_of_photos
+        let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+        if(photosPage >= lastPage) {
+          requestPhotos(photosOffset, lastPage)
+        } else if(photosPage <= lastPage) {
+          requestPhotos(offset, photosPage)
+        }
+      })
+    })
+  }
 
 </script>
 
