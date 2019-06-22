@@ -213,6 +213,11 @@
 
   let ungroupPhotoBtn = document.querySelector('.ungroup-photo-btn')
   const handleUngroupPhotos = () => {
+    let userId = <%= @user_id %>
+    <% if !logged_in? %>
+      userId = null
+    <% end %>
+
     let selectedPhotos = document.querySelectorAll('.selected')
     let selectedPhotosIds = Array.from(selectedPhotos).map(photo => photo.getAttribute('data-photo-id')) // ["255", "256"]
     $.ajax({
@@ -221,7 +226,7 @@
       data: {
         id: selectedPhotosIds, // array of selected photos' ids
         album_id: null,
-        user_id: <%= @user_id %>
+        user_id: userId
       }
     }).done(() => {
       // // how to redirect to dashboard and then go to unarchived photos last page
