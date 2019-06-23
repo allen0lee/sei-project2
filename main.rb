@@ -71,7 +71,10 @@ get '/photos/:album_name/:album_id' do
   @album_owner = User.find_by(id: @album.user_id).email
   @album_name = params[:album_name]
   @album_id = params[:album_id]
-  @user_id = session[:user_id]     
+  @user_id = session[:user_id]  
+  num_of_photos = Photo.where(album_id: params[:album_id]).length
+  photos_per_page = 12
+  @album_pages = (num_of_photos/photos_per_page.to_f).ceil   
   erb :photos
 end
 

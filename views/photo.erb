@@ -1,49 +1,25 @@
 <div class="one-photo-page-container">
-  <div class="photo-btn-container">
-    <div class="photo-container">
-      <img src="<%= @photo.image_url %>" alt="">
-    </div>
-
-    <div class="edit-delete-forms">
-      <%# edit button should show to photo owner, hidden for not photo owner %>
-      <% if session[:user_id] == @photo.user_id  %>
-        <div class="edit-photo">
-          <button class="button edit-photo-btn" onclick="showUpdatePhotoForm()">edit</button>
-        </div>
-      <% end %>
-
-      <%# delete button should show to photo owner, hidden for not photo owner %>
-      <% if session[:user_id] == @photo.user_id  %>
-        <div class="delete-photo-form">
-          <form action="/photos/<%= @photo.id %>" method="post">
-            <input type="hidden" name="photo_id" value="<%= @photo.id %>"> 
-            <input type="hidden" name="_method" value="delete">
-            <button class="button delete-photo-btn">delete</button>
-          </form>
-        </div>
-      <% end %>
-    </div>
+  <div class="photo-container">
+    <img src="<%= @photo.image_url %>" alt="">
   </div>
-
+  
   <%# <span>&nbsp &nbsp</span> %>
 
   <div class="comment-like-container">
     <div class="post-comment-form">
-      <input type="hidden" name="photo_id" value="<%= @photo.id %>">
-
       <div class="comment-input-field">
         <textarea class="content" name="content" placeholder="comment"></textarea>
       </div>   
 
       <div class="post-comment-btn-holder">
-        <button class="button post-comment-btn" onclick="clearTextarea()">post</button>
+        <button class="button post-comment-btn">post</button>
       </div> 
     </div>
 
     <% if logged_in? %>
       <div class="image-link">
         <a href="<%= @photo.image_url %>" target="_blank">
-          image link
+          View Image
         </a>
       </div>
     <% end %>
@@ -178,7 +154,7 @@
         let lastPage = Math.ceil(numOfComments/commentsPerPage)
         page = lastPage // update page number
         setCommentsPage.textContent = page
-        document.querySelector('.content').value = ''
+        document.querySelector('.content').value = '' // clear textarea after post a comment
         requestComments(offset, lastPage)
       })
     })
@@ -208,11 +184,6 @@
     requestComments(offset, page)
   }
   loadPrev5Comments.addEventListener('click', handlePrev5Comments)
-
-  const clearTextarea = () => {
-    // let textAreaContent = document.querySelector('.content')
-    // textAreaContent.value = ''
-  }
 
   let editPhotoBtn = document.querySelector('.edit-photo-btn')
   let editPhotoForm = document.querySelector('.edit-photo-form')

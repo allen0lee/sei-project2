@@ -25,7 +25,7 @@
 
 <div class="prev-next">
   <a class="prev-12-photos">prev</a>
-  <span class="page">1</span>
+  <span class="page">1</span><span class="total-page">/<%= @album_pages %></span>
   <a class="next-12-photos">next</a>
 </div>
 
@@ -82,19 +82,10 @@
     }
   }
 
-
-// var showEditDelete = function(event) {
-//     event.target.classList.toggle('.show-edit-delete');
-// }
-// document.querySelectorAll('.photo-name').forEach(function(item) {
-//     item.addEventListener('click', showEditDelete);    
-// });
-
-
   let loadNext12Photos = document.querySelector('.next-12-photos')
   let loadPrev12Photos = document.querySelector('.prev-12-photos')
   let offset = 12 
-  let page = 1    // increase up to 10
+  let page = 1    
   let photosPerPage = 12
 
   const requestPhotos = (offset, page) => {
@@ -118,7 +109,6 @@
                 <a class="select" onclick="selectPhoto(this)">select &nbsp</a>
                 <a class="to-comment" href="/photos/${res[i].id}">comment &nbsp</a>
                 <% if @user_id == @album.user_id  %>
-                  <a class="edit">edit &nbsp</a>
                   <a data-photo-id="${res[i].id}" class="delete" onclick="deletePhoto(this)">delete</a>
                 <% end %>
               </div>
@@ -131,6 +121,10 @@
 
   // 1st request - show first 12 photos
   requestPhotos(offset, page)
+
+  <% if @album_pages == 1 %>
+    loadNext12Photos.style.display = 'none'
+  <% end %>
 
   async function getNumOfAllPhotos() {
     const options = {
@@ -149,15 +143,22 @@
   // }
 
   let setPage = document.querySelector('.page')
+  let setTotalPage = document.querySelector('.total-page')
   const handleNext = () => {
     // need to make new request to get the number of all photos
     getNumOfAllPhotos().then(res => {
       let numOfPhotos = res.num_of_photos
-      console.log(numOfPhotos)
-      let lastPage = Math.ceil(numOfPhotos/photosPerPage) // max set to 10?
+      let lastPage = Math.ceil(numOfPhotos/photosPerPage) 
+
       if(page < lastPage) {
+        loadNext12Photos.style.display = 'inline-block'
+        loadPrev12Photos.style.display = 'inline-block'
         page += 1
         setPage.textContent = page
+        setTotalPage.textContent = `/${lastPage}`
+        if(page == lastPage) {
+          loadNext12Photos.style.display = 'none' // disable 'next'
+        }
       }
       requestPhotos(offset, page)
     })
@@ -165,8 +166,13 @@
 
   const handlePrev = () => {
     if(page > 1) {
+      loadNext12Photos.style.display = 'inline-block'
+      loadPrev12Photos.style.display = 'inline-block'
       page -= 1
       setPage.textContent = page
+      if(page == 1) {
+        loadPrev12Photos.style.display = 'none' // disable 'prev'
+      }
     }
     requestPhotos(offset, page)
   }
@@ -193,11 +199,15 @@
     }).done(() => {
       getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
-        console.log(numOfPhotos)
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
         page = lastPage // update page number
-        setPage.textContent = page
         requestPhotos(offset, lastPage) // always go to last page to see the change
+        setPage.textContent = lastPage
+        setTotalPage.textContent = `/${lastPage}`
+        loadNext12Photos.style.display = 'none' // last page has no 'next'
+        if(lastPage > 1) {
+          loadPrev12Photos.style.display = 'inline-block'
+        }
       })
     })
   }
@@ -246,9 +256,17 @@
         let numOfPhotos = res.num_of_photos
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
         if(page >= lastPage) {
-          requestPhotos(offset, lastPage)
+          page = lastPage // update page number
+          requestPhotos(offset, page)
+          setPage.textContent = page
+          setTotalPage.textContent = `/${lastPage}`
+          if(page == 1) {
+            loadPrev12Photos.style.display = 'none'
+          }
         } else if(page <= lastPage) {
           requestPhotos(offset, page)
+          setPage.textContent = page
+          setTotalPage.textContent = `/${lastPage}`
         }
       })
     })  
@@ -271,9 +289,17 @@
         let numOfPhotos = res.num_of_photos
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
         if(page >= lastPage) {
-          requestPhotos(offset, lastPage)
+          page = lastPage // update page number
+          requestPhotos(offset, page)
+          setPage.textContent = page
+          setTotalPage.textContent = `/${lastPage}`
+          if(page == 1) {
+            loadPrev12Photos.style.display = 'none'
+          }
         } else if(page <= lastPage) {
           requestPhotos(offset, page)
+          setPage.textContent = page
+          setTotalPage.textContent = `/${lastPage}`
         }
       })
     })
