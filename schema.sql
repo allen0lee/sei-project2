@@ -23,7 +23,8 @@ create table comments(
     time TEXT,
     photo_id INTEGER,
     album_id INTEGER,
-    user_id INTEGER
+    user_id INTEGER,
+    user_email VARCHAR(500) NOT NULL
     -- FOREIGN KEY (photo_id) REFERENCES photos (id) ON DELETE CASCADE,
     -- FOREIGN KEY (album_id) REFERENCES albums (id) ON DELETE CASCADE,
     -- FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE

@@ -120,6 +120,7 @@ post '/comments' do
   comment.content = params[:content]
   comment.photo_id = params[:photo_id]
   comment.user_id = session[:user_id]
+  comment.user_email = User.find_by(id: session[:user_id]).email
   comment.time = Time.now.strftime("%d/%m/%Y %H:%M")
   if comment.content != ""
     comment.save
@@ -313,13 +314,13 @@ get '/api/comments/:photo_id' do
   }.to_json
 end
 
-# api to get user email
-get '/api/users/:user_id' do
-  content_type :json
-  {
-    user_email: User.find_by(id: params[:user_id]).email
-  }.to_json
-end
+# # api to get user email
+# get '/api/users/:user_id' do
+#   content_type :json
+#   {
+#     user_email: User.find_by(id: params[:user_id]).email
+#   }.to_json
+# end
 
 
 

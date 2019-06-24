@@ -44,28 +44,6 @@
   <a class="next-5-comments">next</a>
 </div>
 
-<div class="edit-photo-form">
-  <span class="close-edit-photo-form-btn">&times</span>
-
-  <form action="/photos/<%= @photo.id %>" method="post">
-    <input type="hidden" name="_method" value="put">
-
-    <div>
-      <label for="">name</label>
-      <input type="text" name="name" value="<%= @photo.name %>">
-    </div>
-    
-    <div>
-      <label for="">image url</label>
-      <input type="text" name="image_url" value="<%= @photo.image_url %>">    
-    </div>
-
-    <div>
-      <button class="button update-photo-btn">update photo</button>
-    </div>
-  </form>
-</div>
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -98,13 +76,13 @@
   let commentsPerPage = 5
   let setCommentsPage = document.querySelector('.comments-page')
 
-  async function requestUserEmail(userId) {
-    const options = {
-      url: `/api/users/${userId}`,
-      method: 'get'
-    }
-    return await $.ajax(options)
-  }
+  // async function requestUserEmail(userId) {
+  //   const options = {
+  //     url: `/api/users/${userId}`,
+  //     method: 'get'
+  //   }
+  //   return await $.ajax(options)
+  // }
 
   let commentsArea = document.querySelector('.comments-area')
   const requestComments = (offset, page) => {
@@ -119,19 +97,26 @@
       for(let i = 0; i < res.length; i++) {             // show 5 comments
         let article = document.createElement('article')
         commentsArea.append(article)
+        article.innerHTML = 
+        `<p>${res[i].user_email} &nbsp &nbsp &nbsp
+          ${res[i].time}
+        </p>
+        <div class="comment">
+          <p>${res[i].content}</p>
+        </div>`
 
         // let userId = res[i].user_id
-        // console.log(`<%= User.find_by(id: 2).email %>`) // cannot embedded js in ruby
+        // console.log(`<%= User.find_by(id: 2).email %>`) // cannot embed js in ruby
 
-        requestUserEmail(res[i].user_id).then(response => {
-          article.innerHTML = 
-          `<p>${response.user_email} &nbsp &nbsp &nbsp
-            ${res[i].time}
-          </p>
-          <div class="comment">
-            <p>${res[i].content}</p>
-          </div>`
-        })
+        // requestUserEmail(res[i].user_id).then(response => {
+        //   article.innerHTML = 
+        //   `<p>${response.user_email} &nbsp &nbsp &nbsp
+        //     ${res[i].time}
+        //   </p>
+        //   <div class="comment">
+        //     <p>${res[i].content}</p>
+        //   </div>`
+        // })
       }
     })    
   }

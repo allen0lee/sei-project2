@@ -366,6 +366,11 @@ header {
   background-color: snow;
 }
 
+.comments-area {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
 .comment {
   border-bottom: 1px solid gray;
   padding-left: 20px;
