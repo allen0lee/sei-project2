@@ -109,6 +109,7 @@ header {
   justify-content: center;
   padding: 2% 5% 0 5%;
   background-color: snow;
+  align-items: flex-end;
 }
 
 .album-container {
@@ -208,12 +209,12 @@ header {
 .photo-container {
   /* margin: 5px; */
   margin-right: 20px;
-  width: 250px;
+  width: 240px;
 }
 
 .photo-container img {
   width: 100%;
-  height: 250px;
+  height: 240px;
   cursor: pointer;
   object-fit: cover; /* keep image aspect ratio when resizing */
   /* border-radius: 20px; */
@@ -534,7 +535,7 @@ header {
   cursor: pointer;
 }
 
-.prev-12-photos {
+.prev-12-photos, .prev-8-albums {
   display: none;
 }
 

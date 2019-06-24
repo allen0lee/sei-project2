@@ -149,7 +149,6 @@
     getNumOfAllPhotos().then(res => {
       let numOfPhotos = res.num_of_photos
       let lastPage = Math.ceil(numOfPhotos/photosPerPage) 
-
       if(page < lastPage) {
         loadNext12Photos.style.display = 'inline-block'
         loadPrev12Photos.style.display = 'inline-block'
@@ -262,6 +261,7 @@
           setTotalPage.textContent = `/${lastPage}`
           if(page == 1) {
             loadPrev12Photos.style.display = 'none'
+            loadNext12Photos.style.display = 'none'
           }
         } else if(page <= lastPage) {
           requestPhotos(offset, page)
@@ -295,6 +295,7 @@
           setTotalPage.textContent = `/${lastPage}`
           if(page == 1) {
             loadPrev12Photos.style.display = 'none'
+            loadNext12Photos.style.display = 'none'
           }
         } else if(page <= lastPage) {
           requestPhotos(offset, page)

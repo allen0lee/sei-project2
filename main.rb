@@ -49,6 +49,12 @@ end
 # page that lists one user's albums - dashboard
 get '/albums/:user_id' do
   @user_id = session[:user_id]
+  num_of_photos = Photo.where(user_id: params[:user_id]).where(album_id: nil).length
+  photos_per_page = 12
+  @pages_of_photos = (num_of_photos/photos_per_page.to_f).ceil
+  num_of_albums = Album.where(user_id: params[:user_id]).length
+  albums_per_page = 8
+  @pages_of_albums = (num_of_albums/albums_per_page.to_f).ceil
   erb :dashboard
 end
 
