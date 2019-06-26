@@ -10,6 +10,7 @@ create table photos(
     -- FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     -- FOREIGN KEY (album_id) REFERENCES albums (id) ON DELETE CASCADE
 );
+alter table photos add image_file_name text;
 
 create table users(
     id SERIAL PRIMARY KEY,
