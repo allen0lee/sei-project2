@@ -1,89 +1,98 @@
 <%# list one user's all albums and unarchived photos %>
 
-<div class="dashboard-albums-container"> 
-  <div class="display-box"></div>
-
-  <div class="create-album">  
-    <button class="button show-create-albums-btn" onclick="openCreateAlbumForm()">create album</button>
-  </div>
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Non-album images')" id="defaultOpen">Non-album images</button>
+  <button class="tablinks" onclick="openTab(event, 'Albums')">Albums</button>
 </div>
 
-<div class="prev-next">
-  <a class="prev-8-albums">prev</a>
-  <span class="albums-page">1</span><span class="total-albums-page">/<%= @pages_of_albums %></span>
-  <a class="next-8-albums">next</a>
-</div>
+<div id="Albums" class="tabcontent">
+  <div class="dashboard-albums-container"> 
+    <div class="display-box"></div>
 
-<div class="create-album-form">
-  <span class="close-create-album-form-btn">&times</span>
-  
-  <div>
-    <label for="">name</label>
-    <input class="theme-image-name" type="text" name="name" required>    
-  </div>
-  
-  <div>
-    <label for="">theme image url</label>
-    <input class="theme-image-url" type="text" name="theme_image_url" required>   
+    <div class="create-album">  
+      <button class="button show-create-albums-btn" onclick="openCreateAlbumForm()">create album</button>
+    </div>
   </div>
 
-  <div>
-    <button class="button create-album-btn" onclick="closeCreateAlbumForm()">create album</button>
+  <div class="prev-next">
+    <a class="prev-8-albums">prev</a>
+    <span class="albums-page">1</span><span class="total-albums-page">/<%= @pages_of_albums %></span>
+    <a class="next-8-albums">next</a>
   </div>
-</div>
 
-
-<div class="dashboard-photos-container"> 
-  <div class="display-box1"></div>
-
-  <div>
-    <div class="upload-photo">
-      <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
+  <div class="create-album-form">
+    <span class="close-create-album-form-btn">&times</span>
+    
+    <div>
+      <label for="">name</label>
+      <input class="theme-image-name" type="text" name="name" required>    
+    </div>
+    
+    <div>
+      <label for="">theme image url</label>
+      <input class="theme-image-url" type="text" name="theme_image_url" required>   
     </div>
 
-    <div class="group-photo">
-      <button class="button show-group-photo-form" onclick="openGroupPhotoForm()">add to album</button>
+    <div>
+      <button class="button create-album-btn" onclick="closeCreateAlbumForm()">create album</button>
     </div>
   </div>
 </div>
 
-<div class="prev-next">
-  <a class="prev-12-photos">prev</a>
-  <span class="photos-page">1</span><span class="total-photos-page">/<%= @pages_of_photos %></span>
-  <a class="next-12-photos">next</a>
+<div id="Non-album images" class="tabcontent">
+  <div class="dashboard-photos-container"> 
+    <div class="display-box1"></div>
+
+    <div>
+      <div class="upload-photo">
+        <button class="button show-upload-photo-form" onclick="openUploadPhotoForm()">upload photo</button>
+      </div>
+
+      <div class="group-photo">
+        <button class="button show-group-photo-form" onclick="openGroupPhotoForm()">add to album</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="prev-next">
+    <a class="prev-12-photos">prev</a>
+    <span class="photos-page">1</span><span class="total-photos-page">/<%= @pages_of_photos %></span>
+    <a class="next-12-photos">next</a>
+  </div>
+
+  <div class="upload-photo-form">
+    <span class="close-upload-photo-form-btn">&times</span>
+    
+    <div>
+      <label for="">name</label>
+      <input class="image-name" type="text" name="name" required>    
+    </div>
+    
+    <div>
+      <label for="">image url</label>
+      <input class="image-url" type="text" name="image_url" required>   
+    </div>
+
+    <div>
+      <button class="button upload-photo-btn" onclick="closeUploadPhotoForm()">upload photo</button>
+    </div>
+  </div>
+
+  <div class="group-photo-form">
+    <span class="close-group-photo-form-btn">&times</span>
+
+  <%# Array.from(document.querySelector('#albums').options).find(option => option.selected).dataset.albumId %>
+    <div>
+      <label for="">choose album</label>
+      <select class="albums-list"></select>
+    </div>
+
+    <div>
+      <button class="button group-photo-btn" onclick="closeGroupPhotoForm()">add to album</button>
+    </div>
+  </div>
 </div>
 
-<div class="upload-photo-form">
-  <span class="close-upload-photo-form-btn">&times</span>
-  
-  <div>
-    <label for="">name</label>
-    <input class="image-name" type="text" name="name" required>    
-  </div>
-  
-  <div>
-    <label for="">image url</label>
-    <input class="image-url" type="text" name="image_url" required>   
-  </div>
-
-  <div>
-    <button class="button upload-photo-btn" onclick="closeUploadPhotoForm()">upload photo</button>
-  </div>
-</div>
-
-<div class="group-photo-form">
-  <span class="close-group-photo-form-btn">&times</span>
-
-<%# Array.from(document.querySelector('#albums').options).find(option => option.selected).dataset.albumId %>
-  <div>
-    <label for="">choose album</label>
-    <select class="albums-list"></select>
-  </div>
-
-  <div>
-    <button class="button group-photo-btn" onclick="closeGroupPhotoForm()">add to album</button>
-  </div>
-</div>
 
 <div class="enlarged-image-container">
     <span class="close-image-btn">&times</span>
@@ -462,6 +471,21 @@
       })
     })
   }
+
+  let openTab = (event, tabName) => {
+    let tabContents = document.querySelectorAll('.tabcontent')
+    tabContents.forEach(tabContent => {
+      tabContent.style.display = 'none'
+    })
+
+    let tabLinks = document.querySelectorAll('.tablinks')
+    tabLinks.forEach(tabLink => {
+      tabLink.className = tabLink.className.replace(' active', '')
+    })
+    document.getElementById(tabName).style.display = "block"
+    event.currentTarget.className += " active"
+  }
+  document.getElementById("defaultOpen").click()
 
 </script>
 

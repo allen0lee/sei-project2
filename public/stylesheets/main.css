@@ -556,3 +556,35 @@ header {
   padding: 2% 0 2% 0;
 }
 
+.tab {
+  overflow: hidden;
+  border-bottom: 1px solid silver;
+  background-color: snow;
+  margin: 0 5% 0 5%;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  color: gray;
+}
+
+.tab button.active {
+  color: black;
+}
+
+.tabcontent {
+  display: none;
+  animation: fadeEffect 1s;
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
