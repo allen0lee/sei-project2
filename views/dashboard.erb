@@ -10,7 +10,7 @@
     <div class="display-box"></div>
 
     <div class="create-album">  
-      <button class="button show-create-albums-btn" onclick="openCreateAlbumForm()">create album</button>
+      <button class="button show-create-albums-btn" onclick="openCreateAlbumForm()">New Album</button>
     </div>
   </div>
 
@@ -28,10 +28,10 @@
       <input class="theme-image-name" type="text" name="name" required>    
     </div>
     
-    <div>
+    <%# <div>
       <label for="">theme image url</label>
       <input class="theme-image-url" type="text" name="theme_image_url" required>   
-    </div>
+    </div> %>
 
     <div>
       <button class="button create-album-btn" onclick="closeCreateAlbumForm()">create album</button>
@@ -105,7 +105,7 @@
   let createAlbumForm = document.querySelector('.create-album-form')
   const openCreateAlbumForm = () => {
     document.querySelector('.theme-image-name').value = '' // clear input field each time open
-    document.querySelector('.theme-image-url').value = ''
+    // document.querySelector('.theme-image-url').value = ''
     createAlbumForm.style.display = 'block'
     let span = document.querySelector('.close-create-album-form-btn')
     span.onclick = () => { 
@@ -178,11 +178,11 @@
         displayBox.append(article)
         article.innerHTML = 
         `<div class="album-container">
-          <img src="${res[i].theme_image_url}" alt="">
+          <a href="/photos/${res[i].name}/${res[i].id}">
+            <img src="https://i.imgur.com/YESD5uF.png" alt="">
+          </a>
           <div class="album-name">
-            <a href="/photos/${res[i].name}/${res[i].id}">
-              ${res[i].name}
-            </a>
+            ${res[i].name}
           </div>
         </div>`
       }
@@ -240,7 +240,7 @@
       data: {
         user_id: <%= @user_id %>,
         name: document.querySelector('.theme-image-name').value,
-        theme_image_url: document.querySelector('.theme-image-url').value 
+        theme_image_url: "https://i.imgur.com/YESD5uF.png"
       }
     }).done(() => {
       getAllAlbums().then(res => {
