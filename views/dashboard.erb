@@ -178,9 +178,14 @@
         displayBox.append(article)
         article.innerHTML = 
         `<div class="album-container">
-          <a href="/photos/${res[i].name}/${res[i].id}">
-            <img src="https://i.imgur.com/YESD5uF.png" alt="">
-          </a>
+          <div class="album-cover">
+            <a href="/photos/${res[i].name}/${res[i].id}">
+              <img src="https://i.imgur.com/6Iw9q2Z.png" alt="">
+            </a>
+            <div class="latest-photo-container">
+              <img class="latest-photo" src="${res[i].latest_image_url}" alt="">
+            </div>
+          </div>
           <div class="album-name">
             ${res[i].name}
           </div>
@@ -240,7 +245,7 @@
       data: {
         user_id: <%= @user_id %>,
         name: document.querySelector('.theme-image-name').value,
-        theme_image_url: "https://i.imgur.com/YESD5uF.png"
+        theme_image_url: "https://i.imgur.com/6Iw9q2Z.png"
       }
     }).done(() => {
       getAllAlbums().then(res => {
@@ -472,13 +477,12 @@
     })
   }
 
+  let tabLinks = document.querySelectorAll('.tablinks')
   let openTab = (event, tabName) => {
     let tabContents = document.querySelectorAll('.tabcontent')
     tabContents.forEach(tabContent => {
       tabContent.style.display = 'none'
-    })
-
-    let tabLinks = document.querySelectorAll('.tablinks')
+    })  
     tabLinks.forEach(tabLink => {
       tabLink.className = tabLink.className.replace(' active', '')
     })
@@ -486,6 +490,8 @@
     event.currentTarget.className += " active"
   }
   document.getElementById("defaultOpen").click()
+
+  tabLinks[1].addEventListener('click', () => {requestAlbums(albumsOffset, albumsPage)})
 
 </script>
 

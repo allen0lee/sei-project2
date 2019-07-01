@@ -134,6 +134,30 @@ header {
   /* padding-left: 4rem; */
 }
 
+.album-cover {
+  position: relative;
+}
+
+.latest-photo-container {
+  position: absolute;
+  top: 0;
+  bottom: 200px;
+  left: 100px;
+  right: 0;
+  /* background: rgba(36, 62, 206, 0.5); */
+  opacity: 0;
+  transition: opacity .2s, visibility .2s; /* transition effect. not necessary */
+}
+
+.album-cover:hover .latest-photo-container {
+  opacity: 1;
+}
+
+.latest-photo {
+  transition: .2s;
+  transform: translateY(1em);
+}
+
 /* .album-name a {
   color: orange;
 } */

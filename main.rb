@@ -95,6 +95,12 @@ post '/photos/:album_id/:user_id' do
   if photo.name != "" && photo.image_url != ""
     photo.save
   end
+
+  album.latest_image_url = params[:latest_image_url]
+  if album.latest_image_url != ""
+    album.save
+  end
+
   # remove space in album name, otherwise route not known by browser
   # redirect "/photos/#{(album.name).split(" ").join("")}/#{photo.album_id}"
 end
@@ -139,26 +145,36 @@ put '/likes' do
 end
 
 # edit a photo
-get '/photos/:id/:album_id/edit' do
-  redirect '/login' if !logged_in? # if not logged in, cannot edit photo
-  @photo = Photo.find(params[:id])
-  erb :edit_photo
-end
-# update a photo 
-put '/photos/:id' do
-  photo = Photo.find(params[:id])
-  photo.name = params[:name]
-  photo.image_url = params[:image_url]
-  photo.save
-  redirect "/photos/#{photo.id}"
-end
-# delete a photo
+# get '/photos/:id/:album_id/edit' do
+#   redirect '/login' if !logged_in? # if not logged in, cannot edit photo
+#   @photo = Photo.find(params[:id])
+#   erb :edit_photo
+# end
+# # update a photo 
+# put '/photos/:id' do
+#   photo = Photo.find(params[:id])
+#   photo.name = params[:name]
+#   photo.image_url = params[:image_url]
+#   photo.save
+#   redirect "/photos/#{photo.id}"
+# end
+# delete a non-album photo
 delete '/photos/:id' do
   photo = Photo.find(params[:id])
   photo.destroy
 
   # album = Album.where(id: photo.album_id).first
   # redirect "/photos/#{(album.name).split(" ").join("")}/#{album.id}"
+end
+
+# delete an album photo
+delete '/photos/:id/:album_id' do
+  photo = Photo.find(params[:id])
+  photo.destroy
+
+  album = Album.find_by(id: params[:album_id])
+  album.latest_image_url = Photo.order(:id).where(album_id: params[:album_id]).last.image_url
+  album.save
 end
 
 # delete an album
@@ -205,7 +221,7 @@ end
 # api for one user's all albums - show 8 per page, offset is 8 - in dashboard
 get '/api/albums/:user_id/:offset/:page' do
   albums_per_page = 8
-  all_albums = Album.where(user_id: params[:user_id])
+  all_albums = Album.order(:id).where(user_id: params[:user_id])
   page_start = albums_per_page * (params[:page].to_i - 1)
   page_end = params[:offset].to_i - 1
   albums = all_albums[page_start..page_end]
@@ -215,7 +231,7 @@ end
 
 # api for albums and number of albums an user has
 get '/api/albums/:user_id' do 
-  albums = Album.where(user_id: params[:user_id])
+  albums = Album.order(:id).where(user_id: params[:user_id])
   content_type :json
   albums.to_json
 end
@@ -277,6 +293,10 @@ put '/photos-move-in-album' do
     photo.album_id = params[:album_id]
     photo.save
   end
+
+  album = Album.find_by(id: params[:album_id])
+  album.latest_image_url = Photo.find_by(id: params[:id].last).image_url
+  album.save 
 end
 
 # move photos out of an album

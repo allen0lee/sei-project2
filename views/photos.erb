@@ -193,7 +193,8 @@
         album_id: <%= @album_id %>,
         user_id: userId,
         name: document.querySelector('.image-name').value,
-        image_url: document.querySelector('.image-url').value 
+        image_url: document.querySelector('.image-url').value,
+        latest_image_url: document.querySelector('.image-url').value // for album to keep track of the latest image; for local image upload, find it and make post request in callback   
       }
     }).done(() => {
       getNumOfAllPhotos().then(res => {
@@ -278,10 +279,11 @@
   const deletePhoto = (photo) => {
     let photoId = photo.getAttribute('data-photo-id')
     $.ajax({
-      url: `/photos/${photoId}`,
+      url: `/photos/${photoId}/<%= @album_id %>`,
       method: 'delete',
       data: {
-        id: photoId
+        id: photoId,
+        album_id: <%= @album_id %>
       }
     }).done(() => {
       // stay in current page 

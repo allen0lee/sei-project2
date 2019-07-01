@@ -37,8 +37,10 @@ create table albums(
     theme_image_url TEXT,
     -- theme_image_file_name TEXT,
     user_id INTEGER
+    -- latest_image_url TEXT
     -- FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+alter table albums add latest_image_url text;
 
 create table likes(
     id SERIAL PRIMARY KEY,
