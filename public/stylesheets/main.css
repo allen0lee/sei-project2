@@ -222,47 +222,6 @@ header {
   color: white;
 }
 
-/* .delete button {
-  border: none; 
-  padding: 0; 
-  background: none;
-  color: white;
-  font-family: 'Crimson Text', serif;
-  font-size: 15px;
-  cursor: pointer;
-} */
-
-
-.photo-container {
-  /* margin: 5px; */
-  margin-right: 20px;
-  width: 240px;
-}
-
-.photo-container img {
-  width: 100%;
-  height: 240px;
-  cursor: pointer;
-  object-fit: cover; /* keep image aspect ratio when resizing */
-  /* border-radius: 20px; */
-  border: 6px solid lightgray;
-}
-
-.photo-name {
-  height: 60px;
-  line-height: 60px;
-  text-align: center; 
-  cursor: pointer;
-}
-
-.photo-name a {
-  color: orange;
-}
-
-/* .photo-display:hover {
-  border: 1px solid blue;
-} */
-
 .enlarged-image-container {
   text-align: center;
   display: none;
@@ -310,97 +269,6 @@ header {
 .upload-photo, .group-photo, .create-album, .ungroup-photo, .bookmark-photos {
   text-align: center;
   margin: 10px 0 0 20px;
-}
-
-
-.one-photo-page-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 2%;
-  background-color: snow;
-  /* height: 100vh; */
-}
-
-/* .photo-btn-container {
-  text-align: center;
-}
-
-.edit-delete-forms {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-.edit-photo {
-  margin-left: 20px;
-}
-
-.delete-photo-form {
-  margin-left: 10px;
-} */
-
-.comment-like-container {
-  padding-top: 10px;
-  text-align: center;
-  /* padding-left: 20px; */
-}
-
-.post-comment-form {
-  /* margin-top: 10px; */
-  /* text-align: center; */
-}
-
-.comment-input-field textarea {
-  width: 22rem;
-  height: 100px;
-}
-
-.post-comment-btn-holder {
-  margin-top: 10px;
-}
-
-.image-link {
-  margin-top: 15px;
-  text-align: center;
-}
-
-.like-container {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-.like-btn {
-  margin-right: 10px;
-}
-
-.like-btn button {
-  border: none; 
-  padding: 0; 
-  background: none;
-  cursor: pointer;
-}
-
-.like-holder {
-  margin-top: 5px;
-}
-
-.list-of-comments {
-  padding: 3% 20% 0 20%;
-  /* margin: auto; */
-  text-align: left;
-  background-color: snow;
-}
-
-.comments-area {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-.comment {
-  border-bottom: 1px solid gray;
-  padding-left: 20px;
 }
 
 
@@ -614,4 +482,111 @@ header {
 @keyframes fadeEffect {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+
+.one-photo-page-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: snow;
+  /* height: 100vh; */
+}
+
+.ui-card {
+  background-color: gold;
+  width: 301px;
+  height: 435px;
+  margin-top: 1rem;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+}
+
+.head div:last-child {
+  margin-left: auto;
+}
+
+.photo-container {
+  width: 241px;
+  height: 226px;
+  text-align: center;
+  margin: auto;
+  margin-top: 0.4rem;
+  background-color: white;
+}
+
+.photo-container img {
+  outline: 6px solid silver;
+  width: 229px;
+  height: 226px;
+  cursor: pointer;
+  object-fit: cover; /* keep image aspect ratio when resizing */
+}
+
+.ui-card footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.avatar {
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.head, footer {
+  padding: 0.5rem;
+}
+
+.description {
+  padding-left: 1rem;
+  border: 1px solid silver;
+  width: 270px;
+  height: 85px;
+  margin: auto;
+  margin-top: 1rem;
+  background-color: papayawhip;
+}
+
+.shadow {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.add-like-btn {
+  cursor: pointer;
+}
+
+.post-comment-form {
+  margin: 1rem 0 0 1rem;
+  text-align: center;
+}
+
+.comment-input-field textarea {
+  width: 22rem;
+  height: 100px;
+}
+
+.post-comment-btn-holder {
+  margin-top: 10px;
+}
+
+.list-of-comments {
+  padding: 3% 20% 0 20%;
+  /* margin: auto; */
+  text-align: left;
+  background-color: snow;
+}
+
+.comments-area {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.comment {
+  border-bottom: 1px solid gray;
+  padding-left: 20px;
 }

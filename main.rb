@@ -108,6 +108,7 @@ end
 # show single photo, likes and comments - create comments, add likes here
 get '/photos/:id' do
   @photo = Photo.find(params[:id])
+  @user_email = User.find_by(id: @photo.user_id).email
   # if a photo has no likes, create a new record in database
   if Like.find_by(photo_id: params[:id]) == nil
     @like = Like.new

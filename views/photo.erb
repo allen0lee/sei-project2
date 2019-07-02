@@ -1,36 +1,35 @@
 <div class="one-photo-page-container">
-  <div class="photo-container">
-    <img src="<%= @photo.image_url %>" alt="">
-  </div>
-  
-  <%# <span>&nbsp &nbsp</span> %>
-
-  <div class="comment-like-container">
-    <div class="post-comment-form">
-      <div class="comment-input-field">
-        <textarea class="content" name="content" placeholder="comment"></textarea>
-      </div>   
-
-      <div class="post-comment-btn-holder">
-        <button class="button post-comment-btn">post</button>
-      </div> 
+  <div class="ui-card shadow">
+    <div class="head">
+      <img class="avatar" src="https://via.placeholder.com/50" alt=""> <%= @user_email %>
     </div>
-
-    <% if logged_in? %>
-      <div class="image-link">
-        <a href="<%= @photo.image_url %>" target="_blank">
-          View Image
-        </a>
+    <div class="photo-container">
+      <img src="<%= @photo.image_url %>" alt="">
+    </div>
+    <div class="description">
+      <p><%= @photo.name %></p>      
+      <a href="<%= @photo.image_url %>" target="_blank">
+        View Image
+      </a>
+    </div>
+    <footer>
+      <div>
+        <span class="add-like-btn">❤️</span>
+        <span class="like-holder"><%= @like.number %></span>
       </div>
-    <% end %>
-
-    <div class="like-container">
-      <div class="like-btn">
-        <button class="add-like-btn"><img src="/images/heart.png" alt=""></button>
-      </div>     
-      <div class="like-holder"><%= @like.number %></div> 
-    </div>
+    </footer>
   </div>
+
+  <div class="post-comment-form">
+    <div class="comment-input-field">
+      <textarea class="content" name="content" placeholder="comment"></textarea>
+    </div>   
+
+    <div class="post-comment-btn-holder">
+      <button class="button post-comment-btn">post</button>
+    </div> 
+  </div>
+
 </div>
 
 <%# list all comments of a photo %>
