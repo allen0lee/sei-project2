@@ -221,7 +221,7 @@ end
 # api for one user's all albums - show 8 per page, offset is 8 - in dashboard
 get '/api/albums/:user_id/:offset/:page' do
   albums_per_page = 8
-  all_albums = Album.order(:id).where(user_id: params[:user_id])
+  all_albums = Album.order(id: :desc).where(user_id: params[:user_id])
   page_start = albums_per_page * (params[:page].to_i - 1)
   page_end = params[:offset].to_i - 1
   albums = all_albums[page_start..page_end]
@@ -239,7 +239,7 @@ end
 # api for album page, each page shows 12 photos, offset is 12
 get '/api/photos/:album_name/:album_id/:offset/:page' do
   photos_per_page = 12
-  all_photos = Photo.order(:id).where(album_id: params[:album_id])
+  all_photos = Photo.order(id: :desc).where(album_id: params[:album_id])
   page_start = photos_per_page * (params[:page].to_i - 1)
   page_end = params[:offset].to_i - 1
   photos = all_photos[page_start..page_end]

@@ -16,6 +16,9 @@
 
   <div class="prev-next">
     <a class="prev-8-albums">prev</a>
+    <% if @pages_of_albums == 0 %>
+      <% @pages_of_albums = 1 %>
+    <% end %>
     <span class="albums-page">1</span><span class="total-albums-page">/<%= @pages_of_albums %></span>
     <a class="next-8-albums">next</a>
   </div>
@@ -56,6 +59,9 @@
 
   <div class="prev-next">
     <a class="prev-12-photos">prev</a>
+    <% if @pages_of_photos == 0 %>
+      <% @pages_of_photos = 1 %>
+    <% end %>
     <span class="photos-page">1</span><span class="total-photos-page">/<%= @pages_of_photos %></span>
     <a class="next-12-photos">next</a>
   </div>
@@ -251,14 +257,10 @@
       getAllAlbums().then(res => {
         let numOfAlbums = res.length
         let lastPage = Math.ceil(numOfAlbums/albumsPerPage)
-        albumsPage = lastPage // update page number
-        requestAlbums(albumsOffset, lastPage) // always go to last page to see the change
-        setAlbumsPage.textContent = lastPage
+        requestAlbums(albumsOffset, 1) // always go to first page to see the change
+        setAlbumsPage.textContent = 1
         setTotalAlbumsPage.textContent = `/${lastPage}`
-        loadNext8Albums.style.display = 'none' // last page has no 'next'
-        if(lastPage > 1) {
-          loadPrev8Albums.style.display = 'inline-block'
-        }
+        loadPrev8Albums.style.display = 'none' // first page has no 'prev'
       })
     })
   }
@@ -335,14 +337,10 @@
       getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
-        photosPage = lastPage // update page number
-        requestPhotos(photosOffset, lastPage) // always go to last page to see the change
-        setPhotosPage.textContent = lastPage
+        requestPhotos(photosOffset, 1) // always go to first page to see the change
+        setPhotosPage.textContent = 1
         setTotalPhotosPage.textContent = `/${lastPage}`
-        loadNext12Photos.style.display = 'none' // last page has no 'next'
-        if(lastPage > 1) {
-          loadPrev12Photos.style.display = 'inline-block'
-        }
+        loadPrev12Photos.style.display = 'none' // first page has no 'prev'
       })
     })
   }

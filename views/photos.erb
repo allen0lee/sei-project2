@@ -25,6 +25,9 @@
 
 <div class="prev-next">
   <a class="prev-12-photos">prev</a>
+  <% if @album_pages == 0 %>
+    <% @album_pages = 1 %>
+  <% end %>
   <span class="page">1</span><span class="total-page">/<%= @album_pages %></span>
   <a class="next-12-photos">next</a>
 </div>
@@ -200,14 +203,10 @@
       getNumOfAllPhotos().then(res => {
         let numOfPhotos = res.num_of_photos
         let lastPage = Math.ceil(numOfPhotos/photosPerPage)
-        page = lastPage // update page number
-        requestPhotos(offset, lastPage) // always go to last page to see the change
-        setPage.textContent = lastPage
+        requestPhotos(offset, 1) // always go to first page to see the change
+        setPage.textContent = 1
         setTotalPage.textContent = `/${lastPage}`
-        loadNext12Photos.style.display = 'none' // last page has no 'next'
-        if(lastPage > 1) {
-          loadPrev12Photos.style.display = 'inline-block'
-        }
+        loadPrev12Photos.style.display = 'none' // first page has no 'prev'
       })
     })
   }
