@@ -70,7 +70,7 @@ header {
 }
 
 /* style logout-btn to look like a link */
-.logout-btn button, .dashboard-btn button {
+.logout-btn button, .dashboard-btn button, .post-comment-btn button {
   border: none; 
   padding: 0; 
   background: none;
@@ -313,7 +313,7 @@ header {
 }
 
 .login-btn:hover, .create-albums-btn:hover, .sign-up-btn:hover, 
-.upload-photo-btn:hover, .edit-photo-btn:hover, .post-comment-btn:hover, 
+.upload-photo-btn:hover, .edit-photo-btn:hover, 
 .update-photo-btn:hover, .create-account-btn:hover {
   background-color: ivory;
   color: #4CAF50;
@@ -435,7 +435,7 @@ header {
   cursor: pointer;
 }
 
-.prev-12-photos, .prev-8-albums {
+.prev-12-photos, .prev-8-albums, .prev-5-comments {
   display: none;
 }
 
@@ -487,7 +487,7 @@ header {
 
 .one-photo-page-container {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: center;
   background-color: snow;
   /* height: 100vh; */
@@ -561,17 +561,25 @@ header {
 }
 
 .post-comment-form {
-  margin: 1rem 0 0 1rem;
-  text-align: center;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* background-color: rgba(0, 0, 0, 0.7); */
+  height: 30px;
+}
+
+.comment-input-field {
+  margin-right: 0.5rem;
 }
 
 .comment-input-field textarea {
-  width: 22rem;
-  height: 100px;
+  width: 20rem;
+  height: 30px;
 }
 
-.post-comment-btn-holder {
-  margin-top: 10px;
+.post-comment-btn button {
+  color: black;
 }
 
 .list-of-comments {
@@ -582,11 +590,11 @@ header {
 }
 
 .comments-area {
-  display: grid;
-  grid-template-columns: 1fr;
+  height: 600px;
 }
 
 .comment {
   border-bottom: 1px solid gray;
-  padding-left: 20px;
+  margin-left: 10%;
 }
+

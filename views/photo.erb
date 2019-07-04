@@ -20,16 +20,6 @@
     </footer>
   </div>
 
-  <div class="post-comment-form">
-    <div class="comment-input-field">
-      <textarea class="content" name="content" placeholder="comment"></textarea>
-    </div>   
-
-    <div class="post-comment-btn-holder">
-      <button class="button post-comment-btn">post</button>
-    </div> 
-  </div>
-
 </div>
 
 <%# list all comments of a photo %>
@@ -39,8 +29,21 @@
 
 <div class="comment-prev-next">
   <a class="prev-5-comments">prev</a>
-  <span class="comments-page">1</span>
+  <% if @comment_pages == 0 %>
+    <% @comment_pages = 1 %>
+  <% end %>
+  <span class="comments-page">1</span><span class="total-page">/<%= @comment_pages %></span>
   <a class="next-5-comments">next</a>
+</div>
+
+<div class="post-comment-form">
+  <div class="comment-input-field">
+    <textarea class="content" name="content" placeholder="comment"></textarea>
+  </div>   
+
+  <div class="post-comment-btn">
+    <button>post</button>
+  </div>
 </div>
 
 
@@ -97,9 +100,11 @@
         let article = document.createElement('article')
         commentsArea.append(article)
         article.innerHTML = 
-        `<p>${res[i].user_email} &nbsp &nbsp &nbsp
+        `<div class="head">
+          <img class="avatar" src="https://via.placeholder.com/50" alt="">
+          ${res[i].user_email} <br>
           ${res[i].time}
-        </p>
+        </div>
         <div class="comment">
           <p>${res[i].content}</p>
         </div>`
@@ -121,6 +126,11 @@
   }
 
   requestComments(offset, page)
+
+  let loadNext5Comments = document.querySelector('.next-5-comments')
+  <% if @comment_pages == 1 %>
+    loadNext5Comments.style.display = 'none'
+  <% end %>
 
   let postCommentBtn = document.querySelector('.post-comment-btn')
   const handlePostComment = () => {
@@ -145,14 +155,20 @@
   }
   postCommentBtn.addEventListener('click', handlePostComment)
 
-  let loadNext5Comments = document.querySelector('.next-5-comments')
+  let setTotalPage = document.querySelector('.total-page')
   const handleNext5Comments = () => {
     getNumOfAllComments().then(res => {
       let numOfComments = res.num_of_comments
       let lastPage = Math.ceil(numOfComments/commentsPerPage) 
       if(page < lastPage) {
+        loadNext5Comments.style.display = 'inline-block'
+        loadPrev5Comments.style.display = 'inline-block'        
         page += 1
         setCommentsPage.textContent = page
+        setTotalPage.textContent = `/${lastPage}`
+        if(page == lastPage) {
+          loadNext5Comments.style.display = 'none' // disable 'next'
+        }
       }
       requestComments(offset, page)
     })
@@ -162,8 +178,13 @@
   let loadPrev5Comments = document.querySelector('.prev-5-comments')
   const handlePrev5Comments = () => {
     if(page > 1) {
+      loadNext5Comments.style.display = 'inline-block'
+      loadPrev5Comments.style.display = 'inline-block'
       page -= 1
       setCommentsPage.textContent = page
+      if(page == 1) {
+        loadPrev5Comments.style.display = 'none' // disable 'prev'
+      }
     }
     requestComments(offset, page)
   }

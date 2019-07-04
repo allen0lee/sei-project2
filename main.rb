@@ -118,6 +118,9 @@ get '/photos/:id' do
   else # a photo has likes and can be found in table 'likes'
     @like = Like.find_by(photo_id: params[:id])
   end
+  num_of_comments = Comment.where(photo_id: params[:id]).length
+  comments_per_page = 5
+  @comment_pages = (num_of_comments/comments_per_page.to_f).ceil   
   erb :photo
 end
 # create a comment of a photo
