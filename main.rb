@@ -89,13 +89,28 @@ post '/photos/:album_id/:user_id' do
   album = Album.find_by(id: params[:album_id]) 
   photo = Photo.new
   photo.name = params[:name]
-  photo.image_url = params[:image_url]
   photo.user_id = params[:user_id]
   photo.album_id = album.id
-  if photo.name != "" && photo.image_url != ""
+
+  if params[:image_url] != nil && params[:image_file_name] == nil
+    photo.image_url = params[:image_url]
     photo.save
+  elsif params[:image_url] == nil && params[:image_file_name] != nil
+    photo.image_file_name = params[:image_file_name]        
+    photo.image_url = "/uploads/#{params[:image_file_name]["filename"]}" 
+    
+    # binding.pry
+    
+    if photo.name != "" # if is not working
+      photo.save
+    end
+
+    # redirect here
+
   end
 
+
+  # need to fix when deteting only one
   album.latest_image_url = params[:latest_image_url]
   if album.latest_image_url != ""
     album.save

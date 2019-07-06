@@ -42,7 +42,15 @@
   
   <div>
     <label for="">image url</label>
-    <input class="image-url" type="text" name="image_url" required>   
+    <input class="image-url" type="text" name="image_url">  
+  </div>
+
+  <div>
+    <form action="/photos/<%= @album_id %>/<%= @user_id %>" method="post" enctype="multipart/form-data">
+      <label for="">image file</label>
+      <input class="image-file" type="file" name="image_file_name">
+      <button>upload</button>
+    </form> 
   </div>
 
   <div>
@@ -189,26 +197,28 @@
       userId = null
     <% end %>
 
-    $.ajax({
-      url: '/photos/<%= @album_id %>/<%= @user_id %>',
-      method: 'post',
-      data: {
-        album_id: <%= @album_id %>,
-        user_id: userId,
-        name: document.querySelector('.image-name').value,
-        image_url: document.querySelector('.image-url').value,
-        latest_image_url: document.querySelector('.image-url').value // for album to keep track of the latest image; for local image upload, find it and make post request in callback   
-      }
-    }).done(() => {
-      getNumOfAllPhotos().then(res => {
-        let numOfPhotos = res.num_of_photos
-        let lastPage = Math.ceil(numOfPhotos/photosPerPage)
-        requestPhotos(offset, 1) // always go to first page to see the change
-        setPage.textContent = 1
-        setTotalPage.textContent = `/${lastPage}`
-        loadPrev12Photos.style.display = 'none' // first page has no 'prev'
+    if(document.querySelector('.image-name').value != "" && document.querySelector('.image-url').value != "") {
+      $.ajax({
+        url: '/photos/<%= @album_id %>/<%= @user_id %>',
+        method: 'post',
+        data: {
+          album_id: <%= @album_id %>,
+          user_id: userId,
+          name: document.querySelector('.image-name').value,
+          image_url: document.querySelector('.image-url').value,
+          latest_image_url: document.querySelector('.image-url').value // for album to keep track of the latest image; for local image upload, find it and make post request in callback   
+        }
+      }).done(() => {
+        getNumOfAllPhotos().then(res => {
+          let numOfPhotos = res.num_of_photos
+          let lastPage = Math.ceil(numOfPhotos/photosPerPage)
+          requestPhotos(offset, 1) // always go to first page to see the change
+          setPage.textContent = 1
+          setTotalPage.textContent = `/${lastPage}`
+          loadPrev12Photos.style.display = 'none' // first page has no 'prev'
+        })
       })
-    })
+    }
   }
   uploadPhotoBtn.addEventListener('click', handleUploadPhoto)
 
